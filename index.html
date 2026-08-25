@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 SYSTEM BREACH 🚨</title>
+    <style>
+        body { background: #000; margin: 0; font-family: sans-serif; overflow-x: hidden; }
+        
+        /* THE AUTO-LAYOUT: This handles all the resizing and rearranging */
+        .container {
+            display: grid;
+            /* This line makes it responsive: items will be at least 150px 
+               and fill the screen automatically */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-auto-rows: 150px;
+            grid-auto-flow: dense;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .media-item { width: 100%; height: 100%; object-fit: cover; border: 1px solid #333; }
+
+        /* The Troll Popup */
+        #popup {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 20px; border: 5px solid red; z-index: 100; text-align: center;
+        }
+    </style>
+</head>
+<body onclick="startPrank()">
+
+    <div class="container" id="wall">
+        <!-- Images and videos will appear here automatically -->
+    </div>
+
+    <div id="popup">
+        <h2 style="color:red">VIRUS DETECTED!</h2>
+        <p>Your local files are being deleted...</p>
+        <button id="run-btn" style="padding:10px;">STOP PROCESS</button>
+    </div>
+
+    <script>
+        // 1. CHANGE THESE TWO THINGS:
+        const username = 'YOUR_GITHUB_USERNAME';
+        const repo = 'troll-wall';
+
+        // 2. THE AUTO-LOADER: This finds your files automatically
+        async function loadMedia() {
+            const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/media`);
+            const files = await response.json();
+            const wall = document.getElementById('wall');
+
+            files.forEach(file => {
+                const ext = file.name.split('.').pop().toLowerCase();
+                let el;
+
+                if (['mp4', 'webm'].includes(ext)) {
+                    el = document.createElement('video');
+                    el.src = file.download_url;
+                    el.autoplay = el.loop = el.muted = true;
+                    el.setAttribute('playsinline', '');
+                } else {
+                    el = document.createElement('img');
+                    el.src = file.download_url;
+                }
+                
+                el.className = 'media-item';
+                wall.appendChild(el);
+            });
+        }
+
+        // 3. THE TROLL: Sound and Runaway Button
+        function startPrank() {
+            const audio = new Audio('https://www.myinstants.com/media/sounds/mlg-airhorn.mp3');
+            audio.play();
+            document.getElementById('popup').style.display = 'block';
+            
+            const btn = document.getElementById('run-btn');
+            btn.onmouseover = btn.ontouchstart = () => {
+                btn.style.position = 'absolute';
+                btn.style.left = Math.random() * 80 + '%';
+                btn.style.top = Math.random() * 80 + '%';
+            };
+        }
+
+        loadMedia();
+    </script>
+</body>
+</html>
