@@ -1,150 +1,1840 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚨 SYSTEM BREACH: NOWIE VAULT 🚨</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NOWIE VAULT"
+    >
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>SYSTEM BREACH: NOWIE VAULT</title>
+
+
     <style>
-        /* THEME: BRIGHT PINK */
-        body { 
-            background: #ff007f; 
-            margin: 0; 
+
+        /* =========================================================
+           RESET / GLOBAL
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #000;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
             padding: 0;
-            font-family: 'Courier New', monospace; 
-            overflow-x: hidden; 
-            color: #fff; 
+
+            width: 100%;
+            min-height: 100vh;
+
+            background: #000;
+
+            color: #ff007f;
+
+            font-family:
+                "Courier New",
+                Courier,
+                monospace;
+
+            overflow-x: hidden;
         }
 
-        /* FULL SCREEN MASONRY LAYOUT */
-        .container {
-            column-count: 4; /* Number of columns for desktop */
-            column-gap: 0;   /* No space between columns */
-            width: 100vw;
+
+        /* =========================================================
+           CUSTOM SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        /* Adjust columns for smaller screens */
-        @media (max-width: 1200px) { .container { column-count: 3; } }
-        @media (max-width: 800px) { .container { column-count: 2; } }
-        @media (max-width: 480px) { .container { column-count: 1; } }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ff007f;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff3399;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        header {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            width: 100%;
+
+            padding: 25px 15px;
+
+            text-align: center;
+
+            background:
+                rgba(0, 0, 0, 0.96);
+
+            border-bottom:
+                3px solid #ff007f;
+
+            box-shadow:
+                0 0 20px
+                rgba(255, 0, 127, 0.5);
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            color: #ff007f;
+
+            font-size:
+                clamp(
+                    1.4rem,
+                    4vw,
+                    2.2rem
+                );
+
+            font-weight: bold;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                2px 2px 0 #fff;
+        }
+
+
+        header span {
+
+            display: block;
+
+            margin-top: 10px;
+
+            color: #00ff41;
+
+            font-size: 0.9rem;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================================
+           STATUS BAR
+        ========================================================= */
+
+        #status-bar {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 20px;
+
+            padding:
+                10px 15px;
+
+            background: #050505;
+
+            border-bottom:
+                1px solid #222;
+
+            text-align: center;
+
+            font-size: 0.75rem;
+        }
+
+
+        #status {
+
+            color: #00ff41;
+        }
+
+
+        #counter {
+
+            color: #ff007f;
+        }
+
+
+        /* =========================================================
+           MEDIA WALL CONTAINER
+        ========================================================= */
+
+        #wall-container {
+
+            width: 100%;
+
+            padding: 20px;
+
+            background: #ff007f;
+        }
+
+
+        /* =========================================================
+           MASONRY WALL
+        ========================================================= */
+
+        #wall {
+
+            width: 100%;
+
+            /*
+                Automatically changes the number
+                of columns depending on screen width.
+            */
+
+            column-width: 280px;
+
+            column-gap: 15px;
+        }
+
+
+        /* =========================================================
+           MEDIA ITEM
+        ========================================================= */
 
         .media-link {
+
             display: inline-block;
+
             width: 100%;
-            text-decoration: none;
-            overflow: hidden;
-            transition: 0.3s;
-            line-height: 0; /* Removes tiny gaps at bottom of images */
+
+            margin-bottom: 15px;
+
+            break-inside: avoid;
+
+            background: #000;
+
+            border:
+                2px solid #000;
+
+            line-height: 0;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease,
+                filter 0.3s ease;
         }
+
 
         .media-link:hover {
-            transform: scale(1.02);
+
+            transform:
+                scale(1.03)
+                rotate(0.5deg);
+
             z-index: 5;
-            filter: brightness(1.2);
+
+            border-color: #fff;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 0, 0, 0.6);
+
+            filter:
+                brightness(1.15);
         }
 
-        .media-item { 
-            width: 100%; 
-            height: auto; /* Adjusts to the natural height of the file */
+
+        .media-item {
+
             display: block;
+
+            width: 100%;
+
+            height: auto;
+
+            background: #000;
+
+            object-fit: contain;
         }
 
-        /* THE TROLL POPUP */
-        #popup {
-            display: none; position: fixed; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); background: white; 
-            padding: 40px; border: 15px solid #eee; z-index: 999; 
-            text-align: center; color: black; box-shadow: 0 0 100px rgba(0,0,0,0.5);
-            width: 80%; max-width: 400px;
+
+        /* =========================================================
+           LOADING
+        ========================================================= */
+
+        .loading {
+
+            width: 100%;
+
+            padding: 60px 20px;
+
+            color: #000;
+
+            text-align: center;
+
+            font-size: 1rem;
+
+            font-weight: bold;
         }
-        
-        #run-btn { 
-            padding: 15px 25px; font-weight: bold; cursor: pointer; 
-            background: black; color: white; border: none; 
-            margin-top: 20px; text-transform: uppercase;
+
+
+        /* =========================================================
+           ERROR
+        ========================================================= */
+
+        .error {
+
+            width: 100%;
+
+            padding: 60px 20px;
+
+            background: #000;
+
+            color: #fff;
+
+            border:
+                2px solid #fff;
+
+            text-align: center;
+
+            line-height: 1.8;
         }
+
+
+        /* =========================================================
+           LIGHTBOX
+        ========================================================= */
+
+        #lightbox {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                60px 20px 40px;
+
+            background:
+                rgba(0, 0, 0, 0.96);
+        }
+
+
+        #lightbox.active {
+
+            display: flex;
+        }
+
+
+        /* =========================================================
+           LIGHTBOX CONTENT
+        ========================================================= */
+
+        #lightbox-content {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 100%;
+
+            max-width: 95vw;
+
+            max-height: 85vh;
+        }
+
+
+        #lightbox-content img,
+        #lightbox-content video {
+
+            display: block;
+
+            max-width: 90vw;
+
+            max-height: 82vh;
+
+            width: auto;
+
+            height: auto;
+
+            object-fit: contain;
+
+            background: #000;
+
+            box-shadow:
+                0 0 30px
+                rgba(255, 0, 127, 0.4);
+        }
+
+
+        /* =========================================================
+           LIGHTBOX BUTTON
+        ========================================================= */
+
+        .lightbox-button {
+
+            position: absolute;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 50px;
+
+            height: 50px;
+
+            padding: 0;
+
+            background: #000;
+
+            color: #ff007f;
+
+            border:
+                2px solid #ff007f;
+
+            font-family:
+                "Courier New",
+                Courier,
+                monospace;
+
+            font-size: 1.5rem;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                color 0.2s;
+        }
+
+
+        .lightbox-button:hover {
+
+            background: #ff007f;
+
+            color: #000;
+        }
+
+
+        /* =========================================================
+           CLOSE
+        ========================================================= */
+
+        #close-lightbox {
+
+            top: 15px;
+
+            right: 15px;
+        }
+
+
+        /* =========================================================
+           PREVIOUS
+        ========================================================= */
+
+        #previous {
+
+            left: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+        }
+
+
+        /* =========================================================
+           NEXT
+        ========================================================= */
+
+        #next {
+
+            right: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+        }
+
+
+        /* =========================================================
+           LIGHTBOX INFORMATION
+        ========================================================= */
+
+        #lightbox-info {
+
+            position: absolute;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 10px;
+
+            padding:
+                5px 60px;
+
+            color: #00ff41;
+
+            text-align: center;
+
+            font-size: 0.75rem;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            header {
+
+                padding:
+                    18px 10px;
+            }
+
+
+            header h1 {
+
+                letter-spacing: 2px;
+
+                font-size:
+                    1.4rem;
+            }
+
+
+            header span {
+
+                font-size:
+                    0.7rem;
+            }
+
+
+            #wall-container {
+
+                padding: 10px;
+            }
+
+
+            #wall {
+
+                column-width: 160px;
+
+                column-gap: 10px;
+            }
+
+
+            .media-link {
+
+                margin-bottom: 10px;
+            }
+
+
+            #previous,
+            #next {
+
+                width: 40px;
+
+                height: 40px;
+
+                font-size: 1.2rem;
+            }
+
+
+            #previous {
+
+                left: 5px;
+            }
+
+
+            #next {
+
+                right: 5px;
+            }
+
+
+            #lightbox {
+
+                padding:
+                    50px 5px 35px;
+            }
+
+
+            #lightbox-content img,
+            #lightbox-content video {
+
+                max-width: 95vw;
+
+                max-height: 80vh;
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================= */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            html {
+
+                scroll-behavior: auto;
+            }
+
+
+            *,
+            *::before,
+            *::after {
+
+                animation: none !important;
+
+                transition: none !important;
+            }
+
+
+            .media-link:hover {
+
+                transform: none;
+            }
+
+        }
+
     </style>
+
 </head>
-<body onclick="startPrank()">
 
-    <!-- Header removed as requested -->
 
-    <div class="container" id="wall">
-        <!-- Content loads here -->
+<body>
+
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <header>
+
+        <h1>
+            🚨 SYSTEM BREACH 🚨
+        </h1>
+
+
+        <span>
+            DECRYPTING NOWIE VAULT DATA...
+            ACCESS GRANTED
+        </span>
+
+    </header>
+
+
+    <!-- =========================================================
+         STATUS BAR
+    ========================================================= -->
+
+    <div id="status-bar">
+
+        <div id="status">
+            CONNECTING TO VAULT...
+        </div>
+
+
+        <div id="counter">
+            0 FILES
+        </div>
+
     </div>
 
-    <!-- The Popup -->
-    <div id="popup">
-        <h1 style="margin-top:0;">POLICE ALERT!</h1>
-        <p>Your IP address has been logged. This device is now under surveillance by local authorities.</p>
-        <button id="run-btn">CANCEL TRACKING</button>
+
+    <!-- =========================================================
+         MEDIA WALL
+    ========================================================= -->
+
+    <main id="wall-container">
+
+        <div id="wall">
+
+            <div class="loading">
+                ACCESSING VAULT...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         LIGHTBOX
+    ========================================================= -->
+
+    <div
+        id="lightbox"
+        aria-hidden="true"
+    >
+
+
+        <!-- CLOSE -->
+
+        <button
+            id="close-lightbox"
+            class="lightbox-button"
+            aria-label="Close"
+            type="button"
+        >
+            ×
+        </button>
+
+
+        <!-- PREVIOUS -->
+
+        <button
+            id="previous"
+            class="lightbox-button"
+            aria-label="Previous"
+            type="button"
+        >
+            ‹
+        </button>
+
+
+        <!-- MEDIA -->
+
+        <div id="lightbox-content"></div>
+
+
+        <!-- NEXT -->
+
+        <button
+            id="next"
+            class="lightbox-button"
+            aria-label="Next"
+            type="button"
+        >
+            ›
+        </button>
+
+
+        <!-- INFORMATION -->
+
+        <div id="lightbox-info"></div>
+
     </div>
+
 
     <script>
-        const username = 'NewbDev-gif';
-        const repo = 'troll-wall';
-        const folder = 'media'; 
-        const fbLink = 'https://www.facebook.com/profile.php?id=61575848311942';
+
+        /* =========================================================
+           CONFIGURATION
+        ========================================================= */
+
+
+        /*
+            GitHub username
+        */
+
+        const username =
+            "NewbDev-gif";
+
+
+        /*
+            Repository name
+        */
+
+        const repo =
+            "troll-wall";
+
+
+        /*
+            Folder containing all media
+        */
+
+        const folder =
+            "media";
+
+
+        /*
+            Facebook profile
+
+            We will use this later for a
+            separate Facebook button.
+        */
+
+        const fbLink =
+            "https://www.facebook.com/profile.php?id=61575848311942";
+
+
+        /* =========================================================
+           DOM ELEMENTS
+        ========================================================= */
+
+        const wall =
+            document.getElementById("wall");
+
+
+        const status =
+            document.getElementById("status");
+
+
+        const counter =
+            document.getElementById("counter");
+
+
+        const lightbox =
+            document.getElementById("lightbox");
+
+
+        const lightboxContent =
+            document.getElementById(
+                "lightbox-content"
+            );
+
+
+        const lightboxInfo =
+            document.getElementById(
+                "lightbox-info"
+            );
+
+
+        const closeButton =
+            document.getElementById(
+                "close-lightbox"
+            );
+
+
+        const previousButton =
+            document.getElementById(
+                "previous"
+            );
+
+
+        const nextButton =
+            document.getElementById(
+                "next"
+            );
+
+
+        /* =========================================================
+           SUPPORTED MEDIA
+        ========================================================= */
+
+        const validTypes = [
+
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp",
+
+            "mp4",
+            "mov",
+            "webm"
+
+        ];
+
+
+        /* =========================================================
+           MEDIA STORAGE
+        ========================================================= */
+
+        let mediaFiles = [];
+
+
+        let currentIndex = 0;
+
+
+        /* =========================================================
+           VIDEO OBSERVER
+        ========================================================= */
+
+        /*
+            This prevents every video from playing
+            at the same time.
+
+            Videos play only when they become
+            visible on screen.
+        */
+
+        const videoObserver =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(
+                        entry => {
+
+                            const video =
+                                entry.target;
+
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                video
+                                    .play()
+                                    .catch(
+                                        () => {}
+                                    );
+
+                            }
+
+                            else {
+
+                                video.pause();
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+                    threshold: 0.25
+                }
+
+            );
+
+
+        /* =========================================================
+           LOAD MEDIA FROM GITHUB
+        ========================================================= */
 
         async function loadMedia() {
-            const wall = document.getElementById('wall');
-            const url = `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
 
             try {
-                const response = await fetch(url);
-                const files = await response.json();
 
-                files.forEach(file => {
-                    const ext = file.name.split('.').pop().toLowerCase();
-                    let el;
 
-                    const link = document.createElement('a');
-                    link.href = fbLink;
-                    link.className = 'media-link';
+                status.textContent =
+                    "CONNECTING TO GITHUB VAULT...";
 
-                    if (['mp4', 'webm', 'mov'].includes(ext)) {
-                        el = document.createElement('video');
-                        el.src = file.download_url;
-                        el.autoplay = true;
-                        el.loop = true;
-                        el.muted = true;
-                        el.setAttribute('playsinline', '');
-                    } else if (['jpg', 'png', 'gif', 'webp', 'jpeg'].includes(ext)) {
-                        el = document.createElement('img');
-                        el.src = file.download_url;
+
+                /*
+                    GitHub API
+                */
+
+                const url =
+                    `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
+
+
+                /*
+                    Request files
+                */
+
+                const response =
+                    await fetch(url);
+
+
+                /*
+                    Check HTTP response
+                */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `GitHub API Error: ${response.status}`
+                    );
+
+                }
+
+
+                /*
+                    Convert response to JSON
+                */
+
+                const files =
+                    await response.json();
+
+
+                /*
+                    Make sure GitHub returned
+                    an array.
+                */
+
+                if (
+                    !Array.isArray(files)
+                ) {
+
+                    throw new Error(
+                        "Invalid GitHub response."
+                    );
+
+                }
+
+
+                /* =================================================
+                   FILTER MEDIA
+                ================================================= */
+
+
+                mediaFiles =
+                    files
+
+                        .filter(
+                            file => {
+
+                                /*
+                                    Ignore folders.
+                                */
+
+                                if (
+                                    file.type !==
+                                    "file"
+                                ) {
+
+                                    return false;
+
+                                }
+
+
+                                /*
+                                    Get extension.
+                                */
+
+                                const extension =
+                                    file.name
+                                        .split(".")
+                                        .pop()
+                                        .toLowerCase();
+
+
+                                /*
+                                    Only allow
+                                    supported files.
+                                */
+
+                                return validTypes
+                                    .includes(
+                                        extension
+                                    );
+
+                            }
+                        )
+
+
+                        /* =================================================
+                           SORT FILES
+                        ================================================= */
+
+                        .sort(
+                            (a, b) => {
+
+                                return a.name.localeCompare(
+                                    b.name,
+
+                                    undefined,
+
+                                    {
+                                        numeric: true,
+
+                                        sensitivity:
+                                            "base"
+                                    }
+                                );
+
+                            }
+                        );
+
+
+                /* =================================================
+                   EMPTY FOLDER
+                ================================================= */
+
+                if (
+                    mediaFiles.length === 0
+                ) {
+
+                    wall.innerHTML = `
+
+                        <div class="error">
+
+                            ⚠ VAULT IS EMPTY
+
+                            <br><br>
+
+                            NO SUPPORTED MEDIA FOUND
+
+                        </div>
+
+                    `;
+
+
+                    status.textContent =
+                        "NO MEDIA FOUND";
+
+
+                    counter.textContent =
+                        "0 FILES";
+
+
+                    return;
+
+                }
+
+
+                /* =================================================
+                   UPDATE COUNTER
+                ================================================= */
+
+                counter.textContent =
+                    `${mediaFiles.length} FILES`;
+
+
+                status.textContent =
+                    "ACCESS GRANTED";
+
+
+                /* =================================================
+                   REMOVE LOADING
+                ================================================= */
+
+                wall.innerHTML = "";
+
+
+                /* =================================================
+                   CREATE MEDIA
+                ================================================= */
+
+                mediaFiles.forEach(
+                    (file, index) => {
+
+                        createMediaElement(
+                            file,
+                            index
+                        );
+
                     }
+                );
 
-                    if (el) {
-                        el.className = 'media-item';
-                        link.appendChild(el);
-                        wall.appendChild(link);
-                    }
-                });
-            } catch (err) {
-                console.error("API Fetch failed.");
             }
+
+
+            /* =====================================================
+               ERROR HANDLING
+            ===================================================== */
+
+            catch (error) {
+
+
+                console.error(
+                    "Vault connection lost:",
+                    error
+                );
+
+
+                status.textContent =
+                    "CONNECTION FAILED";
+
+
+                counter.textContent =
+                    "ERROR";
+
+
+                wall.innerHTML = `
+
+                    <div class="error">
+
+                        ⚠ SYSTEM ERROR
+
+                        <br>
+
+                        VAULT CONNECTION LOST
+
+                        <br><br>
+
+                        <small>
+                            Please refresh the page.
+                        </small>
+
+                    </div>
+
+                `;
+
+            }
+
         }
 
-        let prankStarted = false;
-        function startPrank() {
-            if (prankStarted) return;
-            prankStarted = true;
 
-            const audio = new Audio('https://www.myinstants.com/media/sounds/mlg-airhorn.mp3');
-            audio.play().catch(() => {});
+        /* =========================================================
+           CREATE MEDIA ITEM
+        ========================================================= */
 
-            document.getElementById('popup').style.display = 'block';
+        function createMediaElement(
+            file,
+            index
+        ) {
 
-            const btn = document.getElementById('run-btn');
-            const moveBtn = (e) => {
-                e.preventDefault();
-                btn.style.position = 'fixed';
-                btn.style.left = Math.random() * 80 + 10 + '%';
-                btn.style.top = Math.random() * 80 + 10 + '%';
-            };
-            btn.onmouseover = btn.ontouchstart = moveBtn;
+
+            /*
+                Get file extension.
+            */
+
+            const extension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            /*
+                Create clickable container.
+            */
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                "#";
+
+
+            link.className =
+                "media-link";
+
+
+            link.dataset.index =
+                index;
+
+
+            /*
+                Clicking media opens
+                fullscreen viewer.
+            */
+
+            link.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+
+                    openLightbox(
+                        index
+                    );
+
+                }
+            );
+
+
+            let element;
+
+
+            /* =====================================================
+               VIDEO
+            ===================================================== */
+
+            if (
+
+                extension === "mp4" ||
+
+                extension === "mov" ||
+
+                extension === "webm"
+
+            ) {
+
+
+                element =
+                    document.createElement(
+                        "video"
+                    );
+
+
+                /*
+                    Video source
+                */
+
+                element.src =
+                    file.download_url;
+
+
+                /*
+                    Silent autoplay
+                */
+
+                element.muted =
+                    true;
+
+
+                /*
+                    Repeat
+                */
+
+                element.loop =
+                    true;
+
+
+                /*
+                    Mobile support
+                */
+
+                element.playsInline =
+                    true;
+
+
+                /*
+                    Don't download the
+                    entire video immediately.
+                */
+
+                element.preload =
+                    "metadata";
+
+
+                element.className =
+                    "media-item";
+
+
+                /*
+                    Observe video visibility.
+                */
+
+                videoObserver.observe(
+                    element
+                );
+
+            }
+
+
+            /* =====================================================
+               IMAGE
+            ===================================================== */
+
+            else {
+
+
+                element =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                /*
+                    Image URL
+                */
+
+                element.src =
+                    file.download_url;
+
+
+                /*
+                    Browser lazy loading.
+                */
+
+                element.loading =
+                    "lazy";
+
+
+                /*
+                    Decode images in
+                    background when possible.
+                */
+
+                element.decoding =
+                    "async";
+
+
+                /*
+                    Accessibility
+                */
+
+                element.alt =
+                    file.name;
+
+
+                element.className =
+                    "media-item";
+
+            }
+
+
+            /* =====================================================
+               BROKEN MEDIA
+            ===================================================== */
+
+            element.addEventListener(
+                "error",
+                () => {
+
+                    console.warn(
+                        "Failed to load:",
+                        file.name
+                    );
+
+
+                    link.remove();
+
+                }
+            );
+
+
+            /*
+                Put media inside link.
+            */
+
+            link.appendChild(
+                element
+            );
+
+
+            /*
+                Put item on wall.
+            */
+
+            wall.appendChild(
+                link
+            );
+
         }
+
+
+        /* =========================================================
+           OPEN LIGHTBOX
+        ========================================================= */
+
+        function openLightbox(
+            index
+        ) {
+
+
+            /*
+                Validate index.
+            */
+
+            if (
+
+                index < 0 ||
+
+                index >= mediaFiles.length
+
+            ) {
+
+                return;
+
+            }
+
+
+            currentIndex =
+                index;
+
+
+            renderLightbox();
+
+
+            lightbox.classList.add(
+                "active"
+            );
+
+
+            lightbox.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            /*
+                Prevent background
+                scrolling.
+            */
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+        /* =========================================================
+           RENDER LIGHTBOX
+        ========================================================= */
+
+        function renderLightbox() {
+
+
+            const file =
+                mediaFiles[
+                    currentIndex
+                ];
+
+
+            const extension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            /*
+                Remove previous media.
+            */
+
+            lightboxContent.innerHTML =
+                "";
+
+
+            let element;
+
+
+            /* =====================================================
+               VIDEO
+            ===================================================== */
+
+            if (
+
+                extension === "mp4" ||
+
+                extension === "mov" ||
+
+                extension === "webm"
+
+            ) {
+
+
+                element =
+                    document.createElement(
+                        "video"
+                    );
+
+
+                element.src =
+                    file.download_url;
+
+
+                element.controls =
+                    true;
+
+
+                element.autoplay =
+                    true;
+
+
+                element.loop =
+                    true;
+
+
+                element.muted =
+                    true;
+
+
+                element.playsInline =
+                    true;
+
+            }
+
+
+            /* =====================================================
+               IMAGE
+            ===================================================== */
+
+            else {
+
+
+                element =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                element.src =
+                    file.download_url;
+
+
+                element.alt =
+                    file.name;
+
+            }
+
+
+            /*
+                Add media.
+            */
+
+            lightboxContent.appendChild(
+                element
+            );
+
+
+            /*
+                Display filename
+                and position.
+            */
+
+            lightboxInfo.textContent =
+                `${currentIndex + 1} / ${mediaFiles.length} — ${file.name}`;
+
+        }
+
+
+        /* =========================================================
+           CLOSE LIGHTBOX
+        ========================================================= */
+
+        function closeLightbox() {
+
+
+            lightbox.classList.remove(
+                "active"
+            );
+
+
+            lightbox.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            /*
+                Destroy currently displayed
+                video/image.
+            */
+
+            lightboxContent.innerHTML =
+                "";
+
+
+            /*
+                Restore scrolling.
+            */
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        /* =========================================================
+           PREVIOUS MEDIA
+        ========================================================= */
+
+        function previousMedia() {
+
+
+            currentIndex--;
+
+
+            /*
+                Loop to last item.
+            */
+
+            if (
+                currentIndex < 0
+            ) {
+
+                currentIndex =
+                    mediaFiles.length - 1;
+
+            }
+
+
+            renderLightbox();
+
+        }
+
+
+        /* =========================================================
+           NEXT MEDIA
+        ========================================================= */
+
+        function nextMedia() {
+
+
+            currentIndex++;
+
+
+            /*
+                Loop to first item.
+            */
+
+            if (
+
+                currentIndex >=
+                mediaFiles.length
+
+            ) {
+
+                currentIndex = 0;
+
+            }
+
+
+            renderLightbox();
+
+        }
+
+
+        /* =========================================================
+           BUTTON EVENTS
+        ========================================================= */
+
+        closeButton.addEventListener(
+            "click",
+            closeLightbox
+        );
+
+
+        previousButton.addEventListener(
+            "click",
+            previousMedia
+        );
+
+
+        nextButton.addEventListener(
+            "click",
+            nextMedia
+        );
+
+
+        /* =========================================================
+           CLICK OUTSIDE LIGHTBOX
+        ========================================================= */
+
+        lightbox.addEventListener(
+            "click",
+            event => {
+
+
+                if (
+                    event.target ===
+                    lightbox
+                ) {
+
+                    closeLightbox();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           KEYBOARD CONTROLS
+        ========================================================= */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+
+                /*
+                    Don't do anything if
+                    viewer isn't open.
+                */
+
+                if (
+                    !lightbox.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                /*
+                    ESC
+                */
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeLightbox();
+
+                }
+
+
+                /*
+                    LEFT ARROW
+                */
+
+                if (
+                    event.key ===
+                    "ArrowLeft"
+                ) {
+
+                    previousMedia();
+
+                }
+
+
+                /*
+                    RIGHT ARROW
+                */
+
+                if (
+                    event.key ===
+                    "ArrowRight"
+                ) {
+
+                    nextMedia();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           START APPLICATION
+        ========================================================= */
 
         loadMedia();
+
     </script>
+
 </body>
+
 </html>
