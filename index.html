@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,6 +38,10 @@ body {
     font-family:
         "Courier New",
         monospace;
+}
+
+body.modal-open {
+    overflow: hidden;
 }
 
 
@@ -177,6 +180,8 @@ header span {
     line-height: 0;
 
     position: relative;
+
+    border-radius: 10px;
 }
 
 .media-card:hover {
@@ -206,8 +211,16 @@ header span {
     background: #000;
 
     object-fit: contain;
+}
 
-    cursor: zoom-in;
+
+/* =========================================================
+   CLICKABLE MEDIA
+========================================================= */
+
+.media-card > .media-content {
+
+    cursor: pointer;
 }
 
 
@@ -217,7 +230,7 @@ header span {
 
 .media-video {
 
-    cursor: zoom-in;
+    cursor: pointer;
 }
 
 
@@ -296,6 +309,8 @@ header span {
     gap: 7px;
 
     transition: none;
+
+    border-radius: 7px;
 }
 
 .vote-button:hover {
@@ -356,6 +371,8 @@ header span {
     align-items: center;
 
     gap: 7px;
+
+    border-radius: 7px;
 }
 
 .comment-button:hover {
@@ -425,6 +442,8 @@ header span {
     font-size: 12px;
 
     outline: none;
+
+    border-radius: 6px;
 }
 
 .comment-input:focus {
@@ -453,6 +472,8 @@ header span {
     font-weight: bold;
 
     cursor: pointer;
+
+    border-radius: 6px;
 }
 
 .comment-submit:hover {
@@ -498,6 +519,8 @@ header span {
         7px 8px;
 
     line-height: normal;
+
+    border-radius: 0 6px 6px 0;
 }
 
 .comment-text {
@@ -531,288 +554,6 @@ header span {
     text-align: center;
 
     padding: 8px;
-}
-
-
-/* =========================================================
-   MEDIA VIEWER MODAL
-========================================================= */
-
-#media-viewer {
-
-    position: fixed;
-
-    inset: 0;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 25px;
-
-    background:
-        rgba(0,0,0,0.72);
-
-    backdrop-filter:
-        blur(3px);
-
-    -webkit-backdrop-filter:
-        blur(3px);
-
-    z-index: 8000;
-
-    overflow-y: auto;
-}
-
-#media-viewer.show {
-
-    display: flex;
-}
-
-
-/* =========================================================
-   MEDIA VIEWER INNER
-========================================================= */
-
-.media-viewer-inner {
-
-    position: relative;
-
-    width: min(
-        1200px,
-        94vw
-    );
-
-    max-height: 94vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        rgba(0,0,0,0.88);
-
-    border:
-        2px solid #ff0088;
-
-    box-shadow:
-        0 0 30px
-        rgba(255,0,136,0.45),
-
-        0 0 80px
-        rgba(0,0,0,0.9);
-
-    overflow-y: auto;
-}
-
-
-/* =========================================================
-   VIEWER CLOSE
-========================================================= */
-
-.media-viewer-close {
-
-    position: absolute;
-
-    right: 10px;
-
-    top: 8px;
-
-    width: 42px;
-
-    height: 42px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        rgba(0,0,0,0.8);
-
-    border:
-        1px solid #fff;
-
-    color: #fff;
-
-    font-size: 28px;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    z-index: 20;
-}
-
-.media-viewer-close:hover {
-
-    background: #ff0088;
-
-    color: #000;
-
-    border-color: #ff0088;
-}
-
-
-/* =========================================================
-   VIEWER MEDIA AREA
-========================================================= */
-
-.media-viewer-media {
-
-    width: 100%;
-
-    max-height:
-        70vh;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        rgba(0,0,0,0.9);
-
-    padding: 15px;
-
-    line-height: 0;
-}
-
-.media-viewer-media img,
-.media-viewer-media video {
-
-    max-width: 100%;
-
-    max-height:
-        68vh;
-
-    width: auto;
-
-    height: auto;
-
-    object-fit: contain;
-
-    display: block;
-}
-
-.media-viewer-media video {
-
-    cursor: default;
-}
-
-
-/* =========================================================
-   VIEWER INFORMATION
-========================================================= */
-
-.media-viewer-info {
-
-    width: 100%;
-
-    background:
-        rgba(0,0,0,0.96);
-
-    border-top:
-        1px solid #222;
-
-    padding:
-        15px 18px 18px;
-
-    line-height: normal;
-}
-
-.media-viewer-caption {
-
-    color: #fff;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-
-    margin-bottom: 12px;
-
-    word-break: break-word;
-}
-
-.media-viewer-caption.empty {
-
-    display: none;
-}
-
-
-/* =========================================================
-   VIEWER VOTE ROW
-========================================================= */
-
-.media-viewer-vote-row {
-
-    display: flex;
-
-    gap: 8px;
-
-    align-items: center;
-
-    flex-wrap: wrap;
-}
-
-.media-viewer-vote-row .vote-button,
-.media-viewer-vote-row .comment-button {
-
-    padding:
-        8px 13px;
-}
-
-
-/* =========================================================
-   VIEWER COMMENTS
-========================================================= */
-
-.media-viewer-comments {
-
-    display: none;
-
-    margin-top: 13px;
-
-    padding-top: 12px;
-
-    border-top:
-        1px solid #222;
-}
-
-.media-viewer-comments.show {
-
-    display: block;
-}
-
-
-/* =========================================================
-   VIEWER COMMENT INPUT
-========================================================= */
-
-.media-viewer-comments
-.comment-input-row {
-
-    display: flex;
-
-    gap: 6px;
-
-    margin-bottom: 10px;
-}
-
-.media-viewer-comments
-.comment-input {
-
-    flex: 1;
-
-    min-width: 0;
 }
 
 
@@ -949,6 +690,8 @@ header span {
     box-shadow:
         0 0 12px
         rgba(255,0,136,0.35);
+
+    border-radius: 8px;
 }
 
 #admin-logout:hover {
@@ -1026,6 +769,8 @@ body.admin-mode #admin-logout {
     max-height: none;
 
     overflow: visible;
+
+    border-radius: 16px;
 }
 
 
@@ -1098,6 +843,8 @@ body.admin-mode #admin-logout {
     text-align: center;
 
     cursor: pointer;
+
+    border-radius: 10px;
 }
 
 .drop-area.dragover {
@@ -1220,6 +967,8 @@ body.admin-mode #admin-logout {
     outline: none;
 
     margin: 0;
+
+    border-radius: 7px;
 }
 
 .caption-area textarea:focus {
@@ -1267,6 +1016,8 @@ body.admin-mode #admin-logout {
     letter-spacing: 2px;
 
     cursor: pointer;
+
+    border-radius: 8px;
 }
 
 .start-upload:hover {
@@ -1363,6 +1114,8 @@ body.admin-mode #admin-logout {
         rgba(255,0,136,0.35);
 
     padding: 23px;
+
+    border-radius: 16px;
 }
 
 
@@ -1420,6 +1173,8 @@ input[type="password"] {
     outline: none;
 
     margin-bottom: 12px;
+
+    border-radius: 7px;
 }
 
 input:focus {
@@ -1460,6 +1215,8 @@ input:focus {
         monospace;
 
     cursor: pointer;
+
+    border-radius: 7px;
 }
 
 .action-button.primary {
@@ -1535,51 +1292,11 @@ input:focus {
     cursor: pointer;
 
     line-height: normal;
+
+    border-radius: 6px;
 }
 
 .delete-button:hover {
-
-    background: #ff3333;
-
-    color: #000;
-}
-
-
-/* =========================================================
-   VIEWER ADMIN DELETE
-========================================================= */
-
-.media-viewer-delete {
-
-    display: none;
-
-    margin-left: auto;
-
-    background: #000;
-
-    border:
-        1px solid #ff3333;
-
-    color: #ff3333;
-
-    padding:
-        8px 12px;
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-body.admin-mode .media-viewer-delete {
-
-    display: inline-block;
-}
-
-.media-viewer-delete:hover {
 
     background: #ff3333;
 
@@ -1613,6 +1330,8 @@ body.admin-mode .media-viewer-delete {
     padding: 25px;
 
     text-align: center;
+
+    border-radius: 16px;
 }
 
 #notification-icon {
@@ -1676,6 +1395,8 @@ body.admin-mode .media-viewer-delete {
     font-weight: bold;
 
     cursor: pointer;
+
+    border-radius: 7px;
 }
 
 .notification-button:hover {
@@ -1697,6 +1418,523 @@ body.admin-mode .media-viewer-delete {
     background: #ff3333;
 
     color: #000;
+}
+
+
+/* =========================================================
+   =========================================================
+   MEDIA VIEWER MODAL
+   FACEBOOK REELS STYLE
+   =========================================================
+========================================================= */
+
+#media-viewer {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,0.82);
+
+    backdrop-filter:
+        blur(5px);
+
+    -webkit-backdrop-filter:
+        blur(5px);
+
+    z-index: 10000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+}
+
+#media-viewer.show {
+
+    display: flex;
+}
+
+
+/* =========================================================
+   VIEWER WRAPPER
+========================================================= */
+
+.media-viewer-wrapper {
+
+    position: relative;
+
+    display: flex;
+
+    width: auto;
+
+    max-width:
+        min(1200px, 94vw);
+
+    max-height:
+        92vh;
+
+    min-height: 400px;
+
+    background: #050505;
+
+    border:
+        2px solid #ff0088;
+
+    box-shadow:
+        0 0 35px
+        rgba(255,0,136,0.35);
+
+    overflow: hidden;
+
+    border-radius: 18px;
+}
+
+
+/* =========================================================
+   VIEWER MEDIA SIDE
+========================================================= */
+
+.media-viewer-media-area {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #000;
+
+    min-width: 300px;
+
+    min-height: 300px;
+
+    max-width:
+        70vw;
+
+    max-height:
+        92vh;
+
+    overflow: hidden;
+}
+
+
+.media-viewer-media {
+
+    display: block;
+
+    max-width:
+        70vw;
+
+    max-height:
+        92vh;
+
+    width: auto;
+
+    height: auto;
+
+    object-fit: contain;
+
+    background: #000;
+}
+
+
+/* =========================================================
+   VIEWER VIDEO
+========================================================= */
+
+#viewer-video {
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   VIEWER SIDE PANEL
+========================================================= */
+
+.media-viewer-side {
+
+    width: 350px;
+
+    min-width: 350px;
+
+    max-height: 92vh;
+
+    background: #050505;
+
+    display: flex;
+
+    flex-direction: column;
+
+    border-left:
+        1px solid #222;
+}
+
+
+/* =========================================================
+   VIEWER HEADER
+========================================================= */
+
+.media-viewer-side-header {
+
+    padding:
+        18px 18px 14px;
+
+    border-bottom:
+        1px solid #222;
+
+    flex-shrink: 0;
+}
+
+.media-viewer-label {
+
+    color: #ff0088;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.media-viewer-caption {
+
+    color: #fff;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.media-viewer-caption.empty {
+
+    color: #555;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   VIEWER VOTE ROW
+========================================================= */
+
+.media-viewer-votes {
+
+    display: flex;
+
+    gap: 8px;
+
+    padding:
+        14px 18px;
+
+    border-bottom:
+        1px solid #222;
+
+    flex-shrink: 0;
+}
+
+.viewer-vote-button {
+
+    flex: 1;
+
+    background: #090909;
+
+    border:
+        1px solid #333;
+
+    color: #fff;
+
+    padding:
+        10px 12px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.viewer-vote-button:hover {
+
+    background: #111;
+
+    border-color: #666;
+}
+
+.viewer-vote-button.active-like {
+
+    color: #00ff41;
+
+    border-color: #00ff41;
+}
+
+.viewer-vote-button.active-dislike {
+
+    color: #ff0088;
+
+    border-color: #ff0088;
+}
+
+
+/* =========================================================
+   VIEWER COMMENTS TITLE
+========================================================= */
+
+.media-viewer-comments-title {
+
+    padding:
+        12px 18px 8px;
+
+    color: #00ff41;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: bold;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   VIEWER COMMENT LIST
+========================================================= */
+
+.media-viewer-comment-list {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding:
+        5px 14px 15px;
+}
+
+
+/* =========================================================
+   VIEWER COMMENT ITEM
+========================================================= */
+
+.viewer-comment-item {
+
+    background: #090909;
+
+    border-left:
+        2px solid #ff0088;
+
+    padding:
+        9px 10px;
+
+    margin-bottom: 8px;
+
+    line-height: normal;
+
+    border-radius:
+        0 8px 8px 0;
+}
+
+.viewer-comment-text {
+
+    color: #fff;
+
+    font-size: 12px;
+
+    line-height: 1.45;
+
+    word-break: break-word;
+}
+
+.viewer-comment-meta {
+
+    color: #555;
+
+    font-size: 9px;
+
+    margin-top: 5px;
+}
+
+.viewer-comment-empty {
+
+    color: #555;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    padding: 20px 5px;
+}
+
+
+/* =========================================================
+   VIEWER COMMENT INPUT
+========================================================= */
+
+.media-viewer-comment-input {
+
+    padding:
+        12px;
+
+    border-top:
+        1px solid #222;
+
+    background: #050505;
+
+    flex-shrink: 0;
+}
+
+.viewer-comment-input-row {
+
+    display: flex;
+
+    gap: 7px;
+}
+
+.viewer-comment-input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    background: #000;
+
+    color: #fff;
+
+    border:
+        1px solid #333;
+
+    padding:
+        10px;
+
+    outline: none;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 11px;
+
+    border-radius: 7px;
+}
+
+.viewer-comment-input:focus {
+
+    border-color: #ff0088;
+}
+
+.viewer-comment-submit {
+
+    background: #ff0088;
+
+    color: #000;
+
+    border:
+        1px solid #ff0088;
+
+    padding:
+        8px 12px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border-radius: 7px;
+}
+
+.viewer-comment-submit:hover {
+
+    background: #fff;
+
+    border-color: #fff;
+}
+
+.viewer-comment-submit:disabled {
+
+    background: #333;
+
+    border-color: #555;
+
+    color: #777;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   VIEWER CLOSE
+========================================================= */
+
+.media-viewer-close {
+
+    position: absolute;
+
+    top: 12px;
+
+    right: 12px;
+
+    z-index: 20;
+
+    width: 40px;
+
+    height: 40px;
+
+    border:
+        1px solid rgba(255,255,255,0.5);
+
+    background:
+        rgba(0,0,0,0.75);
+
+    color: #fff;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.media-viewer-close:hover {
+
+    background: #ff0088;
+
+    color: #000;
+
+    border-color: #ff0088;
 }
 
 
@@ -1749,6 +1987,69 @@ body.admin-mode .media-viewer-delete {
         grid-template-columns:
             repeat(3, minmax(0, 1fr));
     }
+
+    .media-viewer-side {
+
+        width: 320px;
+
+        min-width: 320px;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    #media-viewer {
+
+        padding: 15px;
+    }
+
+    .media-viewer-wrapper {
+
+        width: 95vw;
+
+        max-width: 95vw;
+
+        max-height: 94vh;
+
+        min-height: 0;
+
+        flex-direction: column;
+    }
+
+    .media-viewer-media-area {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        max-height: 58vh;
+
+        min-height: 250px;
+    }
+
+    .media-viewer-media {
+
+        max-width: 100%;
+
+        max-height: 58vh;
+    }
+
+    .media-viewer-side {
+
+        width: 100%;
+
+        min-width: 0;
+
+        height: 36vh;
+
+        max-height: 36vh;
+
+        border-left: none;
+
+        border-top:
+            1px solid #222;
+    }
 }
 
 
@@ -1794,37 +2095,6 @@ body.admin-mode .media-viewer-delete {
 
         padding:
             22px 12px;
-    }
-
-    #media-viewer {
-
-        padding: 10px;
-    }
-
-    .media-viewer-inner {
-
-        width: 100%;
-
-        max-height: 96vh;
-    }
-
-    .media-viewer-media {
-
-        padding: 8px;
-
-        max-height: 70vh;
-    }
-
-    .media-viewer-media img,
-    .media-viewer-media video {
-
-        max-height: 65vh;
-    }
-
-    .media-viewer-info {
-
-        padding:
-            12px;
     }
 }
 
@@ -1886,47 +2156,81 @@ body.admin-mode .media-viewer-delete {
         width: 100%;
     }
 
+    #media-viewer {
+
+        padding: 8px;
+    }
+
+    .media-viewer-wrapper {
+
+        width: 100vw;
+
+        max-width: 100vw;
+
+        max-height: 96vh;
+
+        border-radius: 12px;
+    }
+
+    .media-viewer-media-area {
+
+        max-height: 55vh;
+
+        min-height: 180px;
+    }
+
+    .media-viewer-media {
+
+        max-height: 55vh;
+
+        max-width: 100%;
+    }
+
+    .media-viewer-side {
+
+        height: 41vh;
+
+        max-height: 41vh;
+    }
+
+    .media-viewer-side-header {
+
+        padding:
+            12px 14px 10px;
+    }
+
+    .media-viewer-votes {
+
+        padding:
+            10px 14px;
+    }
+
+    .media-viewer-comments-title {
+
+        padding:
+            9px 14px 5px;
+    }
+
+    .media-viewer-comment-list {
+
+        padding:
+            5px 10px 10px;
+    }
+
+    .media-viewer-comment-input {
+
+        padding: 9px;
+    }
+
     .media-viewer-close {
 
         width: 36px;
 
         height: 36px;
 
-        font-size: 24px;
+        top: 8px;
 
-        right: 6px;
-
-        top: 6px;
-    }
-
-    .media-viewer-media {
-
-        padding:
-            45px 5px 5px;
-    }
-
-    .media-viewer-media img,
-    .media-viewer-media video {
-
-        max-width: 100%;
-
-        max-height: 58vh;
-    }
-
-    .media-viewer-vote-row {
-
-        gap: 5px;
-    }
-
-    .media-viewer-vote-row
-    .vote-button,
-    .media-viewer-vote-row
-    .comment-button {
-
-        padding:
-            7px 9px;
-
-        font-size: 12px;
+        right: 8px;
     }
 }
 
@@ -1972,141 +2276,6 @@ body.admin-mode .media-viewer-delete {
         <div id="empty-message">
 
             NO MEDIA FOUND.
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     MEDIA VIEWER MODAL
-========================================================= -->
-
-<div
-    id="media-viewer"
-    aria-hidden="true"
->
-
-    <div
-        class="media-viewer-inner"
-        id="media-viewer-inner"
-    >
-
-        <button
-            id="media-viewer-close"
-            class="media-viewer-close"
-            type="button"
-            aria-label="Close media viewer"
-        >
-            ×
-        </button>
-
-
-        <div
-            id="media-viewer-media"
-            class="media-viewer-media"
-        ></div>
-
-
-        <div
-            id="media-viewer-info"
-            class="media-viewer-info"
-        >
-
-            <div
-                id="media-viewer-caption"
-                class="media-viewer-caption"
-            ></div>
-
-
-            <div
-                class="media-viewer-vote-row"
-            >
-
-                <button
-                    id="viewer-like"
-                    class="vote-button"
-                    type="button"
-                >
-                    👍
-                    <span class="vote-count">
-                        0
-                    </span>
-                </button>
-
-
-                <button
-                    id="viewer-dislike"
-                    class="vote-button"
-                    type="button"
-                >
-                    👎
-                    <span class="vote-count">
-                        0
-                    </span>
-                </button>
-
-
-                <button
-                    id="viewer-comment-button"
-                    class="comment-button"
-                    type="button"
-                >
-                    💬
-                    <span class="vote-count">
-                        0
-                    </span>
-                </button>
-
-
-                <button
-                    id="viewer-delete"
-                    class="media-viewer-delete"
-                    type="button"
-                >
-                    DELETE
-                </button>
-
-            </div>
-
-
-            <div
-                id="viewer-comments"
-                class="media-viewer-comments"
-            >
-
-                <div
-                    class="comment-input-row"
-                >
-
-                    <input
-                        id="viewer-comment-input"
-                        class="comment-input"
-                        type="text"
-                        maxlength="500"
-                        placeholder="Write a comment..."
-                    >
-
-
-                    <button
-                        id="viewer-comment-submit"
-                        class="comment-submit"
-                        type="button"
-                    >
-                        POST
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="viewer-comment-list"
-                    class="comment-list"
-                ></div>
-
-            </div>
 
         </div>
 
@@ -2389,6 +2558,172 @@ body.admin-mode .media-viewer-delete {
 
 
 <!-- =========================================================
+     MEDIA VIEWER
+========================================================= -->
+
+<div
+    id="media-viewer"
+>
+
+    <div
+        id="media-viewer-wrapper"
+        class="media-viewer-wrapper"
+    >
+
+        <button
+            id="media-viewer-close"
+            class="media-viewer-close"
+            type="button"
+            aria-label="Close media viewer"
+        >
+            ×
+        </button>
+
+
+        <!-- =================================================
+             MEDIA
+        ================================================== -->
+
+        <div
+            class="media-viewer-media-area"
+        >
+
+            <img
+                id="viewer-image"
+                class="media-viewer-media"
+                alt=""
+                style="display:none;"
+            >
+
+            <video
+                id="viewer-video"
+                class="media-viewer-media"
+                controls
+                playsinline
+                style="display:none;"
+            ></video>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDE PANEL
+        ================================================== -->
+
+        <div
+            class="media-viewer-side"
+        >
+
+            <div
+                class="media-viewer-side-header"
+            >
+
+                <div class="media-viewer-label">
+                    NOWIE VAULT
+                </div>
+
+                <div
+                    id="viewer-caption"
+                    class="media-viewer-caption"
+                >
+                </div>
+
+            </div>
+
+
+            <!-- VOTES -->
+
+            <div
+                class="media-viewer-votes"
+            >
+
+                <button
+                    id="viewer-like"
+                    class="viewer-vote-button"
+                    type="button"
+                >
+                    👍
+                    <span id="viewer-like-count">
+                        0
+                    </span>
+                </button>
+
+
+                <button
+                    id="viewer-dislike"
+                    class="viewer-vote-button"
+                    type="button"
+                >
+                    👎
+                    <span id="viewer-dislike-count">
+                        0
+                    </span>
+                </button>
+
+            </div>
+
+
+            <!-- COMMENTS TITLE -->
+
+            <div
+                class="media-viewer-comments-title"
+            >
+
+                💬 COMMENTS
+                <span id="viewer-comment-count">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- COMMENTS -->
+
+            <div
+                id="viewer-comment-list"
+                class="media-viewer-comment-list"
+            >
+            </div>
+
+
+            <!-- COMMENT INPUT -->
+
+            <div
+                class="media-viewer-comment-input"
+            >
+
+                <div
+                    class="viewer-comment-input-row"
+                >
+
+                    <input
+                        id="viewer-comment-input"
+                        class="viewer-comment-input"
+                        type="text"
+                        maxlength="500"
+                        placeholder="Write a comment..."
+                    >
+
+                    <button
+                        id="viewer-comment-submit"
+                        class="viewer-comment-submit"
+                        type="button"
+                    >
+                        POST
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
      SUPABASE
 ========================================================= -->
 
@@ -2524,86 +2859,6 @@ const adminStatus =
 
 
 /* =========================================================
-   MEDIA VIEWER DOM
-========================================================= */
-
-const mediaViewer =
-    document.getElementById(
-        "media-viewer"
-    );
-
-const mediaViewerInner =
-    document.getElementById(
-        "media-viewer-inner"
-    );
-
-const mediaViewerClose =
-    document.getElementById(
-        "media-viewer-close"
-    );
-
-const mediaViewerMedia =
-    document.getElementById(
-        "media-viewer-media"
-    );
-
-const mediaViewerCaption =
-    document.getElementById(
-        "media-viewer-caption"
-    );
-
-const viewerLike =
-    document.getElementById(
-        "viewer-like"
-    );
-
-const viewerDislike =
-    document.getElementById(
-        "viewer-dislike"
-    );
-
-const viewerCommentButton =
-    document.getElementById(
-        "viewer-comment-button"
-    );
-
-const viewerDelete =
-    document.getElementById(
-        "viewer-delete"
-    );
-
-const viewerComments =
-    document.getElementById(
-        "viewer-comments"
-    );
-
-const viewerCommentInput =
-    document.getElementById(
-        "viewer-comment-input"
-    );
-
-const viewerCommentSubmit =
-    document.getElementById(
-        "viewer-comment-submit"
-    );
-
-const viewerCommentList =
-    document.getElementById(
-        "viewer-comment-list"
-    );
-
-
-/* =========================================================
-   VIEWER STATE
-========================================================= */
-
-let viewerCommentCount =
-    viewerCommentButton.querySelector(
-        ".vote-count"
-    );
-
-
-/* =========================================================
    NOTIFICATION DOM
 ========================================================= */
 
@@ -2639,6 +2894,81 @@ const notificationConfirm =
 
 
 let notificationResolver = null;
+
+
+/* =========================================================
+   MEDIA VIEWER DOM
+========================================================= */
+
+const mediaViewer =
+    document.getElementById(
+        "media-viewer"
+    );
+
+const mediaViewerWrapper =
+    document.getElementById(
+        "media-viewer-wrapper"
+    );
+
+const mediaViewerClose =
+    document.getElementById(
+        "media-viewer-close"
+    );
+
+const viewerImage =
+    document.getElementById(
+        "viewer-image"
+    );
+
+const viewerVideo =
+    document.getElementById(
+        "viewer-video"
+    );
+
+const viewerCaption =
+    document.getElementById(
+        "viewer-caption"
+    );
+
+const viewerLike =
+    document.getElementById(
+        "viewer-like"
+    );
+
+const viewerDislike =
+    document.getElementById(
+        "viewer-dislike"
+    );
+
+const viewerLikeCount =
+    document.getElementById(
+        "viewer-like-count"
+    );
+
+const viewerDislikeCount =
+    document.getElementById(
+        "viewer-dislike-count"
+    );
+
+const viewerCommentCount =
+    document.getElementById(
+        "viewer-comment-count"
+    );
+
+const viewerCommentList =
+    document.getElementById(
+        "viewer-comment-list"
+    );
+
+const viewerCommentInput =
+    document.getElementById(
+        "viewer-comment-input"
+    );
+
+const viewerCommentSubmit =
+    document.getElementById(
+        "viewer-comment-submit"
+    );
 
 
 /* =========================================================
@@ -3584,6 +3914,83 @@ function createCommentElement(
 
 
 /* =========================================================
+   CREATE VIEWER COMMENT
+========================================================= */
+
+function createViewerComment(
+    comment
+) {
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+
+    item.className =
+        "viewer-comment-item";
+
+
+    const text =
+        document.createElement(
+            "div"
+        );
+
+
+    text.className =
+        "viewer-comment-text";
+
+
+    text.textContent =
+        comment.comment || "";
+
+
+    const meta =
+        document.createElement(
+            "div"
+        );
+
+
+    meta.className =
+        "viewer-comment-meta";
+
+
+    if (
+        currentUser &&
+        comment.user_id ===
+        currentUser.id
+    ) {
+
+        meta.textContent =
+            "YOU · " +
+            formatCommentDate(
+                comment.created_at
+            );
+
+    } else {
+
+        meta.textContent =
+            "VISITOR · " +
+            formatCommentDate(
+                comment.created_at
+            );
+    }
+
+
+    item.appendChild(
+        text
+    );
+
+    item.appendChild(
+        meta
+    );
+
+
+    return item;
+}
+
+
+/* =========================================================
    RENDER COMMENTS
 ========================================================= */
 
@@ -3667,6 +4074,107 @@ async function renderComments(
             )
         );
     }
+}
+
+
+/* =========================================================
+   RENDER VIEWER COMMENTS
+========================================================= */
+
+async function renderViewerComments(
+    item
+) {
+
+    viewerCommentList.innerHTML =
+        "";
+
+
+    if (
+        item.isGithub
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "viewer-comment-empty";
+
+        empty.textContent =
+            "COMMENTS ARE ONLY AVAILABLE FOR VAULT MEDIA.";
+
+        viewerCommentList.appendChild(
+            empty
+        );
+
+        viewerCommentCount.textContent =
+            "0";
+
+        viewerCommentInput.disabled =
+            true;
+
+        viewerCommentSubmit.disabled =
+            true;
+
+        return;
+    }
+
+
+    viewerCommentInput.disabled =
+        false;
+
+    viewerCommentSubmit.disabled =
+        false;
+
+
+    const comments =
+        await getCommentData(
+            item.id
+        );
+
+
+    viewerCommentCount.textContent =
+        comments.length;
+
+
+    if (
+        comments.length === 0
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "viewer-comment-empty";
+
+        empty.textContent =
+            "NO COMMENTS YET.";
+
+        viewerCommentList.appendChild(
+            empty
+        );
+
+        return;
+    }
+
+
+    for (
+        const comment of comments
+    ) {
+
+        viewerCommentList.appendChild(
+            createViewerComment(
+                comment
+            )
+        );
+    }
+
+
+    viewerCommentList.scrollTop =
+        viewerCommentList.scrollHeight;
 }
 
 
@@ -3785,6 +4293,119 @@ async function addComment(
             false;
 
         submitButton.textContent =
+            "POST";
+    }
+}
+
+
+/* =========================================================
+   ADD VIEWER COMMENT
+========================================================= */
+
+async function addViewerComment() {
+
+    if (
+        !currentViewerItem ||
+        currentViewerItem.isGithub
+    ) {
+
+        return;
+    }
+
+
+    const text =
+        viewerCommentInput.value.trim();
+
+
+    if (!text) {
+
+        return;
+    }
+
+
+    if (!currentUser) {
+
+        await ensureUser();
+    }
+
+
+    if (!currentUser) {
+
+        showNotification(
+            "COMMENT ERROR",
+            "Unable to create visitor identity.",
+            "⚠️"
+        );
+
+        return;
+    }
+
+
+    viewerCommentSubmit.disabled =
+        true;
+
+
+    viewerCommentSubmit.textContent =
+        "...";
+
+
+    try {
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("media_comments")
+            .insert({
+
+                media_id:
+                    currentViewerItem.id,
+
+                user_id:
+                    currentUser.id,
+
+                comment:
+                    text
+
+            });
+
+
+        if (error) {
+
+            throw error;
+        }
+
+
+        viewerCommentInput.value =
+            "";
+
+
+        await renderViewerComments(
+            currentViewerItem
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Viewer comment failed:",
+            error
+        );
+
+
+        showNotification(
+            "COMMENT FAILED",
+            error.message ||
+            "Unable to post comment.",
+            "❌"
+        );
+
+    } finally {
+
+        viewerCommentSubmit.disabled =
+            false;
+
+        viewerCommentSubmit.textContent =
             "POST";
     }
 }
@@ -3969,7 +4590,7 @@ async function createMediaCard(
 
     mediaElement.addEventListener(
         "click",
-        function(event) {
+        event => {
 
             event.stopPropagation();
 
@@ -4344,6 +4965,16 @@ async function createMediaCard(
                 likeButton,
                 dislikeButton
             );
+
+
+            if (
+                currentViewerItem &&
+                currentViewerItem.id ===
+                item.id
+            ) {
+
+                await refreshViewerVotes();
+            }
         };
 
 
@@ -4360,533 +4991,20 @@ async function createMediaCard(
                 likeButton,
                 dislikeButton
             );
+
+
+            if (
+                currentViewerItem &&
+                currentViewerItem.id ===
+                item.id
+            ) {
+
+                await refreshViewerVotes();
+            }
         };
 
 
     return card;
-}
-
-
-/* =========================================================
-   OPEN MEDIA VIEWER
-========================================================= */
-
-async function openMediaViewer(
-    item
-) {
-
-    currentViewerItem =
-        item;
-
-
-    /* =====================================================
-       RESET
-    ===================================================== */
-
-    mediaViewerMedia.innerHTML =
-        "";
-
-    mediaViewerCaption.textContent =
-        "";
-
-    mediaViewerCaption.classList.remove(
-        "empty"
-    );
-
-    viewerComments.classList.remove(
-        "show"
-    );
-
-    viewerCommentInput.value =
-        "";
-
-    viewerCommentList.innerHTML =
-        "";
-
-    viewerCommentButton
-        .querySelector(
-            ".vote-count"
-        )
-        .textContent =
-        "0";
-
-
-    /* =====================================================
-       CAPTION
-    ===================================================== */
-
-    if (
-        item.caption &&
-        item.caption.trim()
-    ) {
-
-        mediaViewerCaption.textContent =
-            item.caption;
-
-    } else {
-
-        mediaViewerCaption.classList.add(
-            "empty"
-        );
-    }
-
-
-    /* =====================================================
-       CREATE LARGE MEDIA
-    ===================================================== */
-
-    const isVideo =
-        String(
-            item.media_type || ""
-        ).startsWith(
-            "video/"
-        );
-
-
-    if (isVideo) {
-
-        const video =
-            document.createElement(
-                "video"
-            );
-
-
-        video.src =
-            item.public_url;
-
-
-        video.controls =
-            true;
-
-
-        video.autoplay =
-            true;
-
-
-        video.loop =
-            true;
-
-
-        video.playsInline =
-            true;
-
-
-        video.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-            }
-        );
-
-
-        mediaViewerMedia.appendChild(
-            video
-        );
-
-    } else {
-
-        const image =
-            document.createElement(
-                "img"
-            );
-
-
-        image.src =
-            item.public_url;
-
-
-        image.alt =
-            item.caption ||
-            item.filename ||
-            "NOWIE VAULT MEDIA";
-
-
-        image.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-            }
-        );
-
-
-        mediaViewerMedia.appendChild(
-            image
-        );
-    }
-
-
-    /* =====================================================
-       LOAD VOTES
-    ===================================================== */
-
-    const voteData =
-        await getVoteData(
-            item.id
-        );
-
-
-    updateVoteButtons(
-        viewerLike,
-        viewerDislike,
-        voteData
-    );
-
-
-    /* =====================================================
-       LOAD COMMENT COUNT
-    ===================================================== */
-
-    const comments =
-        await getCommentData(
-            item.id
-        );
-
-
-    viewerCommentCount.textContent =
-        comments.length;
-
-
-    /* =====================================================
-       SHOW
-    ===================================================== */
-
-    mediaViewer.classList.add(
-        "show"
-    );
-
-
-    mediaViewer.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
-}
-
-
-/* =========================================================
-   CLOSE MEDIA VIEWER
-========================================================= */
-
-function closeMediaViewer() {
-
-    const video =
-        mediaViewerMedia.querySelector(
-            "video"
-        );
-
-
-    if (video) {
-
-        video.pause();
-
-        video.removeAttribute(
-            "src"
-        );
-
-        video.load();
-    }
-
-
-    mediaViewerMedia.innerHTML =
-        "";
-
-
-    mediaViewer.classList.remove(
-        "show"
-    );
-
-
-    mediaViewer.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-
-    currentViewerItem =
-        null;
-
-
-    document.body.style.overflow =
-        "";
-}
-
-
-/* =========================================================
-   VIEWER CLOSE BUTTON
-========================================================= */
-
-mediaViewerClose.addEventListener(
-    "click",
-    function(event) {
-
-        event.stopPropagation();
-
-        closeMediaViewer();
-    }
-);
-
-
-/* =========================================================
-   VIEWER BACKGROUND CLICK
-========================================================= */
-
-mediaViewer.addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target ===
-            mediaViewer
-        ) {
-
-            closeMediaViewer();
-        }
-    }
-);
-
-
-/* =========================================================
-   VIEWER INNER CLICK
-========================================================= */
-
-mediaViewerInner.addEventListener(
-    "click",
-    function(event) {
-
-        event.stopPropagation();
-    }
-);
-
-
-/* =========================================================
-   VIEWER LIKE
-========================================================= */
-
-viewerLike.addEventListener(
-    "click",
-    async function() {
-
-        if (!currentViewerItem) {
-
-            return;
-        }
-
-
-        await voteForMedia(
-            currentViewerItem,
-            1,
-            viewerLike,
-            viewerDislike
-        );
-
-
-        /*
-         * Refresh the wall's matching card
-         * without rebuilding the entire wall.
-         */
-
-        await refreshCardVote(
-            currentViewerItem
-        );
-    }
-);
-
-
-/* =========================================================
-   VIEWER DISLIKE
-========================================================= */
-
-viewerDislike.addEventListener(
-    "click",
-    async function() {
-
-        if (!currentViewerItem) {
-
-            return;
-        }
-
-
-        await voteForMedia(
-            currentViewerItem,
-            -1,
-            viewerLike,
-            viewerDislike
-        );
-
-
-        await refreshCardVote(
-            currentViewerItem
-        );
-    }
-);
-
-
-/* =========================================================
-   VIEWER COMMENT TOGGLE
-========================================================= */
-
-viewerCommentButton.addEventListener(
-    "click",
-    async function() {
-
-        if (!currentViewerItem) {
-
-            return;
-        }
-
-
-        viewerComments.classList.toggle(
-            "show"
-        );
-
-
-        if (
-            viewerComments.classList.contains(
-                "show"
-            )
-        ) {
-
-            await renderComments(
-                currentViewerItem,
-                viewerCommentList,
-                viewerCommentCount
-            );
-        }
-    }
-);
-
-
-/* =========================================================
-   VIEWER POST COMMENT
-========================================================= */
-
-viewerCommentSubmit.addEventListener(
-    "click",
-    async function() {
-
-        if (!currentViewerItem) {
-
-            return;
-        }
-
-
-        await addComment(
-            currentViewerItem,
-            viewerCommentInput,
-            viewerCommentSubmit,
-            viewerCommentList,
-            viewerCommentCount
-        );
-    }
-);
-
-
-/* =========================================================
-   VIEWER ENTER COMMENT
-========================================================= */
-
-viewerCommentInput.addEventListener(
-    "keydown",
-    async function(event) {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            event.preventDefault();
-
-
-            if (!currentViewerItem) {
-
-                return;
-            }
-
-
-            await addComment(
-                currentViewerItem,
-                viewerCommentInput,
-                viewerCommentSubmit,
-                viewerCommentList,
-                viewerCommentCount
-            );
-        }
-    }
-);
-
-
-/* =========================================================
-   REFRESH CARD VOTE
-========================================================= */
-
-async function refreshCardVote(
-    item
-) {
-
-    const cards =
-        document.querySelectorAll(
-            ".media-card"
-        );
-
-
-    for (
-        const card of cards
-    ) {
-
-        const media =
-            card.querySelector(
-                ".media-content"
-            );
-
-
-        if (!media) {
-
-            continue;
-        }
-
-
-        if (
-            media.src !==
-            item.public_url
-        ) {
-
-            continue;
-        }
-
-
-        const buttons =
-            card.querySelectorAll(
-                ".vote-button"
-            );
-
-
-        if (
-            buttons.length < 2
-        ) {
-
-            return;
-        }
-
-
-        const voteData =
-            await getVoteData(
-                item.id
-            );
-
-
-        updateVoteButtons(
-            buttons[0],
-            buttons[1],
-            voteData
-        );
-
-
-        return;
-    }
 }
 
 
@@ -5125,6 +5243,500 @@ async function voteForMedia(
         voteData
     );
 }
+
+
+/* =========================================================
+   REFRESH VIEWER VOTES
+========================================================= */
+
+async function refreshViewerVotes() {
+
+    if (
+        !currentViewerItem
+    ) {
+
+        return;
+    }
+
+
+    const voteData =
+        await getVoteData(
+            currentViewerItem.id
+        );
+
+
+    viewerLikeCount.textContent =
+        voteData.likes;
+
+
+    viewerDislikeCount.textContent =
+        voteData.dislikes;
+
+
+    viewerLike.classList.toggle(
+        "active-like",
+        voteData.userVote === 1
+    );
+
+
+    viewerDislike.classList.toggle(
+        "active-dislike",
+        voteData.userVote === -1
+    );
+}
+
+
+/* =========================================================
+   OPEN MEDIA VIEWER
+========================================================= */
+
+async function openMediaViewer(
+    item
+) {
+
+    currentViewerItem =
+        item;
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+
+    viewerImage.style.display =
+        "none";
+
+    viewerVideo.style.display =
+        "none";
+
+
+    viewerImage.src =
+        "";
+
+    viewerVideo.src =
+        "";
+
+
+    /* CAPTION */
+
+    if (
+        item.caption &&
+        item.caption.trim()
+    ) {
+
+        viewerCaption.textContent =
+            item.caption;
+
+        viewerCaption.classList.remove(
+            "empty"
+        );
+
+    } else {
+
+        viewerCaption.textContent =
+            "NO CAPTION";
+
+        viewerCaption.classList.add(
+            "empty"
+        );
+    }
+
+
+    /* MEDIA TYPE */
+
+    const isVideo =
+        String(
+            item.media_type || ""
+        ).startsWith(
+            "video/"
+        );
+
+
+    if (isVideo) {
+
+        viewerVideo.src =
+            item.public_url;
+
+        viewerVideo.style.display =
+            "block";
+
+        viewerVideo.load();
+
+    } else {
+
+        viewerImage.src =
+            item.public_url;
+
+        viewerImage.style.display =
+            "block";
+    }
+
+
+    /* SHOW */
+
+    mediaViewer.classList.add(
+        "show"
+    );
+
+
+    /* LOAD VOTES */
+
+    if (
+        item.isGithub
+    ) {
+
+        viewerLikeCount.textContent =
+            "0";
+
+        viewerDislikeCount.textContent =
+            "0";
+
+        viewerLike.classList.remove(
+            "active-like"
+        );
+
+        viewerDislike.classList.remove(
+            "active-dislike"
+        );
+
+    } else {
+
+        await refreshViewerVotes();
+    }
+
+
+    /* COMMENTS */
+
+    await renderViewerComments(
+        item
+    );
+
+
+    /*
+     * Automatically scroll comments
+     * to the newest comment.
+     */
+
+    viewerCommentList.scrollTop =
+        viewerCommentList.scrollHeight;
+}
+
+
+/* =========================================================
+   CLOSE MEDIA VIEWER
+========================================================= */
+
+function closeMediaViewer() {
+
+    mediaViewer.classList.remove(
+        "show"
+    );
+
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+
+    viewerVideo.pause();
+
+    viewerVideo.removeAttribute(
+        "src"
+    );
+
+    viewerVideo.load();
+
+
+    viewerImage.removeAttribute(
+        "src"
+    );
+
+
+    currentViewerItem =
+        null;
+
+
+    viewerCommentInput.value =
+        "";
+}
+
+
+/* =========================================================
+   VIEWER CLOSE BUTTON
+========================================================= */
+
+mediaViewerClose.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        closeMediaViewer();
+    }
+);
+
+
+/* =========================================================
+   VIEWER BACKGROUND CLICK
+========================================================= */
+
+mediaViewer.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            mediaViewer
+        ) {
+
+            closeMediaViewer();
+        }
+    }
+);
+
+
+/* =========================================================
+   VIEWER LIKE
+========================================================= */
+
+viewerLike.addEventListener(
+    "click",
+    async event => {
+
+        event.stopPropagation();
+
+
+        if (
+            !currentViewerItem
+        ) {
+
+            return;
+        }
+
+
+        await voteForViewer(
+            1
+        );
+    }
+);
+
+
+/* =========================================================
+   VIEWER DISLIKE
+========================================================= */
+
+viewerDislike.addEventListener(
+    "click",
+    async event => {
+
+        event.stopPropagation();
+
+
+        if (
+            !currentViewerItem
+        ) {
+
+            return;
+        }
+
+
+        await voteForViewer(
+            -1
+        );
+    }
+);
+
+
+/* =========================================================
+   VIEWER VOTE
+========================================================= */
+
+async function voteForViewer(
+    newVote
+) {
+
+    if (
+        !currentViewerItem ||
+        currentViewerItem.isGithub
+    ) {
+
+        return;
+    }
+
+
+    if (!currentUser) {
+
+        await ensureUser();
+    }
+
+
+    if (!currentUser) {
+
+        showNotification(
+            "VOTE ERROR",
+            "Unable to create visitor identity.",
+            "⚠️"
+        );
+
+        return;
+    }
+
+
+    const {
+        data: existingVote,
+        error: findError
+    } =
+        await supabaseClient
+            .from("media_votes")
+            .select(
+                "id,vote"
+            )
+            .eq(
+                "media_id",
+                currentViewerItem.id
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+    if (findError) {
+
+        console.error(
+            "Viewer vote lookup failed:",
+            findError
+        );
+
+        return;
+    }
+
+
+    if (
+        existingVote &&
+        existingVote.vote === newVote
+    ) {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("media_votes")
+                .delete()
+                .eq(
+                    "id",
+                    existingVote.id
+                );
+
+
+        if (error) {
+
+            showNotification(
+                "VOTE ERROR",
+                "Unable to remove vote.",
+                "⚠️"
+            );
+
+            return;
+        }
+
+
+    } else if (existingVote) {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("media_votes")
+                .update({
+                    vote: newVote
+                })
+                .eq(
+                    "id",
+                    existingVote.id
+                );
+
+
+        if (error) {
+
+            showNotification(
+                "VOTE ERROR",
+                "Unable to change vote.",
+                "⚠️"
+            );
+
+            return;
+        }
+
+
+    } else {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("media_votes")
+                .insert({
+
+                    media_id:
+                        currentViewerItem.id,
+
+                    user_id:
+                        currentUser.id,
+
+                    vote:
+                        newVote
+
+                });
+
+
+        if (error) {
+
+            showNotification(
+                "VOTE ERROR",
+                "Unable to vote.",
+                "⚠️"
+            );
+
+            return;
+        }
+    }
+
+
+    await refreshViewerVotes();
+}
+
+
+/* =========================================================
+   VIEWER COMMENT POST
+========================================================= */
+
+viewerCommentSubmit.addEventListener(
+    "click",
+    async event => {
+
+        event.stopPropagation();
+
+        await addViewerComment();
+    }
+);
+
+
+viewerCommentInput.addEventListener(
+    "keydown",
+    async event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            await addViewerComment();
+        }
+    }
+);
 
 
 /* =========================================================
@@ -5962,13 +6574,7 @@ async function deleteMedia(
             );
 
 
-        /*
-         * COMMENTS
-         *
-         * Your database also has ON DELETE CASCADE,
-         * so deleting the media row will automatically
-         * remove its comments.
-         */
+        /* COMMENTS */
 
         await supabaseClient
             .from("media_comments")
@@ -6001,8 +6607,8 @@ async function deleteMedia(
 
         if (
             currentViewerItem &&
-            String(currentViewerItem.id) ===
-            String(item.id)
+            currentViewerItem.id ===
+            item.id
         ) {
 
             closeMediaViewer();
@@ -6034,91 +6640,6 @@ async function deleteMedia(
         );
     }
 }
-
-
-/* =========================================================
-   VIEWER DELETE
-========================================================= */
-
-viewerDelete.addEventListener(
-    "click",
-    async function() {
-
-        if (
-            !currentViewerItem ||
-            !isAdmin
-        ) {
-
-            return;
-        }
-
-
-        const item =
-            currentViewerItem;
-
-
-        const cards =
-            document.querySelectorAll(
-                ".media-card"
-            );
-
-
-        let matchingCard =
-            null;
-
-
-        for (
-            const card of cards
-        ) {
-
-            const media =
-                card.querySelector(
-                    ".media-content"
-                );
-
-
-            if (
-                media &&
-                media.src ===
-                item.public_url
-            ) {
-
-                matchingCard =
-                    card;
-
-                break;
-            }
-        }
-
-
-        if (matchingCard) {
-
-            await deleteMedia(
-                item,
-                matchingCard
-            );
-
-        } else {
-
-            /*
-             * Fallback card so deleteMedia
-             * can still perform the database
-             * and storage deletion.
-             */
-
-            const temporaryCard =
-                document.createElement(
-                    "div"
-                );
-
-
-            await deleteMedia(
-                item,
-                temporaryCard
-            );
-        }
-    }
-);
 
 
 /* =========================================================
@@ -6505,21 +7026,6 @@ window.addEventListener(
             setTimeout(
                 async () => {
 
-                    /*
-                     * Do not rebuild the wall while
-                     * a media viewer is open.
-                     */
-
-                    if (
-                        mediaViewer.classList.contains(
-                            "show"
-                        )
-                    ) {
-
-                        return;
-                    }
-
-
                     await loadWall();
 
                 },
@@ -6540,4 +7046,3 @@ loadWall();
 </body>
 
 </html>
-```
