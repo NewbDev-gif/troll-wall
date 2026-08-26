@@ -1,0 +1,258 @@
+name: Generate Media Database
+
+on:
+  push:
+    paths:
+      - "media/**"
+      - ".github/workflows/generate-media.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+
+jobs:
+
+  generate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # =========================================================
+      # CHECKOUT REPOSITORY
+      # =========================================================
+
+      - name: Checkout repository
+
+        uses: actions/checkout@v4
+
+
+      # =========================================================
+      # GENERATE media.json
+      # =========================================================
+
+      - name: Generate media.json
+
+        run: |
+
+          python3 <<'PY'
+
+          import json
+          import os
+
+
+          # =======================================================
+          # SETTINGS
+          # =======================================================
+
+          MEDIA_FOLDER = "media"
+          OUTPUT_FILE = "media.json"
+
+
+          # =======================================================
+          # SUPPORTED FILE TYPES
+          # =======================================================
+
+          IMAGE_EXTENSIONS = {
+              ".jpg",
+              ".jpeg",
+              ".png",
+              ".webp"
+          }
+
+          GIF_EXTENSIONS = {
+              ".gif"
+          }
+
+          VIDEO_EXTENSIONS = {
+              ".mp4",
+              ".mov",
+              ".webm"
+          }
+
+
+          # =======================================================
+          # SCAN MEDIA FOLDER
+          # =======================================================
+
+          media = []
+
+
+          if os.path.isdir(MEDIA_FOLDER):
+
+              for filename in os.listdir(MEDIA_FOLDER):
+
+                  filepath = os.path.join(
+                      MEDIA_FOLDER,
+                      filename
+                  )
+
+
+                  # Ignore folders
+
+                  if not os.path.isfile(filepath):
+                      continue
+
+
+                  # Get extension
+
+                  extension = os.path.splitext(
+                      filename
+                  )[1].lower()
+
+
+                  # Determine media type
+
+                  if extension in IMAGE_EXTENSIONS:
+
+                      media_type = "image"
+
+
+                  elif extension in GIF_EXTENSIONS:
+
+                      media_type = "gif"
+
+
+                  elif extension in VIDEO_EXTENSIONS:
+
+                      media_type = "video"
+
+
+                  else:
+
+                      # Ignore unsupported files
+
+                      continue
+
+
+                  # =================================================
+                  # DETERMINE CATEGORY
+                  # =================================================
+
+                  if media_type == "video":
+
+                      category = "video"
+
+                  elif media_type == "gif":
+
+                      category = "reaction"
+
+                  else:
+
+                      category = "meme"
+
+
+                  # =================================================
+                  # ADD FILE
+                  # =================================================
+
+                  media.append({
+
+                      "file": filename,
+
+                      "type": media_type,
+
+                      "category": category,
+
+                      "title": os.path.splitext(
+                          filename
+                      )[0]
+
+                  })
+
+
+          # =======================================================
+          # SORT FILES
+          # =======================================================
+
+          media.sort(
+              key=lambda item:
+                  item["file"].lower()
+          )
+
+
+          # =======================================================
+          # CREATE DATABASE
+          # =======================================================
+
+          database = {
+
+              "version": 1,
+
+              "media": media
+
+          }
+
+
+          # =======================================================
+          # WRITE media.json
+          # =======================================================
+
+          with open(
+              OUTPUT_FILE,
+              "w",
+              encoding="utf-8"
+          ) as file:
+
+              json.dump(
+                  database,
+                  file,
+                  indent=4,
+                  ensure_ascii=False
+              )
+
+
+          print(
+              f"Generated {OUTPUT_FILE}"
+          )
+
+          print(
+              f"Total media: {len(media)}"
+          )
+
+          PY
+
+
+      # =========================================================
+      # CHECK IF media.json CHANGED
+      # =========================================================
+
+      - name: Check for changes
+
+        id: changes
+
+        run: |
+
+          if git diff --quiet -- media.json; then
+
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+
+          else
+
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+
+          fi
+
+
+      # =========================================================
+      # COMMIT media.json
+      # =========================================================
+
+      - name: Commit media.json
+
+        if: steps.changes.outputs.changed == 'true'
+
+        run: |
+
+          git config user.name "github-actions[bot]"
+
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add media.json
+
+          git commit \
+            -m "Automatically update media database"
+
+          git push
