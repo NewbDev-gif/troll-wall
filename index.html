@@ -5,53 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🚨 SYSTEM BREACH: NOWIE VAULT 🚨</title>
     <style>
-        /* THEME: BRIGHT PINK & WHITE */
+        /* THEME: BRIGHT PINK */
         body { 
-            background: #ff007f; /* Bright Pink */
+            background: #ff007f; 
             margin: 0; 
+            padding: 0;
             font-family: 'Courier New', monospace; 
             overflow-x: hidden; 
             color: #fff; 
         }
-        
-        .header { 
-            position: sticky; top: 0; z-index: 100; 
-            background: white; color: black; text-align: center; 
-            padding: 15px; font-weight: bold; border-bottom: 3px solid #ccc;
-            letter-spacing: 2px;
-        }
 
+        /* FULL SCREEN MASONRY LAYOUT */
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            grid-auto-rows: 250px;
-            gap: 15px;
-            padding: 15px;
+            column-count: 4; /* Number of columns for desktop */
+            column-gap: 0;   /* No space between columns */
+            width: 100vw;
         }
 
-        /* MEDIA ITEMS */
+        /* Adjust columns for smaller screens */
+        @media (max-width: 1200px) { .container { column-count: 3; } }
+        @media (max-width: 800px) { .container { column-count: 2; } }
+        @media (max-width: 480px) { .container { column-count: 1; } }
+
         .media-link {
-            display: block;
+            display: inline-block;
             width: 100%;
-            height: 100%;
             text-decoration: none;
             overflow: hidden;
-            border: 4px solid white;
             transition: 0.3s;
+            line-height: 0; /* Removes tiny gaps at bottom of images */
         }
 
         .media-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            transform: scale(1.02);
             z-index: 5;
+            filter: brightness(1.2);
         }
 
         .media-item { 
-            width: 100%; height: 100%; object-fit: cover; 
+            width: 100%; 
+            height: auto; /* Adjusts to the natural height of the file */
             display: block;
         }
 
-        /* THE TROLL POPUP (Now White) */
+        /* THE TROLL POPUP */
         #popup {
             display: none; position: fixed; top: 50%; left: 50%; 
             transform: translate(-50%, -50%); background: white; 
@@ -69,13 +66,13 @@
 </head>
 <body onclick="startPrank()">
 
-    <div class="header">⚠️ WARNING: UNAUTHORIZED DATA VIEWING ⚠️</div>
+    <!-- Header removed as requested -->
 
     <div class="container" id="wall">
         <!-- Content loads here -->
     </div>
 
-    <!-- The Popup (Changed from Red to White) -->
+    <!-- The Popup -->
     <div id="popup">
         <h1 style="margin-top:0;">POLICE ALERT!</h1>
         <p>Your IP address has been logged. This device is now under surveillance by local authorities.</p>
@@ -100,7 +97,6 @@
                     const ext = file.name.split('.').pop().toLowerCase();
                     let el;
 
-                    // Create the clickable link wrapper
                     const link = document.createElement('a');
                     link.href = fbLink;
                     link.className = 'media-link';
@@ -124,18 +120,15 @@
                     }
                 });
             } catch (err) {
-                // Silently fail as requested (no visible error messages)
-                console.error("API Fetch failed. Check if repo is public.");
+                console.error("API Fetch failed.");
             }
         }
 
-        // PRANK LOGIC
         let prankStarted = false;
         function startPrank() {
             if (prankStarted) return;
             prankStarted = true;
 
-            // Sound (Optional: replace with your own or leave for the troll effect)
             const audio = new Audio('https://www.myinstants.com/media/sounds/mlg-airhorn.mp3');
             audio.play().catch(() => {});
 
