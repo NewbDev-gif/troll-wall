@@ -1,25 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="theme-color"
-        content="#000000"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SYSTEM BREACH: NOWIE VAULT</title>
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-
         /* =========================================================
            GLOBAL
         ========================================================= */
@@ -28,602 +18,415 @@
             box-sizing: border-box;
         }
 
-
-        html {
-            background: #000;
-        }
-
-
+        html,
         body {
-
             margin: 0;
             padding: 0;
-
-            min-height: 100vh;
-
-            width: 100%;
-
+            min-height: 100%;
             background: #000;
-
             color: #ff007f;
+            font-family: "Courier New", monospace;
+        }
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
-
+        body {
             overflow-x: hidden;
         }
 
-
-        /* =========================================================
-           SCROLLBAR
-        ========================================================= */
-
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
-
 
         ::-webkit-scrollbar-track {
             background: #000;
         }
 
-
         ::-webkit-scrollbar-thumb {
-
             background: #ff007f;
-
             border-radius: 10px;
         }
-
 
         /* =========================================================
            HEADER
         ========================================================= */
 
         header {
-
-            position: sticky;
-
-            top: 0;
-
-            z-index: 1000;
-
             width: 100%;
-
-            padding: 25px 15px;
-
+            background: #000;
+            border-bottom: 3px solid #ff007f;
             text-align: center;
-
-            background:
-                rgba(0, 0, 0, 0.96);
-
-            border-bottom:
-                3px solid #ff007f;
-
-            box-shadow:
-                0 0 20px
-                rgba(255, 0, 127, 0.5);
+            padding: 30px 15px 28px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
         }
-
 
         header h1 {
-
             margin: 0;
-
             color: #ff007f;
-
-            font-size:
-                clamp(
-                    1.4rem,
-                    4vw,
-                    2.2rem
-                );
-
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             letter-spacing: 5px;
-
-            text-transform: uppercase;
-
             text-shadow:
-                2px 2px 0 #fff;
+                2px 2px 0 #fff,
+                0 0 8px rgba(255, 0, 127, 0.5);
         }
 
-
         header span {
-
             display: block;
-
-            margin-top: 10px;
-
+            margin-top: 12px;
             color: #00ff41;
-
-            font-size: 0.9rem;
-
             font-weight: bold;
-
+            font-size: clamp(0.7rem, 2vw, 0.95rem);
             letter-spacing: 1px;
         }
 
-
         /* =========================================================
-           FILTER BAR
+           UPLOAD BUTTON
         ========================================================= */
 
-        #filter-bar {
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            flex-wrap: wrap;
-
-            gap: 8px;
-
-            padding: 10px 15px;
-
+        .upload-area {
             background: #050505;
-
             border-bottom: 1px solid #222;
-
-            position: sticky;
-
-            top: 101px;
-
-            z-index: 900;
+            padding: 14px;
+            text-align: center;
         }
 
-
-        .filter-button {
-
-            padding: 7px 14px;
-
-            background: #000;
-
-            color: #ff007f;
-
-            border:
-                1px solid #ff007f;
-
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
-
-            font-size: 0.75rem;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-
-        .filter-button:hover,
-        .filter-button.active {
-
+        #uploadButton {
             background: #ff007f;
-
             color: #000;
+            border: 2px solid #ff007f;
+            padding: 12px 22px;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.15s ease, color 0.15s ease;
         }
 
+        #uploadButton:hover {
+            background: #000;
+            color: #ff007f;
+        }
+
+        #uploadButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
         /* =========================================================
            STATUS
         ========================================================= */
 
-        #status-bar {
-
-            display: flex;
-
-            justify-content: center;
-
-            gap: 20px;
-
-            padding: 9px 15px;
-
-            background: #050505;
-
-            border-bottom: 1px solid #222;
-
-            font-size: 0.75rem;
-
-            text-align: center;
-        }
-
-
         #status {
+            min-height: 32px;
+            padding: 10px 15px;
+            text-align: center;
+            background: #050505;
             color: #00ff41;
+            font-size: 0.75rem;
+            border-bottom: 1px solid #222;
         }
 
-
-        #counter {
-            color: #ff007f;
+        #status.error {
+            color: #ff3333;
         }
-
 
         /* =========================================================
-           WALL CONTAINER
+           MEDIA WALL
         ========================================================= */
 
         #wall-container {
-
             width: 100%;
-
-            padding: 20px;
-
             background: #ff007f;
+            padding: 8px;
         }
 
+        /*
+            CSS GRID + JAVASCRIPT ROW SPANS
 
-        /* =========================================================
-           TRUE MASONRY
-        ========================================================= */
+            This gives us a proper masonry layout.
+
+            Unlike ordinary CSS columns, this prevents the large
+            unwanted spaces you were seeing.
+        */
 
         #wall {
-
             display: grid;
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(250px, 1fr)
+            );
 
-            grid-template-columns:
-                repeat(
-                    var(--columns, 1),
-                    minmax(0, 1fr)
-                );
-
-            gap: 15px;
+            grid-auto-rows: 8px;
+            gap: 14px;
 
             width: 100%;
-
             align-items: start;
         }
 
-
-        .masonry-column {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 15px;
-
-            min-width: 0;
-        }
-
-
         /* =========================================================
-           MEDIA
+           MEDIA CARD
         ========================================================= */
 
-        .media-link {
-
-            display: block;
-
+        .media-card {
+            position: relative;
             width: 100%;
-
             background: #000;
-
-            border:
-                2px solid #000;
-
-            line-height: 0;
-
-            cursor: pointer;
-
+            border: 2px solid #000;
             overflow: hidden;
 
-            transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease,
-                border-color 0.3s ease,
-                filter 0.3s ease;
+            /*
+                IMPORTANT:
+                No transform.
+                No rotation.
+                No zoom.
+                No animation.
+            */
+
+            transition: none;
         }
 
-
-        .media-link:hover {
-
-            transform:
-                scale(1.03)
-                rotate(0.5deg);
-
-            border-color: #fff;
-
-            box-shadow:
-                0 10px 25px
-                rgba(0, 0, 0, 0.6);
-
-            filter:
-                brightness(1.15);
+        .media-card:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: #000;
+            filter: none;
         }
-
 
         .media-item {
-
             display: block;
-
             width: 100%;
-
             height: auto;
-
             background: #000;
+            cursor: pointer;
+        }
 
+        /*
+            Prevent accidental image stretching.
+        */
+
+        img.media-item {
             object-fit: contain;
         }
 
-
-        /* =========================================================
-           LOADING / ERROR
-        ========================================================= */
-
-        .loading,
-        .error {
-
-            grid-column: 1 / -1;
-
-            width: 100%;
-
-            padding: 60px 20px;
-
-            background: #000;
-
-            color: #fff;
-
-            border: 2px solid #fff;
-
-            text-align: center;
-
-            line-height: 1.8;
+        video.media-item {
+            object-fit: contain;
         }
 
+        /* =========================================================
+           UPLOAD MODAL
+        ========================================================= */
+
+        #uploadModal {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.88);
+
+            z-index: 5000;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        #uploadModal.show {
+            display: flex;
+        }
+
+        .upload-box {
+            width: min(500px, 100%);
+            background: #000;
+            border: 2px solid #ff007f;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.4);
+            padding: 25px;
+        }
+
+        .upload-box h2 {
+            margin: 0 0 20px;
+            text-align: center;
+            color: #ff007f;
+            font-size: 1.4rem;
+        }
+
+        .upload-box p {
+            color: #00ff41;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        #fileInput {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px dashed #ff007f;
+            background: #050505;
+            color: #fff;
+            font-family: "Courier New", monospace;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ff007f;
+            background: #ff007f;
+            color: #000;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-buttons button.secondary {
+            background: #000;
+            color: #ff007f;
+        }
+
+        .modal-buttons button:hover {
+            opacity: 0.8;
+        }
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        #uploadProgressContainer {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #uploadProgressContainer.show {
+            display: block;
+        }
+
+        .progress-label {
+            color: #00ff41;
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #222;
+            border: 1px solid #ff007f;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background: #ff007f;
+        }
 
         /* =========================================================
            LIGHTBOX
         ========================================================= */
 
         #lightbox {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 9999;
-
             display: none;
 
-            align-items: center;
+            position: fixed;
+            inset: 0;
 
+            background: rgba(0, 0, 0, 0.95);
+
+            z-index: 6000;
+
+            align-items: center;
             justify-content: center;
 
-            padding: 60px 20px 40px;
-
-            background:
-                rgba(0, 0, 0, 0.96);
+            padding: 30px;
         }
 
-
-        #lightbox.active {
+        #lightbox.show {
             display: flex;
         }
 
-
-        #lightbox-content {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
+        #lightboxContent {
             max-width: 95vw;
-
-            max-height: 85vh;
+            max-height: 90vh;
         }
 
-
-        #lightbox-content img,
-        #lightbox-content video {
-
+        #lightboxContent img,
+        #lightboxContent video {
             display: block;
-
-            max-width: 90vw;
-
-            max-height: 82vh;
-
+            max-width: 95vw;
+            max-height: 90vh;
             width: auto;
-
             height: auto;
-
-            object-fit: contain;
-
-            background: #000;
-
-            box-shadow:
-                0 0 30px
-                rgba(255, 0, 127, 0.4);
         }
 
+        #closeLightbox {
+            position: fixed;
+            top: 15px;
+            right: 20px;
 
-        /* =========================================================
-           LIGHTBOX BUTTONS
-        ========================================================= */
-
-        .lightbox-button {
-
-            position: absolute;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            width: 50px;
-
-            height: 50px;
-
-            background: #000;
+            background: none;
+            border: none;
 
             color: #ff007f;
-
-            border:
-                2px solid #ff007f;
-
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
-
-            font-size: 1.5rem;
+            font-family: "Courier New", monospace;
+            font-size: 2rem;
 
             cursor: pointer;
         }
-
-
-        .lightbox-button:hover {
-
-            background: #ff007f;
-
-            color: #000;
-        }
-
-
-        #close-lightbox {
-
-            top: 15px;
-
-            right: 15px;
-        }
-
-
-        #previous {
-
-            left: 15px;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-        }
-
-
-        #next {
-
-            right: 15px;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-        }
-
-
-        #lightbox-info {
-
-            position: absolute;
-
-            left: 0;
-
-            right: 0;
-
-            bottom: 10px;
-
-            color: #00ff41;
-
-            text-align: center;
-
-            font-size: 0.75rem;
-
-            padding: 5px 60px;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
-            white-space: nowrap;
-        }
-
 
         /* =========================================================
            MOBILE
         ========================================================= */
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
 
             header {
-
-                padding: 18px 10px;
+                padding: 22px 10px;
             }
-
 
             header h1 {
-
-                letter-spacing: 2px;
-
-                font-size: 1.4rem;
+                letter-spacing: 3px;
             }
-
-
-            header span {
-
-                font-size: 0.7rem;
-            }
-
-
-            #filter-bar {
-
-                top: 86px;
-
-                gap: 5px;
-
-                padding: 7px 5px;
-            }
-
-
-            .filter-button {
-
-                padding:
-                    6px 9px;
-
-                font-size:
-                    0.65rem;
-            }
-
-
-            #wall-container {
-
-                padding: 10px;
-            }
-
 
             #wall {
+                grid-template-columns: repeat(
+                    auto-fill,
+                    minmax(150px, 1fr)
+                );
 
-                gap: 10px;
+                gap: 8px;
+                grid-auto-rows: 6px;
             }
 
-
-            .masonry-column {
-
-                gap: 10px;
+            #wall-container {
+                padding: 5px;
             }
 
-
-            #previous,
-            #next {
-
-                width: 40px;
-
-                height: 40px;
+            .media-card {
+                border-width: 1px;
             }
-
         }
 
-    </style>
+        @media (max-width: 400px) {
 
+            #wall {
+                grid-template-columns: repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+            }
+        }
+    </style>
 </head>
 
-
 <body>
-
 
     <!-- =========================================================
          HEADER
@@ -631,138 +434,115 @@
 
     <header>
 
-        <h1>
-            🚨 SYSTEM BREACH 🚨
-        </h1>
+        <h1>🚨 SYSTEM BREACH 🚨</h1>
 
         <span>
-            DECRYPTING NOWIE VAULT DATA...
-            ACCESS GRANTED
+            DECRYPTING NOWIE VAULT DATA... ACCESS GRANTED
         </span>
 
     </header>
 
 
     <!-- =========================================================
-         FILTERS
+         UPLOAD BUTTON
     ========================================================= -->
 
-    <nav id="filter-bar">
+    <div class="upload-area">
 
-        <button
-            class="filter-button active"
-            data-filter="all"
-            type="button"
-        >
-            ALL
+        <button id="uploadButton">
+            ＋ UPLOAD TO VAULT
         </button>
 
-
-        <button
-            class="filter-button"
-            data-filter="image"
-            type="button"
-        >
-            IMAGES
-        </button>
-
-
-        <button
-            class="filter-button"
-            data-filter="gif"
-            type="button"
-        >
-            GIFS
-        </button>
-
-
-        <button
-            class="filter-button"
-            data-filter="video"
-            type="button"
-        >
-            VIDEOS
-        </button>
-
-    </nav>
+    </div>
 
 
     <!-- =========================================================
          STATUS
     ========================================================= -->
 
-    <div id="status-bar">
+    <div id="status">
+        CONNECTING TO VAULT...
+    </div>
 
-        <div id="status">
-            CONNECTING TO VAULT...
-        </div>
 
-        <div id="counter">
-            0 FILES
+    <!-- =========================================================
+         MEDIA WALL
+    ========================================================= -->
+
+    <div id="wall-container">
+
+        <div id="wall"></div>
+
+    </div>
+
+
+    <!-- =========================================================
+         UPLOAD MODAL
+    ========================================================= -->
+
+    <div id="uploadModal">
+
+        <div class="upload-box">
+
+            <h2>UPLOAD TO VAULT</h2>
+
+            <p>
+                ADD YOUR OWN PHOTO OR VIDEO TO THE VAULT.
+            </p>
+
+            <p>
+                MAXIMUM FILE SIZE: 50 MB
+            </p>
+
+            <input
+                id="fileInput"
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/webm,video/quicktime"
+            >
+
+            <div id="uploadProgressContainer">
+
+                <div class="progress-label">
+                    UPLOADING...
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progressBar"></div>
+                </div>
+
+            </div>
+
+            <div class="modal-buttons">
+
+                <button id="startUpload">
+                    UPLOAD
+                </button>
+
+                <button
+                    id="cancelUpload"
+                    class="secondary"
+                >
+                    CANCEL
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
 
     <!-- =========================================================
-         WALL
-    ========================================================= -->
-
-    <main id="wall-container">
-
-        <div id="wall">
-
-            <div class="loading">
-
-                ACCESSING VAULT...
-
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <!-- =========================================================
          LIGHTBOX
     ========================================================= -->
 
-    <div
-        id="lightbox"
-        aria-hidden="true"
-    >
+    <div id="lightbox">
 
-        <button
-            id="close-lightbox"
-            class="lightbox-button"
-            type="button"
-        >
+        <button id="closeLightbox">
             ×
         </button>
 
-
-        <button
-            id="previous"
-            class="lightbox-button"
-            type="button"
-        >
-            ‹
-        </button>
-
-
-        <div id="lightbox-content"></div>
-
-
-        <button
-            id="next"
-            class="lightbox-button"
-            type="button"
-        >
-            ›
-        </button>
-
-
-        <div id="lightbox-info"></div>
+        <div id="lightboxContent"></div>
 
     </div>
 
@@ -770,127 +550,390 @@
     <script>
 
         /* =========================================================
+           SUPABASE CONFIGURATION
+        ========================================================= */
+
+        const SUPABASE_URL =
+            "https://wwbbcndlcqxjswxjoxuj.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_sakHwOcB2tV2CqDMrX256Q__taTT9DF";
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        /* =========================================================
            GITHUB CONFIGURATION
         ========================================================= */
 
-        const username =
-            "NewbDev-gif";
+        const githubUsername = "NewbDev-gif";
 
+        const githubRepo = "troll-wall";
 
-        const repo =
-            "troll-wall";
-
-
-        const folder =
-            "media";
+        const githubFolder = "media";
 
 
         /* =========================================================
-           ELEMENTS
+           SUPABASE CONFIGURATION
+        ========================================================= */
+
+        const supabaseBucket = "nowie-media";
+
+
+        /* =========================================================
+           SETTINGS
+        ========================================================= */
+
+        const MAX_FILE_SIZE =
+            50 * 1024 * 1024;
+
+        const allowedExtensions = [
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp",
+            "mp4",
+            "webm",
+            "mov"
+        ];
+
+
+        /* =========================================================
+           DOM
         ========================================================= */
 
         const wall =
-            document.getElementById(
-                "wall"
-            );
-
+            document.getElementById("wall");
 
         const status =
+            document.getElementById("status");
+
+        const uploadButton =
+            document.getElementById("uploadButton");
+
+        const uploadModal =
+            document.getElementById("uploadModal");
+
+        const fileInput =
+            document.getElementById("fileInput");
+
+        const startUpload =
+            document.getElementById("startUpload");
+
+        const cancelUpload =
+            document.getElementById("cancelUpload");
+
+        const progressContainer =
             document.getElementById(
-                "status"
+                "uploadProgressContainer"
             );
 
-
-        const counter =
-            document.getElementById(
-                "counter"
-            );
-
+        const progressBar =
+            document.getElementById("progressBar");
 
         const lightbox =
-            document.getElementById(
-                "lightbox"
-            );
-
+            document.getElementById("lightbox");
 
         const lightboxContent =
             document.getElementById(
-                "lightbox-content"
+                "lightboxContent"
             );
 
-
-        const lightboxInfo =
+        const closeLightbox =
             document.getElementById(
-                "lightbox-info"
-            );
-
-
-        const closeButton =
-            document.getElementById(
-                "close-lightbox"
-            );
-
-
-        const previousButton =
-            document.getElementById(
-                "previous"
-            );
-
-
-        const nextButton =
-            document.getElementById(
-                "next"
-            );
-
-
-        const filterButtons =
-            document.querySelectorAll(
-                ".filter-button"
+                "closeLightbox"
             );
 
 
         /* =========================================================
-           DATA
+           STATUS FUNCTION
         ========================================================= */
 
-        let allMedia = [];
+        function setStatus(message, error = false) {
 
-        let filteredMedia = [];
+            status.textContent = message;
 
-        let currentIndex = 0;
+            status.classList.toggle(
+                "error",
+                error
+            );
 
-        let currentFilter = "all";
+        }
 
 
         /* =========================================================
-           GITHUB API
+           FILE TYPE
         ========================================================= */
 
-        async function loadMedia() {
+        function getExtension(filename) {
 
-            status.textContent =
-                "CONNECTING TO VAULT...";
+            return filename
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+        }
 
 
-            const apiURL =
-                `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
+        function isVideo(filename) {
+
+            const ext =
+                getExtension(filename);
+
+            return [
+                "mp4",
+                "webm",
+                "mov"
+            ].includes(ext);
+
+        }
+
+
+        /* =========================================================
+           MASONRY CALCULATION
+        ========================================================= */
+
+        function resizeCard(card) {
+
+            const rowHeight =
+                parseFloat(
+                    getComputedStyle(wall)
+                        .getPropertyValue(
+                            "grid-auto-rows"
+                        )
+                );
+
+            const rowGap =
+                parseFloat(
+                    getComputedStyle(wall)
+                        .getPropertyValue(
+                            "gap"
+                        )
+                );
+
+            const height =
+                card.getBoundingClientRect()
+                    .height;
+
+            const span =
+                Math.ceil(
+                    (height + rowGap) /
+                    (rowHeight + rowGap)
+                );
+
+            card.style.gridRowEnd =
+                `span ${span}`;
+
+        }
+
+
+        function resizeAllCards() {
+
+            const cards =
+                document.querySelectorAll(
+                    ".media-card"
+                );
+
+            cards.forEach(
+                resizeCard
+            );
+
+        }
+
+
+        /* =========================================================
+           ADD MEDIA TO WALL
+        ========================================================= */
+
+        function addMedia(
+            url,
+            filename,
+            source
+        ) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "media-card";
+
+            card.dataset.source =
+                source;
+
+
+            let media;
+
+
+            /* =====================================================
+               VIDEO
+            ===================================================== */
+
+            if (isVideo(filename)) {
+
+                media =
+                    document.createElement(
+                        "video"
+                    );
+
+                media.src = url;
+
+                media.className =
+                    "media-item";
+
+                media.muted = true;
+
+                media.loop = true;
+
+                media.playsInline = true;
+
+                media.preload = "metadata";
+
+
+                /*
+                    VIDEO BEHAVIOR
+
+                    Hover = play
+
+                    Mouse leaves = pause + reset
+                */
+
+                media.addEventListener(
+                    "mouseenter",
+                    () => {
+
+                        media.currentTime = 0;
+
+                        media.play()
+                            .catch(() => {});
+
+                    }
+                );
+
+
+                media.addEventListener(
+                    "mouseleave",
+                    () => {
+
+                        media.pause();
+
+                        media.currentTime = 0;
+
+                    }
+                );
+
+
+                /*
+                    Recalculate masonry after
+                    video metadata is available.
+                */
+
+                media.addEventListener(
+                    "loadedmetadata",
+                    () => {
+
+                        resizeCard(card);
+
+                    }
+                );
+
+            }
+
+            /* =====================================================
+               IMAGE
+            ===================================================== */
+
+            else {
+
+                media =
+                    document.createElement(
+                        "img"
+                    );
+
+                media.src = url;
+
+                media.className =
+                    "media-item";
+
+                media.loading =
+                    "lazy";
+
+                media.decoding =
+                    "async";
+
+
+                media.addEventListener(
+                    "load",
+                    () => {
+
+                        resizeCard(card);
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               CLICK = LIGHTBOX
+            ===================================================== */
+
+            media.addEventListener(
+                "click",
+                () => {
+
+                    openLightbox(
+                        url,
+                        filename
+                    );
+
+                }
+            );
+
+
+            card.appendChild(media);
+
+            wall.appendChild(card);
+
+
+            /*
+                Resize once immediately.
+            */
+
+            requestAnimationFrame(
+                () => resizeCard(card)
+            );
+
+        }
+
+
+        /* =========================================================
+           LOAD GITHUB MEDIA
+        ========================================================= */
+
+        async function loadGithubMedia() {
+
+            const url =
+                `https://api.github.com/repos/` +
+                `${githubUsername}/` +
+                `${githubRepo}/contents/` +
+                `${githubFolder}`;
 
 
             try {
 
                 const response =
-                    await fetch(
-                        apiURL,
-                        {
-                            cache: "no-store"
-                        }
-                    );
+                    await fetch(url);
 
 
                 if (!response.ok) {
 
                     throw new Error(
-                        `GitHub API returned ${response.status}`
+                        "GitHub request failed"
                     );
 
                 }
@@ -900,812 +943,483 @@
                     await response.json();
 
 
-                if (
-                    !Array.isArray(files)
-                ) {
+                if (!Array.isArray(files)) {
 
-                    throw new Error(
-                        "GitHub did not return a folder."
-                    );
+                    return;
 
                 }
 
 
-                /* =================================================
-                   SUPPORTED FILES
-                ================================================= */
+                files.forEach(file => {
 
-                const validExtensions = [
-
-                    "jpg",
-                    "jpeg",
-                    "png",
-                    "gif",
-                    "webp",
-                    "mp4",
-                    "mov",
-                    "webm"
-
-                ];
+                    if (
+                        file.type !==
+                        "file"
+                    ) {
+                        return;
+                    }
 
 
-                allMedia =
-                    files
-
-                        .filter(
-                            file =>
-                                file.type ===
-                                "file"
-                        )
-
-                        .filter(
-                            file => {
-
-                                const extension =
-                                    file.name
-                                        .split(".")
-                                        .pop()
-                                        .toLowerCase();
-
-
-                                return validExtensions
-                                    .includes(
-                                        extension
-                                    );
-
-                            }
-                        )
-
-                        .sort(
-                            (a, b) =>
-                                a.name.localeCompare(
-                                    b.name,
-                                    undefined,
-                                    {
-                                        numeric: true
-                                    }
-                                )
+                    const ext =
+                        getExtension(
+                            file.name
                         );
 
 
-                counter.textContent =
-                    `${allMedia.length} FILES`;
+                    if (
+                        !allowedExtensions
+                            .includes(ext)
+                    ) {
+                        return;
+                    }
 
 
-                status.textContent =
-                    "DATABASE ONLINE";
+                    addMedia(
+                        file.download_url,
+                        file.name,
+                        "github"
+                    );
 
-
-                applyFilter(
-                    "all"
-                );
+                });
 
             }
-
 
             catch (error) {
 
                 console.error(
-                    "Vault connection error:",
+                    "GitHub media error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           LOAD SUPABASE MEDIA
+        ========================================================= */
+
+        async function loadSupabaseMedia() {
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .storage
+                        .from(
+                            supabaseBucket
+                        )
+                        .list(
+                            "",
+                            {
+                                limit: 1000,
+                                offset: 0,
+                                sortBy: {
+                                    column: "created_at",
+                                    order: "asc"
+                                }
+                            }
+                        );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                if (!data) {
+
+                    return;
+
+                }
+
+
+                data.forEach(file => {
+
+                    if (!file.name) {
+                        return;
+                    }
+
+
+                    const ext =
+                        getExtension(
+                            file.name
+                        );
+
+
+                    if (
+                        !allowedExtensions
+                            .includes(ext)
+                    ) {
+                        return;
+                    }
+
+
+                    const {
+                        data: publicData
+                    } =
+                        supabaseClient
+                            .storage
+                            .from(
+                                supabaseBucket
+                            )
+                            .getPublicUrl(
+                                file.name
+                            );
+
+
+                    if (
+                        !publicData ||
+                        !publicData.publicUrl
+                    ) {
+                        return;
+                    }
+
+
+                    addMedia(
+                        publicData.publicUrl,
+                        file.name,
+                        "supabase"
+                    );
+
+                });
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Supabase media error:",
+                    error
+                );
+
+                setStatus(
+                    "SUPABASE CONNECTION ERROR",
+                    true
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           LOAD EVERYTHING
+        ========================================================= */
+
+        async function loadAllMedia() {
+
+            setStatus(
+                "CONNECTING TO VAULT..."
+            );
+
+
+            await Promise.all([
+                loadGithubMedia(),
+                loadSupabaseMedia()
+            ]);
+
+
+            setStatus(
+                "VAULT ONLINE — ACCESS GRANTED"
+            );
+
+
+            setTimeout(
+                resizeAllCards,
+                500
+            );
+
+        }
+
+
+        /* =========================================================
+           UPLOAD MODAL
+        ========================================================= */
+
+        uploadButton.addEventListener(
+            "click",
+            () => {
+
+                uploadModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        cancelUpload.addEventListener(
+            "click",
+            closeUploadModal
+        );
+
+
+        function closeUploadModal() {
+
+            uploadModal.classList.remove(
+                "show"
+            );
+
+            fileInput.value = "";
+
+            progressContainer.classList.remove(
+                "show"
+            );
+
+            progressBar.style.width =
+                "0%";
+
+        }
+
+
+        /* =========================================================
+           UPLOAD FILE
+        ========================================================= */
+
+        startUpload.addEventListener(
+            "click",
+            uploadFile
+        );
+
+
+        async function uploadFile() {
+
+            const file =
+                fileInput.files[0];
+
+
+            if (!file) {
+
+                alert(
+                    "Please choose a photo or video."
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               SIZE CHECK
+            ===================================================== */
+
+            if (
+                file.size >
+                MAX_FILE_SIZE
+            ) {
+
+                alert(
+                    "File is too large.\n\n" +
+                    "Maximum size: 50 MB"
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               EXTENSION CHECK
+            ===================================================== */
+
+            const ext =
+                getExtension(
+                    file.name
+                );
+
+
+            if (
+                !allowedExtensions
+                    .includes(ext)
+            ) {
+
+                alert(
+                    "This file type is not allowed."
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               UNIQUE FILE NAME
+            ===================================================== */
+
+            const timestamp =
+                Date.now();
+
+            const random =
+                Math.random()
+                    .toString(36)
+                    .substring(
+                        2,
+                        10
+                    );
+
+
+            const safeName =
+                file.name
+                    .replace(
+                        /[^a-zA-Z0-9._-]/g,
+                        "_"
+                    );
+
+
+            const finalName =
+                `${timestamp}_${random}_${safeName}`;
+
+
+            /* =====================================================
+               UI
+            ===================================================== */
+
+            startUpload.disabled =
+                true;
+
+            cancelUpload.disabled =
+                true;
+
+            uploadButton.disabled =
+                true;
+
+            progressContainer.classList.add(
+                "show"
+            );
+
+            progressBar.style.width =
+                "10%";
+
+
+            setStatus(
+                "UPLOADING MEDIA..."
+            );
+
+
+            try {
+
+                /*
+                    Upload to Supabase
+                */
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .storage
+                        .from(
+                            supabaseBucket
+                        )
+                        .upload(
+                            finalName,
+                            file,
+                            {
+                                cacheControl:
+                                    "3600",
+
+                                contentType:
+                                    file.type,
+
+                                upsert:
+                                    false
+                            }
+                        );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                progressBar.style.width =
+                    "100%";
+
+
+                /*
+                    Get public URL
+                */
+
+                const {
+                    data: publicData
+                } =
+                    supabaseClient
+                        .storage
+                        .from(
+                            supabaseBucket
+                        )
+                        .getPublicUrl(
+                            finalName
+                        );
+
+
+                /*
+                    Immediately add the
+                    uploaded media to the wall.
+                */
+
+                addMedia(
+                    publicData.publicUrl,
+                    finalName,
+                    "supabase"
+                );
+
+
+                setStatus(
+                    "✓ UPLOAD COMPLETE — MEDIA ADDED TO VAULT"
+                );
+
+
+                setTimeout(
+                    closeUploadModal,
+                    1000
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Upload failed:",
                     error
                 );
 
 
-                status.textContent =
-                    "DATABASE ERROR";
-
-
-                counter.textContent =
-                    "ERROR";
-
-
-                wall.innerHTML = `
-
-                    <div class="error">
-
-                        ⚠ DATABASE ERROR
-
-                        <br><br>
-
-                        ${escapeHTML(
-                            error.message
-                        )}
-
-                        <br><br>
-
-                        Make sure the
-                        <strong>
-                            media
-                        </strong>
-                        folder exists in:
-
-                        <br><br>
-
-                        ${username}/${repo}
-
-                    </div>
-
-                `;
-
-            }
-
-        }
-
-
-        /* =========================================================
-           FILE TYPE
-        ========================================================= */
-
-        function getFileType(
-            file
-        ) {
-
-            const extension =
-                file.name
-                    .split(".")
-                    .pop()
-                    .toLowerCase();
-
-
-            if (
-                extension === "mp4" ||
-                extension === "mov" ||
-                extension === "webm"
-            ) {
-
-                return "video";
-
-            }
-
-
-            if (
-                extension === "gif"
-            ) {
-
-                return "gif";
-
-            }
-
-
-            return "image";
-
-        }
-
-
-        /* =========================================================
-           FILTER
-        ========================================================= */
-
-        function applyFilter(
-            filter
-        ) {
-
-            currentFilter =
-                filter;
-
-
-            if (
-                filter === "all"
-            ) {
-
-                filteredMedia =
-                    [...allMedia];
-
-            }
-
-            else {
-
-                filteredMedia =
-                    allMedia.filter(
-                        file =>
-                            getFileType(
-                                file
-                            ) === filter
-                    );
-
-            }
-
-
-            counter.textContent =
-                `${filteredMedia.length} FILES`;
-
-
-            renderWall();
-
-        }
-
-
-        /* =========================================================
-           COLUMN COUNT
-        ========================================================= */
-
-        function getColumnCount() {
-
-            const width =
-                window.innerWidth;
-
-
-            if (
-                width <= 500
-            ) {
-
-                return 2;
-
-            }
-
-
-            if (
-                width <= 800
-            ) {
-
-                return 3;
-
-            }
-
-
-            if (
-                width <= 1100
-            ) {
-
-                return 4;
-
-            }
-
-
-            if (
-                width <= 1400
-            ) {
-
-                return 5;
-
-            }
-
-
-            return 6;
-
-        }
-
-
-        /* =========================================================
-           RENDER WALL
-        ========================================================= */
-
-        function renderWall() {
-
-            wall.innerHTML = "";
-
-
-            if (
-                filteredMedia.length === 0
-            ) {
-
-                wall.style.setProperty(
-                    "--columns",
-                    1
+                setStatus(
+                    "UPLOAD FAILED: " +
+                    error.message,
+                    true
                 );
 
 
-                wall.innerHTML = `
-
-                    <div class="error">
-
-                        NO MEDIA FOUND
-
-                    </div>
-
-                `;
-
-                return;
-
-            }
-
-
-            let columnCount =
-                getColumnCount();
-
-
-            columnCount =
-                Math.min(
-                    columnCount,
-                    filteredMedia.length
-                );
-
-
-            wall.style.setProperty(
-                "--columns",
-                columnCount
-            );
-
-
-            /* =====================================================
-               CREATE COLUMNS
-            ===================================================== */
-
-            const columns = [];
-
-
-            const heights = [];
-
-
-            for (
-                let i = 0;
-                i < columnCount;
-                i++
-            ) {
-
-                const column =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                column.className =
-                    "masonry-column";
-
-
-                wall.appendChild(
-                    column
-                );
-
-
-                columns.push(
-                    column
-                );
-
-
-                heights.push(
-                    0
+                alert(
+                    "UPLOAD FAILED\n\n" +
+                    error.message
                 );
 
             }
 
 
-            /* =====================================================
-               ADD MEDIA
-            ===================================================== */
+            finally {
 
-            filteredMedia.forEach(
-                (
-                    file,
-                    index
-                ) => {
+                startUpload.disabled =
+                    false;
 
+                cancelUpload.disabled =
+                    false;
 
-                    const card =
-                        createMediaCard(
-                            file,
-                            index
-                        );
-
-
-                    /*
-                        Find the shortest
-                        column.
-                    */
-
-                    let shortest =
-                        0;
-
-
-                    for (
-                        let i = 1;
-                        i < heights.length;
-                        i++
-                    ) {
-
-                        if (
-                            heights[i] <
-                            heights[shortest]
-                        ) {
-
-                            shortest =
-                                i;
-
-                        }
-
-                    }
-
-
-                    columns[
-                        shortest
-                    ].appendChild(
-                        card
-                    );
-
-
-                    /*
-                        Temporary height.
-                        It will be corrected
-                        after images load.
-                    */
-
-                    heights[
-                        shortest
-                    ] += 1;
-
-                }
-            );
-
-
-            /*
-                Wait for browser to
-                render media, then
-                properly balance columns.
-            */
-
-            waitForImages();
-
-        }
-
-
-        /* =========================================================
-           CREATE CARD
-        ========================================================= */
-
-        function createMediaCard(
-            file,
-            index
-        ) {
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-
-            link.href = "#";
-
-
-            link.className =
-                "media-link";
-
-
-            link.dataset.index =
-                index;
-
-
-            link.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    openLightbox(
-                        index
-                    );
-
-                }
-            );
-
-
-            const type =
-                getFileType(
-                    file
-                );
-
-
-            let element;
-
-
-            /* =====================================================
-               VIDEO
-            ===================================================== */
-
-            if (
-                type === "video"
-            ) {
-
-                element =
-                    document.createElement(
-                        "video"
-                    );
-
-
-                element.src =
-                    file.download_url;
-
-
-                element.autoplay =
-                    true;
-
-
-                element.loop =
-                    true;
-
-
-                element.muted =
-                    true;
-
-
-                element.playsInline =
-                    true;
-
-
-                element.preload =
-                    "metadata";
+                uploadButton.disabled =
+                    false;
 
             }
-
-
-            /* =====================================================
-               IMAGE
-            ===================================================== */
-
-            else {
-
-                element =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                element.src =
-                    file.download_url;
-
-
-                element.loading =
-                    "lazy";
-
-
-                element.decoding =
-                    "async";
-
-
-                element.alt =
-                    file.name;
-
-            }
-
-
-            element.className =
-                "media-item";
-
-
-            link.appendChild(
-                element
-            );
-
-
-            return link;
-
-        }
-
-
-        /* =========================================================
-           BALANCE MASONRY
-        ========================================================= */
-
-        function waitForImages() {
-
-            const media =
-                document.querySelectorAll(
-                    ".media-item"
-                );
-
-
-            if (
-                media.length === 0
-            ) {
-
-                return;
-
-            }
-
-
-            let remaining =
-                media.length;
-
-
-            const finished =
-                () => {
-
-                    remaining--;
-
-
-                    if (
-                        remaining <= 0
-                    ) {
-
-                        rebalance();
-
-                    }
-
-                };
-
-
-            media.forEach(
-                element => {
-
-                    if (
-                        element.tagName ===
-                        "VIDEO"
-                    ) {
-
-                        if (
-                            element.readyState >=
-                            1
-                        ) {
-
-                            finished();
-
-                        }
-
-                        else {
-
-                            element.addEventListener(
-                                "loadedmetadata",
-                                finished,
-                                {
-                                    once: true
-                                }
-                            );
-
-                            element.addEventListener(
-                                "error",
-                                finished,
-                                {
-                                    once: true
-                                }
-                            );
-
-                        }
-
-                    }
-
-                    else {
-
-                        if (
-                            element.complete
-                        ) {
-
-                            finished();
-
-                        }
-
-                        else {
-
-                            element.addEventListener(
-                                "load",
-                                finished,
-                                {
-                                    once: true
-                                }
-                            );
-
-                            element.addEventListener(
-                                "error",
-                                finished,
-                                {
-                                    once: true
-                                }
-                            );
-
-                        }
-
-                    }
-
-                }
-            );
-
-
-            /*
-                Safety fallback.
-
-                Prevents one broken image
-                from stopping masonry.
-            */
-
-            setTimeout(
-                () => {
-
-                    rebalance();
-
-                },
-                2000
-            );
-
-        }
-
-
-        /* =========================================================
-           REBALANCE
-        ========================================================= */
-
-        function rebalance() {
-
-            const cards =
-                Array.from(
-                    document.querySelectorAll(
-                        ".media-link"
-                    )
-                );
-
-
-            const columns =
-                Array.from(
-                    document.querySelectorAll(
-                        ".masonry-column"
-                    )
-                );
-
-
-            if (
-                columns.length === 0
-            ) {
-
-                return;
-
-            }
-
-
-            /*
-                Remove cards first.
-            */
-
-            columns.forEach(
-                column => {
-
-                    column.innerHTML =
-                        "";
-
-                }
-            );
-
-
-            const heights =
-                columns.map(
-                    () => 0
-                );
-
-
-            /*
-                Place cards into
-                shortest column.
-            */
-
-            cards.forEach(
-                card => {
-
-                    let shortest =
-                        0;
-
-
-                    for (
-                        let i = 1;
-                        i < heights.length;
-                        i++
-                    ) {
-
-                        if (
-                            heights[i] <
-                            heights[shortest]
-                        ) {
-
-                            shortest =
-                                i;
-
-                        }
-
-                    }
-
-
-                    columns[
-                        shortest
-                    ].appendChild(
-                        card
-                    );
-
-
-                    heights[
-                        shortest
-                    ] =
-                        columns[
-                            shortest
-                        ].getBoundingClientRect()
-                            .height;
-
-                }
-            );
 
         }
 
@@ -1715,55 +1429,9 @@
         ========================================================= */
 
         function openLightbox(
-            index
+            url,
+            filename
         ) {
-
-            currentIndex =
-                index;
-
-
-            renderLightbox();
-
-
-            lightbox.classList.add(
-                "active"
-            );
-
-
-            lightbox.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-
-            document.body.style.overflow =
-                "hidden";
-
-        }
-
-
-        /* =========================================================
-           RENDER LIGHTBOX
-        ========================================================= */
-
-        function renderLightbox() {
-
-            const file =
-                filteredMedia[
-                    currentIndex
-                ];
-
-
-            if (!file) {
-                return;
-            }
-
-
-            const type =
-                getFileType(
-                    file
-                );
-
 
             lightboxContent.innerHTML =
                 "";
@@ -1772,35 +1440,23 @@
             let element;
 
 
-            if (
-                type === "video"
-            ) {
+            if (isVideo(filename)) {
 
                 element =
                     document.createElement(
                         "video"
                     );
 
-
-                element.src =
-                    file.download_url;
-
+                element.src = url;
 
                 element.controls =
                     true;
 
-
                 element.autoplay =
                     true;
 
-
                 element.loop =
                     true;
-
-
-                element.muted =
-                    true;
-
 
                 element.playsInline =
                     true;
@@ -1814,13 +1470,10 @@
                         "img"
                     );
 
-
-                element.src =
-                    file.download_url;
-
+                element.src = url;
 
                 element.alt =
-                    file.name;
+                    filename;
 
             }
 
@@ -1830,168 +1483,30 @@
             );
 
 
-            lightboxInfo.textContent =
-                `${currentIndex + 1} / ${
-                    filteredMedia.length
-                } — ${
-                    file.name
-                }`;
+            lightbox.classList.add(
+                "show"
+            );
 
         }
 
 
-        /* =========================================================
-           CLOSE
-        ========================================================= */
-
-        function closeLightbox() {
+        function closeLightboxWindow() {
 
             lightbox.classList.remove(
-                "active"
+                "show"
             );
-
-
-            lightbox.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
 
             lightboxContent.innerHTML =
                 "";
 
-
-            document.body.style.overflow =
-                "";
-
         }
 
 
-        /* =========================================================
-           PREVIOUS
-        ========================================================= */
-
-        function previousMedia() {
-
-            if (
-                filteredMedia.length === 0
-            ) {
-
-                return;
-
-            }
-
-
-            currentIndex--;
-
-
-            if (
-                currentIndex < 0
-            ) {
-
-                currentIndex =
-                    filteredMedia.length - 1;
-
-            }
-
-
-            renderLightbox();
-
-        }
-
-
-        /* =========================================================
-           NEXT
-        ========================================================= */
-
-        function nextMedia() {
-
-            if (
-                filteredMedia.length === 0
-            ) {
-
-                return;
-
-            }
-
-
-            currentIndex++;
-
-
-            if (
-                currentIndex >=
-                filteredMedia.length
-            ) {
-
-                currentIndex = 0;
-
-            }
-
-
-            renderLightbox();
-
-        }
-
-
-        /* =========================================================
-           BUTTONS
-        ========================================================= */
-
-        filterButtons.forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        filterButtons.forEach(
-                            item => {
-
-                                item.classList.remove(
-                                    "active"
-                                );
-
-                            }
-                        );
-
-
-                        button.classList.add(
-                            "active"
-                        );
-
-
-                        applyFilter(
-                            button.dataset.filter
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-        closeButton.addEventListener(
+        closeLightbox.addEventListener(
             "click",
-            closeLightbox
+            closeLightboxWindow
         );
 
-
-        previousButton.addEventListener(
-            "click",
-            previousMedia
-        );
-
-
-        nextButton.addEventListener(
-            "click",
-            nextMedia
-        );
-
-
-        /* =========================================================
-           CLICK OUTSIDE
-        ========================================================= */
 
         lightbox.addEventListener(
             "click",
@@ -2002,59 +1517,24 @@
                     lightbox
                 ) {
 
-                    closeLightbox();
+                    closeLightboxWindow();
 
                 }
 
             }
         );
 
-
-        /* =========================================================
-           KEYBOARD
-        ========================================================= */
 
         document.addEventListener(
             "keydown",
             event => {
 
                 if (
-                    !lightbox.classList.contains(
-                        "active"
-                    )
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
                     event.key ===
                     "Escape"
                 ) {
 
-                    closeLightbox();
-
-                }
-
-
-                if (
-                    event.key ===
-                    "ArrowLeft"
-                ) {
-
-                    previousMedia();
-
-                }
-
-
-                if (
-                    event.key ===
-                    "ArrowRight"
-                ) {
-
-                    nextMedia();
+                    closeLightboxWindow();
 
                 }
 
@@ -2063,7 +1543,7 @@
 
 
         /* =========================================================
-           RESIZE
+           WINDOW RESIZE
         ========================================================= */
 
         let resizeTimer;
@@ -2080,12 +1560,8 @@
 
                 resizeTimer =
                     setTimeout(
-                        () => {
-
-                            renderWall();
-
-                        },
-                        300
+                        resizeAllCards,
+                        150
                     );
 
             }
@@ -2093,36 +1569,12 @@
 
 
         /* =========================================================
-           ESCAPE HTML
-        ========================================================= */
-
-        function escapeHTML(
-            text
-        ) {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.textContent =
-                text;
-
-
-            return div.innerHTML;
-
-        }
-
-
-        /* =========================================================
            START
         ========================================================= */
 
-        loadMedia();
+        loadAllMedia();
 
     </script>
 
 </body>
-
 </html>
