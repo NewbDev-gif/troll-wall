@@ -11,11 +11,6 @@
     >
 
     <meta
-        name="description"
-        content="NOWIE VAULT"
-    >
-
-    <meta
         name="theme-color"
         content="#000000"
     >
@@ -36,7 +31,6 @@
 
         html {
             background: #000;
-            scroll-behavior: smooth;
         }
 
 
@@ -45,8 +39,9 @@
             margin: 0;
             padding: 0;
 
-            width: 100%;
             min-height: 100vh;
+
+            width: 100%;
 
             background: #000;
 
@@ -80,11 +75,6 @@
             background: #ff007f;
 
             border-radius: 10px;
-        }
-
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff3399;
         }
 
 
@@ -130,8 +120,6 @@
                     4vw,
                     2.2rem
                 );
-
-            font-weight: bold;
 
             letter-spacing: 5px;
 
@@ -209,21 +197,10 @@
             font-weight: bold;
 
             cursor: pointer;
-
-            transition:
-                background 0.2s,
-                color 0.2s;
         }
 
 
-        .filter-button:hover {
-
-            background: #ff007f;
-
-            color: #000;
-        }
-
-
+        .filter-button:hover,
         .filter-button.active {
 
             background: #ff007f;
@@ -233,7 +210,7 @@
 
 
         /* =========================================================
-           STATUS BAR
+           STATUS
         ========================================================= */
 
         #status-bar {
@@ -241,10 +218,6 @@
             display: flex;
 
             justify-content: center;
-
-            align-items: center;
-
-            flex-wrap: wrap;
 
             gap: 20px;
 
@@ -254,9 +227,9 @@
 
             border-bottom: 1px solid #222;
 
-            text-align: center;
-
             font-size: 0.75rem;
+
+            text-align: center;
         }
 
 
@@ -285,7 +258,7 @@
 
 
         /* =========================================================
-           MASONRY WALL
+           TRUE MASONRY
         ========================================================= */
 
         #wall {
@@ -306,10 +279,6 @@
         }
 
 
-        /* =========================================================
-           MASONRY COLUMNS
-        ========================================================= */
-
         .masonry-column {
 
             display: flex;
@@ -323,7 +292,7 @@
 
 
         /* =========================================================
-           MEDIA CARD
+           MEDIA
         ========================================================= */
 
         .media-link {
@@ -331,8 +300,6 @@
             display: block;
 
             width: 100%;
-
-            margin: 0;
 
             background: #000;
 
@@ -359,8 +326,6 @@
                 scale(1.03)
                 rotate(0.5deg);
 
-            z-index: 5;
-
             border-color: #fff;
 
             box-shadow:
@@ -371,10 +336,6 @@
                 brightness(1.15);
         }
 
-
-        /* =========================================================
-           MEDIA
-        ========================================================= */
 
         .media-item {
 
@@ -391,31 +352,10 @@
 
 
         /* =========================================================
-           LOADING
+           LOADING / ERROR
         ========================================================= */
 
-        .loading {
-
-            grid-column: 1 / -1;
-
-            width: 100%;
-
-            padding: 60px 20px;
-
-            color: #000;
-
-            text-align: center;
-
-            font-size: 1rem;
-
-            font-weight: bold;
-        }
-
-
-        /* =========================================================
-           ERROR
-        ========================================================= */
-
+        .loading,
         .error {
 
             grid-column: 1 / -1;
@@ -428,8 +368,7 @@
 
             color: #fff;
 
-            border:
-                2px solid #fff;
+            border: 2px solid #fff;
 
             text-align: center;
 
@@ -455,8 +394,7 @@
 
             justify-content: center;
 
-            padding:
-                60px 20px 40px;
+            padding: 60px 20px 40px;
 
             background:
                 rgba(0, 0, 0, 0.96);
@@ -475,8 +413,6 @@
             align-items: center;
 
             justify-content: center;
-
-            width: 100%;
 
             max-width: 95vw;
 
@@ -525,8 +461,6 @@
 
             height: 50px;
 
-            padding: 0;
-
             background: #000;
 
             color: #ff007f;
@@ -542,10 +476,6 @@
             font-size: 1.5rem;
 
             cursor: pointer;
-
-            transition:
-                background 0.2s,
-                color 0.2s;
         }
 
 
@@ -587,10 +517,6 @@
         }
 
 
-        /* =========================================================
-           LIGHTBOX INFORMATION
-        ========================================================= */
-
         #lightbox-info {
 
             position: absolute;
@@ -601,14 +527,13 @@
 
             bottom: 10px;
 
-            padding:
-                5px 60px;
-
             color: #00ff41;
 
             text-align: center;
 
             font-size: 0.75rem;
+
+            padding: 5px 60px;
 
             overflow: hidden;
 
@@ -626,8 +551,7 @@
 
             header {
 
-                padding:
-                    18px 10px;
+                padding: 18px 10px;
             }
 
 
@@ -651,8 +575,7 @@
 
                 gap: 5px;
 
-                padding:
-                    7px 5px;
+                padding: 7px 5px;
             }
 
 
@@ -684,76 +607,12 @@
             }
 
 
-            .media-link {
-
-                margin: 0;
-            }
-
-
             #previous,
             #next {
 
                 width: 40px;
 
                 height: 40px;
-
-                font-size: 1.2rem;
-            }
-
-
-            #previous {
-                left: 5px;
-            }
-
-
-            #next {
-                right: 5px;
-            }
-
-
-            #lightbox {
-
-                padding:
-                    50px 5px 35px;
-            }
-
-
-            #lightbox-content img,
-            #lightbox-content video {
-
-                max-width: 95vw;
-
-                max-height: 80vh;
-            }
-
-        }
-
-
-        /* =========================================================
-           REDUCED MOTION
-        ========================================================= */
-
-        @media (
-            prefers-reduced-motion: reduce
-        ) {
-
-            html {
-                scroll-behavior: auto;
-            }
-
-
-            *,
-            *::before,
-            *::after {
-
-                animation: none !important;
-
-                transition: none !important;
-            }
-
-
-            .media-link:hover {
-                transform: none;
             }
 
         }
@@ -785,7 +644,7 @@
 
 
     <!-- =========================================================
-         FILTER BAR
+         FILTERS
     ========================================================= -->
 
     <nav id="filter-bar">
@@ -825,24 +684,6 @@
             VIDEOS
         </button>
 
-
-        <button
-            class="filter-button"
-            data-filter="meme"
-            type="button"
-        >
-            MEMES
-        </button>
-
-
-        <button
-            class="filter-button"
-            data-filter="reaction"
-            type="button"
-        >
-            REACTIONS
-        </button>
-
     </nav>
 
 
@@ -853,9 +694,8 @@
     <div id="status-bar">
 
         <div id="status">
-            LOADING DATABASE...
+            CONNECTING TO VAULT...
         </div>
-
 
         <div id="counter">
             0 FILES
@@ -873,7 +713,9 @@
         <div id="wall">
 
             <div class="loading">
-                ACCESSING VAULT DATABASE...
+
+                ACCESSING VAULT...
+
             </div>
 
         </div>
@@ -893,7 +735,6 @@
         <button
             id="close-lightbox"
             class="lightbox-button"
-            aria-label="Close"
             type="button"
         >
             ×
@@ -903,7 +744,6 @@
         <button
             id="previous"
             class="lightbox-button"
-            aria-label="Previous"
             type="button"
         >
             ‹
@@ -916,7 +756,6 @@
         <button
             id="next"
             class="lightbox-button"
-            aria-label="Next"
             type="button"
         >
             ›
@@ -931,12 +770,19 @@
     <script>
 
         /* =========================================================
-           CONFIGURATION
+           GITHUB CONFIGURATION
         ========================================================= */
 
-        const mediaFolder = "media";
+        const username =
+            "NewbDev-gif";
 
-        const mediaDatabase = "media.json";
+
+        const repo =
+            "troll-wall";
+
+
+        const folder =
+            "media";
 
 
         /* =========================================================
@@ -944,19 +790,27 @@
         ========================================================= */
 
         const wall =
-            document.getElementById("wall");
+            document.getElementById(
+                "wall"
+            );
 
 
         const status =
-            document.getElementById("status");
+            document.getElementById(
+                "status"
+            );
 
 
         const counter =
-            document.getElementById("counter");
+            document.getElementById(
+                "counter"
+            );
 
 
         const lightbox =
-            document.getElementById("lightbox");
+            document.getElementById(
+                "lightbox"
+            );
 
 
         const lightboxContent =
@@ -1009,113 +863,132 @@
 
 
         /* =========================================================
-           VIDEO OBSERVER
+           GITHUB API
         ========================================================= */
 
-        const videoObserver =
-            new IntersectionObserver(
+        async function loadMedia() {
 
-                entries => {
-
-                    entries.forEach(
-                        entry => {
-
-                            const video =
-                                entry.target;
+            status.textContent =
+                "CONNECTING TO VAULT...";
 
 
-                            if (
-                                entry.isIntersecting
-                            ) {
+            const apiURL =
+                `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
 
-                                video
-                                    .play()
-                                    .catch(
-                                        () => {}
-                                    );
-
-                            } else {
-
-                                video.pause();
-
-                            }
-
-                        }
-                    );
-
-                },
-
-                {
-                    threshold: 0.25
-                }
-
-            );
-
-
-        /* =========================================================
-           LOAD DATABASE
-        ========================================================= */
-
-        async function loadDatabase() {
 
             try {
 
-                status.textContent =
-                    "LOADING MEDIA DATABASE...";
-
-
                 const response =
                     await fetch(
-                        `${mediaDatabase}?v=${Date.now()}`
+                        apiURL,
+                        {
+                            cache: "no-store"
+                        }
                     );
 
 
                 if (!response.ok) {
 
                     throw new Error(
-                        "media.json could not be loaded."
+                        `GitHub API returned ${response.status}`
                     );
 
                 }
 
 
-                const database =
+                const files =
                     await response.json();
 
 
                 if (
-                    !database.media ||
-                    !Array.isArray(
-                        database.media
-                    )
+                    !Array.isArray(files)
                 ) {
 
                     throw new Error(
-                        "Invalid media.json format."
+                        "GitHub did not return a folder."
                     );
 
                 }
 
 
+                /* =================================================
+                   SUPPORTED FILES
+                ================================================= */
+
+                const validExtensions = [
+
+                    "jpg",
+                    "jpeg",
+                    "png",
+                    "gif",
+                    "webp",
+                    "mp4",
+                    "mov",
+                    "webm"
+
+                ];
+
+
                 allMedia =
-                    database.media.filter(
-                        item =>
-                            item.file
-                    );
+                    files
+
+                        .filter(
+                            file =>
+                                file.type ===
+                                "file"
+                        )
+
+                        .filter(
+                            file => {
+
+                                const extension =
+                                    file.name
+                                        .split(".")
+                                        .pop()
+                                        .toLowerCase();
 
 
-                applyFilter("all");
+                                return validExtensions
+                                    .includes(
+                                        extension
+                                    );
+
+                            }
+                        )
+
+                        .sort(
+                            (a, b) =>
+                                a.name.localeCompare(
+                                    b.name,
+                                    undefined,
+                                    {
+                                        numeric: true
+                                    }
+                                )
+                        );
+
+
+                counter.textContent =
+                    `${allMedia.length} FILES`;
 
 
                 status.textContent =
                     "DATABASE ONLINE";
+
+
+                applyFilter(
+                    "all"
+                );
 
             }
 
 
             catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Vault connection error:",
+                    error
+                );
 
 
                 status.textContent =
@@ -1140,14 +1013,15 @@
 
                         <br><br>
 
-                        Make sure
+                        Make sure the
                         <strong>
-                            media.json
+                            media
                         </strong>
-                        exists beside
-                        <strong>
-                            index.html
-                        </strong>.
+                        folder exists in:
+
+                        <br><br>
+
+                        ${username}/${repo}
 
                     </div>
 
@@ -1159,26 +1033,74 @@
 
 
         /* =========================================================
-           APPLY FILTER
+           FILE TYPE
         ========================================================= */
 
-        function applyFilter(filter) {
+        function getFileType(
+            file
+        ) {
 
-            currentFilter = filter;
+            const extension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
 
 
-            if (filter === "all") {
+            if (
+                extension === "mp4" ||
+                extension === "mov" ||
+                extension === "webm"
+            ) {
+
+                return "video";
+
+            }
+
+
+            if (
+                extension === "gif"
+            ) {
+
+                return "gif";
+
+            }
+
+
+            return "image";
+
+        }
+
+
+        /* =========================================================
+           FILTER
+        ========================================================= */
+
+        function applyFilter(
+            filter
+        ) {
+
+            currentFilter =
+                filter;
+
+
+            if (
+                filter === "all"
+            ) {
 
                 filteredMedia =
                     [...allMedia];
 
-            } else {
+            }
+
+            else {
 
                 filteredMedia =
                     allMedia.filter(
-                        item =>
-                            item.category === filter ||
-                            item.type === filter
+                        file =>
+                            getFileType(
+                                file
+                            ) === filter
                     );
 
             }
@@ -1194,7 +1116,7 @@
 
 
         /* =========================================================
-           DETERMINE NUMBER OF COLUMNS
+           COLUMN COUNT
         ========================================================= */
 
         function getColumnCount() {
@@ -1203,34 +1125,52 @@
                 window.innerWidth;
 
 
-            if (width <= 500) {
+            if (
+                width <= 500
+            ) {
+
                 return 2;
+
             }
 
 
-            if (width <= 900) {
+            if (
+                width <= 800
+            ) {
+
                 return 3;
+
             }
 
 
-            if (width <= 1200) {
+            if (
+                width <= 1100
+            ) {
+
                 return 4;
+
             }
 
 
-            return Math.max(
-                1,
-                Math.floor(width / 300)
-            );
+            if (
+                width <= 1400
+            ) {
+
+                return 5;
+
+            }
+
+
+            return 6;
 
         }
 
 
         /* =========================================================
-           RENDER MASONRY WALL
+           RENDER WALL
         ========================================================= */
 
-        async function renderWall() {
+        function renderWall() {
 
             wall.innerHTML = "";
 
@@ -1250,13 +1190,6 @@
                     <div class="error">
 
                         NO MEDIA FOUND
-
-                        <br><br>
-
-                        FILTER:
-                        ${escapeHTML(
-                            currentFilter
-                        )}
 
                     </div>
 
@@ -1290,7 +1223,8 @@
 
             const columns = [];
 
-            const columnHeights = [];
+
+            const heights = [];
 
 
             for (
@@ -1319,499 +1253,35 @@
                 );
 
 
-                columnHeights.push(0);
+                heights.push(
+                    0
+                );
 
             }
 
 
             /* =====================================================
-               PREPARE MEDIA
+               ADD MEDIA
             ===================================================== */
 
-            const preparedMedia = [];
+            filteredMedia.forEach(
+                (
+                    file,
+                    index
+                ) => {
 
 
-            for (
-                let index = 0;
-                index < filteredMedia.length;
-                index++
-            ) {
-
-                const file =
-                    filteredMedia[index];
-
-
-                const element =
-                    await createMediaElement(
-                        file,
-                        index
-                    );
-
-
-                /*
-                    Estimate the height
-                    using the actual media
-                    dimensions.
-                */
-
-                const estimatedHeight =
-                    getEstimatedHeight(
-                        element,
-                        columnCount
-                    );
-
-
-                preparedMedia.push({
-
-                    element:
-                        element,
-
-                    height:
-                        estimatedHeight,
-
-                    index:
-                        index
-
-                });
-
-            }
-
-
-            /* =====================================================
-               PLACE EACH ITEM IN SHORTEST COLUMN
-            ===================================================== */
-
-            preparedMedia.forEach(
-                item => {
-
-                    let shortest =
-                        0;
-
-
-                    for (
-                        let i = 1;
-                        i < columnHeights.length;
-                        i++
-                    ) {
-
-                        if (
-                            columnHeights[i] <
-                            columnHeights[shortest]
-                        ) {
-
-                            shortest = i;
-
-                        }
-
-                    }
-
-
-                    columns[shortest]
-                        .appendChild(
-                            item.element
-                        );
-
-
-                    columnHeights[shortest] +=
-                        item.height;
-
-                }
-            );
-
-
-            /*
-                Recalculate after images
-                have actually loaded.
-            */
-
-            requestAnimationFrame(
-                () => {
-
-                    rebalanceMasonry();
-
-                }
-            );
-
-        }
-
-
-        /* =========================================================
-           CREATE MEDIA ELEMENT
-        ========================================================= */
-
-        function createMediaElement(
-            file,
-            index
-        ) {
-
-            return new Promise(
-                resolve => {
-
-                    const extension =
-                        file.file
-                            .split(".")
-                            .pop()
-                            .toLowerCase();
-
-
-                    const type =
-                        getMediaType(
+                    const card =
+                        createMediaCard(
                             file,
-                            extension
+                            index
                         );
-
-
-                    const link =
-                        document.createElement(
-                            "a"
-                        );
-
-
-                    link.href = "#";
-
-                    link.className =
-                        "media-link";
-
-
-                    link.dataset.index =
-                        index;
-
-
-                    link.addEventListener(
-                        "click",
-                        event => {
-
-                            event.preventDefault();
-
-                            openLightbox(
-                                index
-                            );
-
-                        }
-                    );
-
-
-                    let element;
-
-
-                    /* =================================================
-                       VIDEO
-                    ================================================= */
-
-                    if (
-                        type === "video"
-                    ) {
-
-                        element =
-                            document.createElement(
-                                "video"
-                            );
-
-
-                        element.src =
-                            `${mediaFolder}/${encodeURIComponent(
-                                file.file
-                            )}`;
-
-
-                        element.muted =
-                            true;
-
-
-                        element.loop =
-                            true;
-
-
-                        element.playsInline =
-                            true;
-
-
-                        element.preload =
-                            "metadata";
-
-
-                        element.className =
-                            "media-item";
-
-
-                        videoObserver.observe(
-                            element
-                        );
-
-
-                        element.addEventListener(
-                            "loadedmetadata",
-                            () => {
-
-                                resolve(link);
-
-                            },
-
-                            {
-                                once: true
-                            }
-                        );
-
-
-                    }
-
-                    /* =================================================
-                       IMAGE
-                    ================================================= */
-
-                    else {
-
-                        element =
-                            document.createElement(
-                                "img"
-                            );
-
-
-                        element.src =
-                            `${mediaFolder}/${encodeURIComponent(
-                                file.file
-                            )}`;
-
-
-                        element.loading =
-                            "lazy";
-
-
-                        element.decoding =
-                            "async";
-
-
-                        element.alt =
-                            file.title ||
-                            file.file;
-
-
-                        element.className =
-                            "media-item";
-
-
-                        element.addEventListener(
-                            "load",
-                            () => {
-
-                                resolve(link);
-
-                            },
-
-                            {
-                                once: true
-                            }
-                        );
-
-                    }
-
-
-                    /* =================================================
-                       ERROR
-                    ================================================= */
-
-                    element.addEventListener(
-                        "error",
-                        () => {
-
-                            console.warn(
-                                "Failed to load:",
-                                file.file
-                            );
-
-
-                            resolve(link);
-
-                        },
-
-                        {
-                            once: true
-                        }
-                    );
-
-
-                    link.appendChild(
-                        element
-                    );
 
 
                     /*
-                        If the browser has
-                        already loaded the image.
+                        Find the shortest
+                        column.
                     */
-
-                    if (
-                        element.complete
-                    ) {
-
-                        setTimeout(
-                            () => resolve(link),
-                            0
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        /* =========================================================
-           ESTIMATE MEDIA HEIGHT
-        ========================================================= */
-
-        function getEstimatedHeight(
-            link,
-            columnCount
-        ) {
-
-            const media =
-                link.querySelector(
-                    ".media-item"
-                );
-
-
-            if (!media) {
-                return 300;
-            }
-
-
-            let ratio = 1;
-
-
-            if (
-                media.naturalWidth &&
-                media.naturalHeight
-            ) {
-
-                ratio =
-                    media.naturalHeight /
-                    media.naturalWidth;
-
-            }
-
-
-            /*
-                Approximate column width.
-            */
-
-            const wallWidth =
-                wall.clientWidth;
-
-
-            const gap = 15;
-
-
-            const columnWidth =
-                (
-                    wallWidth -
-                    (
-                        gap *
-                        (columnCount - 1)
-                    )
-                ) /
-                columnCount;
-
-
-            return (
-                columnWidth *
-                ratio
-            ) + 15;
-
-        }
-
-
-        /* =========================================================
-           REBALANCE AFTER LOADING
-        ========================================================= */
-
-        function rebalanceMasonry() {
-
-            if (
-                filteredMedia.length === 0
-            ) {
-                return;
-            }
-
-
-            /*
-                Rebuild the wall using
-                actual rendered heights.
-            */
-
-            const items = [];
-
-
-            document
-                .querySelectorAll(
-                    ".media-link"
-                )
-                .forEach(
-                    item => {
-
-                        const index =
-                            Number(
-                                item.dataset.index
-                            );
-
-
-                        items.push({
-
-                            element:
-                                item,
-
-                            index:
-                                index
-
-                        });
-
-                    }
-                );
-
-
-            if (
-                items.length === 0
-            ) {
-                return;
-            }
-
-
-            const columns =
-                Array.from(
-                    document.querySelectorAll(
-                        ".masonry-column"
-                    )
-                );
-
-
-            const heights =
-                columns.map(
-                    () => 0
-                );
-
-
-            /*
-                Remove items.
-            */
-
-            columns.forEach(
-                column => {
-
-                    column.innerHTML =
-                        "";
-
-                }
-            );
-
-
-            /*
-                Reinsert items based
-                on real dimensions.
-            */
-
-            items.forEach(
-                item => {
 
                     let shortest =
                         0;
@@ -1828,22 +1298,410 @@
                             heights[shortest]
                         ) {
 
-                            shortest = i;
+                            shortest =
+                                i;
 
                         }
 
                     }
 
 
-                    columns[shortest]
-                        .appendChild(
-                            item.element
-                        );
+                    columns[
+                        shortest
+                    ].appendChild(
+                        card
+                    );
 
 
-                    heights[shortest] =
-                        columns[shortest]
-                            .getBoundingClientRect()
+                    /*
+                        Temporary height.
+                        It will be corrected
+                        after images load.
+                    */
+
+                    heights[
+                        shortest
+                    ] += 1;
+
+                }
+            );
+
+
+            /*
+                Wait for browser to
+                render media, then
+                properly balance columns.
+            */
+
+            waitForImages();
+
+        }
+
+
+        /* =========================================================
+           CREATE CARD
+        ========================================================= */
+
+        function createMediaCard(
+            file,
+            index
+        ) {
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href = "#";
+
+
+            link.className =
+                "media-link";
+
+
+            link.dataset.index =
+                index;
+
+
+            link.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+                    openLightbox(
+                        index
+                    );
+
+                }
+            );
+
+
+            const type =
+                getFileType(
+                    file
+                );
+
+
+            let element;
+
+
+            /* =====================================================
+               VIDEO
+            ===================================================== */
+
+            if (
+                type === "video"
+            ) {
+
+                element =
+                    document.createElement(
+                        "video"
+                    );
+
+
+                element.src =
+                    file.download_url;
+
+
+                element.autoplay =
+                    true;
+
+
+                element.loop =
+                    true;
+
+
+                element.muted =
+                    true;
+
+
+                element.playsInline =
+                    true;
+
+
+                element.preload =
+                    "metadata";
+
+            }
+
+
+            /* =====================================================
+               IMAGE
+            ===================================================== */
+
+            else {
+
+                element =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                element.src =
+                    file.download_url;
+
+
+                element.loading =
+                    "lazy";
+
+
+                element.decoding =
+                    "async";
+
+
+                element.alt =
+                    file.name;
+
+            }
+
+
+            element.className =
+                "media-item";
+
+
+            link.appendChild(
+                element
+            );
+
+
+            return link;
+
+        }
+
+
+        /* =========================================================
+           BALANCE MASONRY
+        ========================================================= */
+
+        function waitForImages() {
+
+            const media =
+                document.querySelectorAll(
+                    ".media-item"
+                );
+
+
+            if (
+                media.length === 0
+            ) {
+
+                return;
+
+            }
+
+
+            let remaining =
+                media.length;
+
+
+            const finished =
+                () => {
+
+                    remaining--;
+
+
+                    if (
+                        remaining <= 0
+                    ) {
+
+                        rebalance();
+
+                    }
+
+                };
+
+
+            media.forEach(
+                element => {
+
+                    if (
+                        element.tagName ===
+                        "VIDEO"
+                    ) {
+
+                        if (
+                            element.readyState >=
+                            1
+                        ) {
+
+                            finished();
+
+                        }
+
+                        else {
+
+                            element.addEventListener(
+                                "loadedmetadata",
+                                finished,
+                                {
+                                    once: true
+                                }
+                            );
+
+                            element.addEventListener(
+                                "error",
+                                finished,
+                                {
+                                    once: true
+                                }
+                            );
+
+                        }
+
+                    }
+
+                    else {
+
+                        if (
+                            element.complete
+                        ) {
+
+                            finished();
+
+                        }
+
+                        else {
+
+                            element.addEventListener(
+                                "load",
+                                finished,
+                                {
+                                    once: true
+                                }
+                            );
+
+                            element.addEventListener(
+                                "error",
+                                finished,
+                                {
+                                    once: true
+                                }
+                            );
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /*
+                Safety fallback.
+
+                Prevents one broken image
+                from stopping masonry.
+            */
+
+            setTimeout(
+                () => {
+
+                    rebalance();
+
+                },
+                2000
+            );
+
+        }
+
+
+        /* =========================================================
+           REBALANCE
+        ========================================================= */
+
+        function rebalance() {
+
+            const cards =
+                Array.from(
+                    document.querySelectorAll(
+                        ".media-link"
+                    )
+                );
+
+
+            const columns =
+                Array.from(
+                    document.querySelectorAll(
+                        ".masonry-column"
+                    )
+                );
+
+
+            if (
+                columns.length === 0
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+                Remove cards first.
+            */
+
+            columns.forEach(
+                column => {
+
+                    column.innerHTML =
+                        "";
+
+                }
+            );
+
+
+            const heights =
+                columns.map(
+                    () => 0
+                );
+
+
+            /*
+                Place cards into
+                shortest column.
+            */
+
+            cards.forEach(
+                card => {
+
+                    let shortest =
+                        0;
+
+
+                    for (
+                        let i = 1;
+                        i < heights.length;
+                        i++
+                    ) {
+
+                        if (
+                            heights[i] <
+                            heights[shortest]
+                        ) {
+
+                            shortest =
+                                i;
+
+                        }
+
+                    }
+
+
+                    columns[
+                        shortest
+                    ].appendChild(
+                        card
+                    );
+
+
+                    heights[
+                        shortest
+                    ] =
+                        columns[
+                            shortest
+                        ].getBoundingClientRect()
                             .height;
 
                 }
@@ -1853,59 +1711,12 @@
 
 
         /* =========================================================
-           MEDIA TYPE
+           LIGHTBOX
         ========================================================= */
 
-        function getMediaType(
-            file,
-            extension
+        function openLightbox(
+            index
         ) {
-
-            if (file.type) {
-                return file.type;
-            }
-
-
-            if (
-                extension === "mp4" ||
-                extension === "mov" ||
-                extension === "webm"
-            ) {
-
-                return "video";
-
-            }
-
-
-            if (
-                extension === "gif"
-            ) {
-
-                return "gif";
-
-            }
-
-
-            return "image";
-
-        }
-
-
-        /* =========================================================
-           LIGHTBOX OPEN
-        ========================================================= */
-
-        function openLightbox(index) {
-
-            if (
-                index < 0 ||
-                index >= filteredMedia.length
-            ) {
-
-                return;
-
-            }
-
 
             currentIndex =
                 index;
@@ -1932,7 +1743,7 @@
 
 
         /* =========================================================
-           LIGHTBOX RENDER
+           RENDER LIGHTBOX
         ========================================================= */
 
         function renderLightbox() {
@@ -1943,17 +1754,14 @@
                 ];
 
 
-            const extension =
-                file.file
-                    .split(".")
-                    .pop()
-                    .toLowerCase();
+            if (!file) {
+                return;
+            }
 
 
             const type =
-                getMediaType(
-                    file,
-                    extension
+                getFileType(
+                    file
                 );
 
 
@@ -1975,9 +1783,7 @@
 
 
                 element.src =
-                    `${mediaFolder}/${encodeURIComponent(
-                        file.file
-                    )}`;
+                    file.download_url;
 
 
                 element.controls =
@@ -2010,14 +1816,11 @@
 
 
                 element.src =
-                    `${mediaFolder}/${encodeURIComponent(
-                        file.file
-                    )}`;
+                    file.download_url;
 
 
                 element.alt =
-                    file.title ||
-                    file.file;
+                    file.name;
 
             }
 
@@ -2031,15 +1834,14 @@
                 `${currentIndex + 1} / ${
                     filteredMedia.length
                 } — ${
-                    file.title ||
-                    file.file
+                    file.name
                 }`;
 
         }
 
 
         /* =========================================================
-           CLOSE LIGHTBOX
+           CLOSE
         ========================================================= */
 
         function closeLightbox() {
@@ -2074,7 +1876,9 @@
             if (
                 filteredMedia.length === 0
             ) {
+
                 return;
+
             }
 
 
@@ -2105,7 +1909,9 @@
             if (
                 filteredMedia.length === 0
             ) {
+
                 return;
+
             }
 
 
@@ -2128,7 +1934,7 @@
 
 
         /* =========================================================
-           FILTER BUTTONS
+           BUTTONS
         ========================================================= */
 
         filterButtons.forEach(
@@ -2164,10 +1970,6 @@
             }
         );
 
-
-        /* =========================================================
-           LIGHTBOX BUTTONS
-        ========================================================= */
 
         closeButton.addEventListener(
             "click",
@@ -2223,11 +2025,13 @@
                 ) {
 
                     return;
+
                 }
 
 
                 if (
-                    event.key === "Escape"
+                    event.key ===
+                    "Escape"
                 ) {
 
                     closeLightbox();
@@ -2236,7 +2040,8 @@
 
 
                 if (
-                    event.key === "ArrowLeft"
+                    event.key ===
+                    "ArrowLeft"
                 ) {
 
                     previousMedia();
@@ -2245,7 +2050,8 @@
 
 
                 if (
-                    event.key === "ArrowRight"
+                    event.key ===
+                    "ArrowRight"
                 ) {
 
                     nextMedia();
@@ -2257,7 +2063,7 @@
 
 
         /* =========================================================
-           WINDOW RESIZE
+           RESIZE
         ========================================================= */
 
         let resizeTimer;
@@ -2279,7 +2085,7 @@
                             renderWall();
 
                         },
-                        250
+                        300
                     );
 
             }
@@ -2287,10 +2093,12 @@
 
 
         /* =========================================================
-           HTML ESCAPE
+           ESCAPE HTML
         ========================================================= */
 
-        function escapeHTML(text) {
+        function escapeHTML(
+            text
+        ) {
 
             const div =
                 document.createElement(
@@ -2311,7 +2119,7 @@
            START
         ========================================================= */
 
-        loadDatabase();
+        loadMedia();
 
     </script>
 
