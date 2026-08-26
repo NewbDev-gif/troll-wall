@@ -1,4 +1,35 @@
 {
     "version": 1,
-    "media": []
+    "media": [
+        {
+            "file": "nowie.mp4",
+            "type": "video",
+            "category": "video",
+            "title": "nowie"
+        },
+        {
+            "file": "nowie1.png",
+            "type": "image",
+            "category": "meme",
+            "title": "nowie1"
+        },
+        {
+            "file": "nowie2.png",
+            "type": "image",
+            "category": "meme",
+            "title": "nowie2"
+        },
+        {
+            "file": "nowie3.png",
+            "type": "image",
+            "category": "meme",
+            "title": "nowie3"
+        },
+        {
+            "file": "nowie4.png",
+            "type": "image",
+            "category": "meme",
+            "title": "nowie4"
+        }
+    ]
 }
