@@ -26,19 +26,22 @@
     <style>
 
         /* =========================================================
-           RESET / GLOBAL
+           GLOBAL
         ========================================================= */
 
         * {
             box-sizing: border-box;
         }
 
+
         html {
             background: #000;
             scroll-behavior: smooth;
         }
 
+
         body {
+
             margin: 0;
             padding: 0;
 
@@ -59,21 +62,26 @@
 
 
         /* =========================================================
-           CUSTOM SCROLLBAR
+           SCROLLBAR
         ========================================================= */
 
         ::-webkit-scrollbar {
             width: 8px;
         }
 
+
         ::-webkit-scrollbar-track {
             background: #000;
         }
 
+
         ::-webkit-scrollbar-thumb {
+
             background: #ff007f;
+
             border-radius: 10px;
         }
+
 
         ::-webkit-scrollbar-thumb:hover {
             background: #ff3399;
@@ -151,6 +159,80 @@
 
 
         /* =========================================================
+           FILTER BAR
+        ========================================================= */
+
+        #filter-bar {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            padding: 10px 15px;
+
+            background: #050505;
+
+            border-bottom: 1px solid #222;
+
+            position: sticky;
+
+            top: 101px;
+
+            z-index: 900;
+        }
+
+
+        .filter-button {
+
+            padding: 7px 14px;
+
+            background: #000;
+
+            color: #ff007f;
+
+            border:
+                1px solid #ff007f;
+
+            font-family:
+                "Courier New",
+                Courier,
+                monospace;
+
+            font-size: 0.75rem;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                color 0.2s;
+        }
+
+
+        .filter-button:hover {
+
+            background: #ff007f;
+
+            color: #000;
+        }
+
+
+        .filter-button.active {
+
+            background: #ff007f;
+
+            color: #000;
+        }
+
+
+        /* =========================================================
            STATUS BAR
         ========================================================= */
 
@@ -166,13 +248,11 @@
 
             gap: 20px;
 
-            padding:
-                10px 15px;
+            padding: 9px 15px;
 
             background: #050505;
 
-            border-bottom:
-                1px solid #222;
+            border-bottom: 1px solid #222;
 
             text-align: center;
 
@@ -181,19 +261,17 @@
 
 
         #status {
-
             color: #00ff41;
         }
 
 
         #counter {
-
             color: #ff007f;
         }
 
 
         /* =========================================================
-           MEDIA WALL CONTAINER
+           WALL CONTAINER
         ========================================================= */
 
         #wall-container {
@@ -212,32 +290,49 @@
 
         #wall {
 
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    var(--columns, 1),
+                    minmax(0, 1fr)
+                );
+
+            gap: 15px;
+
             width: 100%;
 
-            /*
-                Automatically changes the number
-                of columns depending on screen width.
-            */
-
-            column-width: 280px;
-
-            column-gap: 15px;
+            align-items: start;
         }
 
 
         /* =========================================================
-           MEDIA ITEM
+           MASONRY COLUMNS
+        ========================================================= */
+
+        .masonry-column {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+
+            min-width: 0;
+        }
+
+
+        /* =========================================================
+           MEDIA CARD
         ========================================================= */
 
         .media-link {
 
-            display: inline-block;
+            display: block;
 
             width: 100%;
 
-            margin-bottom: 15px;
-
-            break-inside: avoid;
+            margin: 0;
 
             background: #000;
 
@@ -247,6 +342,8 @@
             line-height: 0;
 
             cursor: pointer;
+
+            overflow: hidden;
 
             transition:
                 transform 0.3s ease,
@@ -275,6 +372,10 @@
         }
 
 
+        /* =========================================================
+           MEDIA
+        ========================================================= */
+
         .media-item {
 
             display: block;
@@ -295,6 +396,8 @@
 
         .loading {
 
+            grid-column: 1 / -1;
+
             width: 100%;
 
             padding: 60px 20px;
@@ -314,6 +417,8 @@
         ========================================================= */
 
         .error {
+
+            grid-column: 1 / -1;
 
             width: 100%;
 
@@ -359,14 +464,9 @@
 
 
         #lightbox.active {
-
             display: flex;
         }
 
-
-        /* =========================================================
-           LIGHTBOX CONTENT
-        ========================================================= */
 
         #lightbox-content {
 
@@ -408,7 +508,7 @@
 
 
         /* =========================================================
-           LIGHTBOX BUTTON
+           LIGHTBOX BUTTONS
         ========================================================= */
 
         .lightbox-button {
@@ -457,10 +557,6 @@
         }
 
 
-        /* =========================================================
-           CLOSE
-        ========================================================= */
-
         #close-lightbox {
 
             top: 15px;
@@ -468,10 +564,6 @@
             right: 15px;
         }
 
-
-        /* =========================================================
-           PREVIOUS
-        ========================================================= */
 
         #previous {
 
@@ -483,10 +575,6 @@
                 translateY(-50%);
         }
 
-
-        /* =========================================================
-           NEXT
-        ========================================================= */
 
         #next {
 
@@ -547,15 +635,34 @@
 
                 letter-spacing: 2px;
 
-                font-size:
-                    1.4rem;
+                font-size: 1.4rem;
             }
 
 
             header span {
 
+                font-size: 0.7rem;
+            }
+
+
+            #filter-bar {
+
+                top: 86px;
+
+                gap: 5px;
+
+                padding:
+                    7px 5px;
+            }
+
+
+            .filter-button {
+
+                padding:
+                    6px 9px;
+
                 font-size:
-                    0.7rem;
+                    0.65rem;
             }
 
 
@@ -567,15 +674,19 @@
 
             #wall {
 
-                column-width: 160px;
+                gap: 10px;
+            }
 
-                column-gap: 10px;
+
+            .masonry-column {
+
+                gap: 10px;
             }
 
 
             .media-link {
 
-                margin-bottom: 10px;
+                margin: 0;
             }
 
 
@@ -591,13 +702,11 @@
 
 
             #previous {
-
                 left: 5px;
             }
 
 
             #next {
-
                 right: 5px;
             }
 
@@ -629,7 +738,6 @@
         ) {
 
             html {
-
                 scroll-behavior: auto;
             }
 
@@ -645,7 +753,6 @@
 
 
             .media-link:hover {
-
                 transform: none;
             }
 
@@ -669,7 +776,6 @@
             🚨 SYSTEM BREACH 🚨
         </h1>
 
-
         <span>
             DECRYPTING NOWIE VAULT DATA...
             ACCESS GRANTED
@@ -679,13 +785,75 @@
 
 
     <!-- =========================================================
-         STATUS BAR
+         FILTER BAR
+    ========================================================= -->
+
+    <nav id="filter-bar">
+
+        <button
+            class="filter-button active"
+            data-filter="all"
+            type="button"
+        >
+            ALL
+        </button>
+
+
+        <button
+            class="filter-button"
+            data-filter="image"
+            type="button"
+        >
+            IMAGES
+        </button>
+
+
+        <button
+            class="filter-button"
+            data-filter="gif"
+            type="button"
+        >
+            GIFS
+        </button>
+
+
+        <button
+            class="filter-button"
+            data-filter="video"
+            type="button"
+        >
+            VIDEOS
+        </button>
+
+
+        <button
+            class="filter-button"
+            data-filter="meme"
+            type="button"
+        >
+            MEMES
+        </button>
+
+
+        <button
+            class="filter-button"
+            data-filter="reaction"
+            type="button"
+        >
+            REACTIONS
+        </button>
+
+    </nav>
+
+
+    <!-- =========================================================
+         STATUS
     ========================================================= -->
 
     <div id="status-bar">
 
         <div id="status">
-            CONNECTING TO VAULT...
+            LOADING DATABASE...
         </div>
 
 
@@ -697,7 +865,7 @@
 
 
     <!-- =========================================================
-         MEDIA WALL
+         WALL
     ========================================================= -->
 
     <main id="wall-container">
@@ -705,7 +873,7 @@
         <div id="wall">
 
             <div class="loading">
-                ACCESSING VAULT...
+                ACCESSING VAULT DATABASE...
             </div>
 
         </div>
@@ -722,9 +890,6 @@
         aria-hidden="true"
     >
 
-
-        <!-- CLOSE -->
-
         <button
             id="close-lightbox"
             class="lightbox-button"
@@ -734,8 +899,6 @@
             ×
         </button>
 
-
-        <!-- PREVIOUS -->
 
         <button
             id="previous"
@@ -747,12 +910,8 @@
         </button>
 
 
-        <!-- MEDIA -->
-
         <div id="lightbox-content"></div>
 
-
-        <!-- NEXT -->
 
         <button
             id="next"
@@ -763,8 +922,6 @@
             ›
         </button>
 
-
-        <!-- INFORMATION -->
 
         <div id="lightbox-info"></div>
 
@@ -777,44 +934,13 @@
            CONFIGURATION
         ========================================================= */
 
+        const mediaFolder = "media";
 
-        /*
-            GitHub username
-        */
-
-        const username =
-            "NewbDev-gif";
-
-
-        /*
-            Repository name
-        */
-
-        const repo =
-            "troll-wall";
-
-
-        /*
-            Folder containing all media
-        */
-
-        const folder =
-            "media";
-
-
-        /*
-            Facebook profile
-
-            We will use this later for a
-            separate Facebook button.
-        */
-
-        const fbLink =
-            "https://www.facebook.com/profile.php?id=61575848311942";
+        const mediaDatabase = "media.json";
 
 
         /* =========================================================
-           DOM ELEMENTS
+           ELEMENTS
         ========================================================= */
 
         const wall =
@@ -863,46 +989,28 @@
             );
 
 
-        /* =========================================================
-           SUPPORTED MEDIA
-        ========================================================= */
-
-        const validTypes = [
-
-            "jpg",
-            "jpeg",
-            "png",
-            "gif",
-            "webp",
-
-            "mp4",
-            "mov",
-            "webm"
-
-        ];
+        const filterButtons =
+            document.querySelectorAll(
+                ".filter-button"
+            );
 
 
         /* =========================================================
-           MEDIA STORAGE
+           DATA
         ========================================================= */
 
-        let mediaFiles = [];
+        let allMedia = [];
 
+        let filteredMedia = [];
 
         let currentIndex = 0;
+
+        let currentFilter = "all";
 
 
         /* =========================================================
            VIDEO OBSERVER
         ========================================================= */
-
-        /*
-            This prevents every video from playing
-            at the same time.
-
-            Videos play only when they become
-            visible on screen.
-        */
 
         const videoObserver =
             new IntersectionObserver(
@@ -926,9 +1034,7 @@
                                         () => {}
                                     );
 
-                            }
-
-                            else {
+                            } else {
 
                                 video.pause();
 
@@ -947,233 +1053,73 @@
 
 
         /* =========================================================
-           LOAD MEDIA FROM GITHUB
+           LOAD DATABASE
         ========================================================= */
 
-        async function loadMedia() {
+        async function loadDatabase() {
 
             try {
 
-
                 status.textContent =
-                    "CONNECTING TO GITHUB VAULT...";
+                    "LOADING MEDIA DATABASE...";
 
-
-                /*
-                    GitHub API
-                */
-
-                const url =
-                    `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
-
-
-                /*
-                    Request files
-                */
 
                 const response =
-                    await fetch(url);
+                    await fetch(
+                        `${mediaDatabase}?v=${Date.now()}`
+                    );
 
-
-                /*
-                    Check HTTP response
-                */
 
                 if (!response.ok) {
 
                     throw new Error(
-                        `GitHub API Error: ${response.status}`
+                        "media.json could not be loaded."
                     );
 
                 }
 
 
-                /*
-                    Convert response to JSON
-                */
-
-                const files =
+                const database =
                     await response.json();
 
 
-                /*
-                    Make sure GitHub returned
-                    an array.
-                */
-
                 if (
-                    !Array.isArray(files)
+                    !database.media ||
+                    !Array.isArray(
+                        database.media
+                    )
                 ) {
 
                     throw new Error(
-                        "Invalid GitHub response."
+                        "Invalid media.json format."
                     );
 
                 }
 
 
-                /* =================================================
-                   FILTER MEDIA
-                ================================================= */
+                allMedia =
+                    database.media.filter(
+                        item =>
+                            item.file
+                    );
 
 
-                mediaFiles =
-                    files
-
-                        .filter(
-                            file => {
-
-                                /*
-                                    Ignore folders.
-                                */
-
-                                if (
-                                    file.type !==
-                                    "file"
-                                ) {
-
-                                    return false;
-
-                                }
-
-
-                                /*
-                                    Get extension.
-                                */
-
-                                const extension =
-                                    file.name
-                                        .split(".")
-                                        .pop()
-                                        .toLowerCase();
-
-
-                                /*
-                                    Only allow
-                                    supported files.
-                                */
-
-                                return validTypes
-                                    .includes(
-                                        extension
-                                    );
-
-                            }
-                        )
-
-
-                        /* =================================================
-                           SORT FILES
-                        ================================================= */
-
-                        .sort(
-                            (a, b) => {
-
-                                return a.name.localeCompare(
-                                    b.name,
-
-                                    undefined,
-
-                                    {
-                                        numeric: true,
-
-                                        sensitivity:
-                                            "base"
-                                    }
-                                );
-
-                            }
-                        );
-
-
-                /* =================================================
-                   EMPTY FOLDER
-                ================================================= */
-
-                if (
-                    mediaFiles.length === 0
-                ) {
-
-                    wall.innerHTML = `
-
-                        <div class="error">
-
-                            ⚠ VAULT IS EMPTY
-
-                            <br><br>
-
-                            NO SUPPORTED MEDIA FOUND
-
-                        </div>
-
-                    `;
-
-
-                    status.textContent =
-                        "NO MEDIA FOUND";
-
-
-                    counter.textContent =
-                        "0 FILES";
-
-
-                    return;
-
-                }
-
-
-                /* =================================================
-                   UPDATE COUNTER
-                ================================================= */
-
-                counter.textContent =
-                    `${mediaFiles.length} FILES`;
+                applyFilter("all");
 
 
                 status.textContent =
-                    "ACCESS GRANTED";
-
-
-                /* =================================================
-                   REMOVE LOADING
-                ================================================= */
-
-                wall.innerHTML = "";
-
-
-                /* =================================================
-                   CREATE MEDIA
-                ================================================= */
-
-                mediaFiles.forEach(
-                    (file, index) => {
-
-                        createMediaElement(
-                            file,
-                            index
-                        );
-
-                    }
-                );
+                    "DATABASE ONLINE";
 
             }
 
 
-            /* =====================================================
-               ERROR HANDLING
-            ===================================================== */
-
             catch (error) {
 
-
-                console.error(
-                    "Vault connection lost:",
-                    error
-                );
+                console.error(error);
 
 
                 status.textContent =
-                    "CONNECTION FAILED";
+                    "DATABASE ERROR";
 
 
                 counter.textContent =
@@ -1184,17 +1130,24 @@
 
                     <div class="error">
 
-                        ⚠ SYSTEM ERROR
-
-                        <br>
-
-                        VAULT CONNECTION LOST
+                        ⚠ DATABASE ERROR
 
                         <br><br>
 
-                        <small>
-                            Please refresh the page.
-                        </small>
+                        ${escapeHTML(
+                            error.message
+                        )}
+
+                        <br><br>
+
+                        Make sure
+                        <strong>
+                            media.json
+                        </strong>
+                        exists beside
+                        <strong>
+                            index.html
+                        </strong>.
 
                     </div>
 
@@ -1206,7 +1159,284 @@
 
 
         /* =========================================================
-           CREATE MEDIA ITEM
+           APPLY FILTER
+        ========================================================= */
+
+        function applyFilter(filter) {
+
+            currentFilter = filter;
+
+
+            if (filter === "all") {
+
+                filteredMedia =
+                    [...allMedia];
+
+            } else {
+
+                filteredMedia =
+                    allMedia.filter(
+                        item =>
+                            item.category === filter ||
+                            item.type === filter
+                    );
+
+            }
+
+
+            counter.textContent =
+                `${filteredMedia.length} FILES`;
+
+
+            renderWall();
+
+        }
+
+
+        /* =========================================================
+           DETERMINE NUMBER OF COLUMNS
+        ========================================================= */
+
+        function getColumnCount() {
+
+            const width =
+                window.innerWidth;
+
+
+            if (width <= 500) {
+                return 2;
+            }
+
+
+            if (width <= 900) {
+                return 3;
+            }
+
+
+            if (width <= 1200) {
+                return 4;
+            }
+
+
+            return Math.max(
+                1,
+                Math.floor(width / 300)
+            );
+
+        }
+
+
+        /* =========================================================
+           RENDER MASONRY WALL
+        ========================================================= */
+
+        async function renderWall() {
+
+            wall.innerHTML = "";
+
+
+            if (
+                filteredMedia.length === 0
+            ) {
+
+                wall.style.setProperty(
+                    "--columns",
+                    1
+                );
+
+
+                wall.innerHTML = `
+
+                    <div class="error">
+
+                        NO MEDIA FOUND
+
+                        <br><br>
+
+                        FILTER:
+                        ${escapeHTML(
+                            currentFilter
+                        )}
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            let columnCount =
+                getColumnCount();
+
+
+            columnCount =
+                Math.min(
+                    columnCount,
+                    filteredMedia.length
+                );
+
+
+            wall.style.setProperty(
+                "--columns",
+                columnCount
+            );
+
+
+            /* =====================================================
+               CREATE COLUMNS
+            ===================================================== */
+
+            const columns = [];
+
+            const columnHeights = [];
+
+
+            for (
+                let i = 0;
+                i < columnCount;
+                i++
+            ) {
+
+                const column =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                column.className =
+                    "masonry-column";
+
+
+                wall.appendChild(
+                    column
+                );
+
+
+                columns.push(
+                    column
+                );
+
+
+                columnHeights.push(0);
+
+            }
+
+
+            /* =====================================================
+               PREPARE MEDIA
+            ===================================================== */
+
+            const preparedMedia = [];
+
+
+            for (
+                let index = 0;
+                index < filteredMedia.length;
+                index++
+            ) {
+
+                const file =
+                    filteredMedia[index];
+
+
+                const element =
+                    await createMediaElement(
+                        file,
+                        index
+                    );
+
+
+                /*
+                    Estimate the height
+                    using the actual media
+                    dimensions.
+                */
+
+                const estimatedHeight =
+                    getEstimatedHeight(
+                        element,
+                        columnCount
+                    );
+
+
+                preparedMedia.push({
+
+                    element:
+                        element,
+
+                    height:
+                        estimatedHeight,
+
+                    index:
+                        index
+
+                });
+
+            }
+
+
+            /* =====================================================
+               PLACE EACH ITEM IN SHORTEST COLUMN
+            ===================================================== */
+
+            preparedMedia.forEach(
+                item => {
+
+                    let shortest =
+                        0;
+
+
+                    for (
+                        let i = 1;
+                        i < columnHeights.length;
+                        i++
+                    ) {
+
+                        if (
+                            columnHeights[i] <
+                            columnHeights[shortest]
+                        ) {
+
+                            shortest = i;
+
+                        }
+
+                    }
+
+
+                    columns[shortest]
+                        .appendChild(
+                            item.element
+                        );
+
+
+                    columnHeights[shortest] +=
+                        item.height;
+
+                }
+            );
+
+
+            /*
+                Recalculate after images
+                have actually loaded.
+            */
+
+            requestAnimationFrame(
+                () => {
+
+                    rebalanceMasonry();
+
+                }
+            );
+
+        }
+
+
+        /* =========================================================
+           CREATE MEDIA ELEMENT
         ========================================================= */
 
         function createMediaElement(
@@ -1214,251 +1444,462 @@
             index
         ) {
 
+            return new Promise(
+                resolve => {
 
-            /*
-                Get file extension.
-            */
-
-            const extension =
-                file.name
-                    .split(".")
-                    .pop()
-                    .toLowerCase();
+                    const extension =
+                        file.file
+                            .split(".")
+                            .pop()
+                            .toLowerCase();
 
 
-            /*
-                Create clickable container.
-            */
-
-            const link =
-                document.createElement(
-                    "a"
-                );
+                    const type =
+                        getMediaType(
+                            file,
+                            extension
+                        );
 
 
-            link.href =
-                "#";
+                    const link =
+                        document.createElement(
+                            "a"
+                        );
 
 
-            link.className =
-                "media-link";
+                    link.href = "#";
+
+                    link.className =
+                        "media-link";
 
 
-            link.dataset.index =
-                index;
+                    link.dataset.index =
+                        index;
 
 
-            /*
-                Clicking media opens
-                fullscreen viewer.
-            */
+                    link.addEventListener(
+                        "click",
+                        event => {
 
-            link.addEventListener(
-                "click",
-                event => {
+                            event.preventDefault();
 
-                    event.preventDefault();
+                            openLightbox(
+                                index
+                            );
 
-
-                    openLightbox(
-                        index
+                        }
                     );
+
+
+                    let element;
+
+
+                    /* =================================================
+                       VIDEO
+                    ================================================= */
+
+                    if (
+                        type === "video"
+                    ) {
+
+                        element =
+                            document.createElement(
+                                "video"
+                            );
+
+
+                        element.src =
+                            `${mediaFolder}/${encodeURIComponent(
+                                file.file
+                            )}`;
+
+
+                        element.muted =
+                            true;
+
+
+                        element.loop =
+                            true;
+
+
+                        element.playsInline =
+                            true;
+
+
+                        element.preload =
+                            "metadata";
+
+
+                        element.className =
+                            "media-item";
+
+
+                        videoObserver.observe(
+                            element
+                        );
+
+
+                        element.addEventListener(
+                            "loadedmetadata",
+                            () => {
+
+                                resolve(link);
+
+                            },
+
+                            {
+                                once: true
+                            }
+                        );
+
+
+                    }
+
+                    /* =================================================
+                       IMAGE
+                    ================================================= */
+
+                    else {
+
+                        element =
+                            document.createElement(
+                                "img"
+                            );
+
+
+                        element.src =
+                            `${mediaFolder}/${encodeURIComponent(
+                                file.file
+                            )}`;
+
+
+                        element.loading =
+                            "lazy";
+
+
+                        element.decoding =
+                            "async";
+
+
+                        element.alt =
+                            file.title ||
+                            file.file;
+
+
+                        element.className =
+                            "media-item";
+
+
+                        element.addEventListener(
+                            "load",
+                            () => {
+
+                                resolve(link);
+
+                            },
+
+                            {
+                                once: true
+                            }
+                        );
+
+                    }
+
+
+                    /* =================================================
+                       ERROR
+                    ================================================= */
+
+                    element.addEventListener(
+                        "error",
+                        () => {
+
+                            console.warn(
+                                "Failed to load:",
+                                file.file
+                            );
+
+
+                            resolve(link);
+
+                        },
+
+                        {
+                            once: true
+                        }
+                    );
+
+
+                    link.appendChild(
+                        element
+                    );
+
+
+                    /*
+                        If the browser has
+                        already loaded the image.
+                    */
+
+                    if (
+                        element.complete
+                    ) {
+
+                        setTimeout(
+                            () => resolve(link),
+                            0
+                        );
+
+                    }
 
                 }
-            );
-
-
-            let element;
-
-
-            /* =====================================================
-               VIDEO
-            ===================================================== */
-
-            if (
-
-                extension === "mp4" ||
-
-                extension === "mov" ||
-
-                extension === "webm"
-
-            ) {
-
-
-                element =
-                    document.createElement(
-                        "video"
-                    );
-
-
-                /*
-                    Video source
-                */
-
-                element.src =
-                    file.download_url;
-
-
-                /*
-                    Silent autoplay
-                */
-
-                element.muted =
-                    true;
-
-
-                /*
-                    Repeat
-                */
-
-                element.loop =
-                    true;
-
-
-                /*
-                    Mobile support
-                */
-
-                element.playsInline =
-                    true;
-
-
-                /*
-                    Don't download the
-                    entire video immediately.
-                */
-
-                element.preload =
-                    "metadata";
-
-
-                element.className =
-                    "media-item";
-
-
-                /*
-                    Observe video visibility.
-                */
-
-                videoObserver.observe(
-                    element
-                );
-
-            }
-
-
-            /* =====================================================
-               IMAGE
-            ===================================================== */
-
-            else {
-
-
-                element =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                /*
-                    Image URL
-                */
-
-                element.src =
-                    file.download_url;
-
-
-                /*
-                    Browser lazy loading.
-                */
-
-                element.loading =
-                    "lazy";
-
-
-                /*
-                    Decode images in
-                    background when possible.
-                */
-
-                element.decoding =
-                    "async";
-
-
-                /*
-                    Accessibility
-                */
-
-                element.alt =
-                    file.name;
-
-
-                element.className =
-                    "media-item";
-
-            }
-
-
-            /* =====================================================
-               BROKEN MEDIA
-            ===================================================== */
-
-            element.addEventListener(
-                "error",
-                () => {
-
-                    console.warn(
-                        "Failed to load:",
-                        file.name
-                    );
-
-
-                    link.remove();
-
-                }
-            );
-
-
-            /*
-                Put media inside link.
-            */
-
-            link.appendChild(
-                element
-            );
-
-
-            /*
-                Put item on wall.
-            */
-
-            wall.appendChild(
-                link
             );
 
         }
 
 
         /* =========================================================
-           OPEN LIGHTBOX
+           ESTIMATE MEDIA HEIGHT
         ========================================================= */
 
-        function openLightbox(
-            index
+        function getEstimatedHeight(
+            link,
+            columnCount
         ) {
+
+            const media =
+                link.querySelector(
+                    ".media-item"
+                );
+
+
+            if (!media) {
+                return 300;
+            }
+
+
+            let ratio = 1;
+
+
+            if (
+                media.naturalWidth &&
+                media.naturalHeight
+            ) {
+
+                ratio =
+                    media.naturalHeight /
+                    media.naturalWidth;
+
+            }
 
 
             /*
-                Validate index.
+                Approximate column width.
             */
 
+            const wallWidth =
+                wall.clientWidth;
+
+
+            const gap = 15;
+
+
+            const columnWidth =
+                (
+                    wallWidth -
+                    (
+                        gap *
+                        (columnCount - 1)
+                    )
+                ) /
+                columnCount;
+
+
+            return (
+                columnWidth *
+                ratio
+            ) + 15;
+
+        }
+
+
+        /* =========================================================
+           REBALANCE AFTER LOADING
+        ========================================================= */
+
+        function rebalanceMasonry() {
+
             if (
+                filteredMedia.length === 0
+            ) {
+                return;
+            }
 
+
+            /*
+                Rebuild the wall using
+                actual rendered heights.
+            */
+
+            const items = [];
+
+
+            document
+                .querySelectorAll(
+                    ".media-link"
+                )
+                .forEach(
+                    item => {
+
+                        const index =
+                            Number(
+                                item.dataset.index
+                            );
+
+
+                        items.push({
+
+                            element:
+                                item,
+
+                            index:
+                                index
+
+                        });
+
+                    }
+                );
+
+
+            if (
+                items.length === 0
+            ) {
+                return;
+            }
+
+
+            const columns =
+                Array.from(
+                    document.querySelectorAll(
+                        ".masonry-column"
+                    )
+                );
+
+
+            const heights =
+                columns.map(
+                    () => 0
+                );
+
+
+            /*
+                Remove items.
+            */
+
+            columns.forEach(
+                column => {
+
+                    column.innerHTML =
+                        "";
+
+                }
+            );
+
+
+            /*
+                Reinsert items based
+                on real dimensions.
+            */
+
+            items.forEach(
+                item => {
+
+                    let shortest =
+                        0;
+
+
+                    for (
+                        let i = 1;
+                        i < heights.length;
+                        i++
+                    ) {
+
+                        if (
+                            heights[i] <
+                            heights[shortest]
+                        ) {
+
+                            shortest = i;
+
+                        }
+
+                    }
+
+
+                    columns[shortest]
+                        .appendChild(
+                            item.element
+                        );
+
+
+                    heights[shortest] =
+                        columns[shortest]
+                            .getBoundingClientRect()
+                            .height;
+
+                }
+            );
+
+        }
+
+
+        /* =========================================================
+           MEDIA TYPE
+        ========================================================= */
+
+        function getMediaType(
+            file,
+            extension
+        ) {
+
+            if (file.type) {
+                return file.type;
+            }
+
+
+            if (
+                extension === "mp4" ||
+                extension === "mov" ||
+                extension === "webm"
+            ) {
+
+                return "video";
+
+            }
+
+
+            if (
+                extension === "gif"
+            ) {
+
+                return "gif";
+
+            }
+
+
+            return "image";
+
+        }
+
+
+        /* =========================================================
+           LIGHTBOX OPEN
+        ========================================================= */
+
+        function openLightbox(index) {
+
+            if (
                 index < 0 ||
-
-                index >= mediaFiles.length
-
+                index >= filteredMedia.length
             ) {
 
                 return;
@@ -1484,11 +1925,6 @@
             );
 
 
-            /*
-                Prevent background
-                scrolling.
-            */
-
             document.body.style.overflow =
                 "hidden";
 
@@ -1496,28 +1932,30 @@
 
 
         /* =========================================================
-           RENDER LIGHTBOX
+           LIGHTBOX RENDER
         ========================================================= */
 
         function renderLightbox() {
 
-
             const file =
-                mediaFiles[
+                filteredMedia[
                     currentIndex
                 ];
 
 
             const extension =
-                file.name
+                file.file
                     .split(".")
                     .pop()
                     .toLowerCase();
 
 
-            /*
-                Remove previous media.
-            */
+            const type =
+                getMediaType(
+                    file,
+                    extension
+                );
+
 
             lightboxContent.innerHTML =
                 "";
@@ -1526,20 +1964,9 @@
             let element;
 
 
-            /* =====================================================
-               VIDEO
-            ===================================================== */
-
             if (
-
-                extension === "mp4" ||
-
-                extension === "mov" ||
-
-                extension === "webm"
-
+                type === "video"
             ) {
-
 
                 element =
                     document.createElement(
@@ -1548,7 +1975,9 @@
 
 
                 element.src =
-                    file.download_url;
+                    `${mediaFolder}/${encodeURIComponent(
+                        file.file
+                    )}`;
 
 
                 element.controls =
@@ -1572,13 +2001,7 @@
 
             }
 
-
-            /* =====================================================
-               IMAGE
-            ===================================================== */
-
             else {
-
 
                 element =
                     document.createElement(
@@ -1587,31 +2010,30 @@
 
 
                 element.src =
-                    file.download_url;
+                    `${mediaFolder}/${encodeURIComponent(
+                        file.file
+                    )}`;
 
 
                 element.alt =
-                    file.name;
+                    file.title ||
+                    file.file;
 
             }
 
-
-            /*
-                Add media.
-            */
 
             lightboxContent.appendChild(
                 element
             );
 
 
-            /*
-                Display filename
-                and position.
-            */
-
             lightboxInfo.textContent =
-                `${currentIndex + 1} / ${mediaFiles.length} — ${file.name}`;
+                `${currentIndex + 1} / ${
+                    filteredMedia.length
+                } — ${
+                    file.title ||
+                    file.file
+                }`;
 
         }
 
@@ -1621,7 +2043,6 @@
         ========================================================= */
 
         function closeLightbox() {
-
 
             lightbox.classList.remove(
                 "active"
@@ -1634,18 +2055,9 @@
             );
 
 
-            /*
-                Destroy currently displayed
-                video/image.
-            */
-
             lightboxContent.innerHTML =
                 "";
 
-
-            /*
-                Restore scrolling.
-            */
 
             document.body.style.overflow =
                 "";
@@ -1654,25 +2066,27 @@
 
 
         /* =========================================================
-           PREVIOUS MEDIA
+           PREVIOUS
         ========================================================= */
 
         function previousMedia() {
 
+            if (
+                filteredMedia.length === 0
+            ) {
+                return;
+            }
+
 
             currentIndex--;
 
-
-            /*
-                Loop to last item.
-            */
 
             if (
                 currentIndex < 0
             ) {
 
                 currentIndex =
-                    mediaFiles.length - 1;
+                    filteredMedia.length - 1;
 
             }
 
@@ -1683,24 +2097,24 @@
 
 
         /* =========================================================
-           NEXT MEDIA
+           NEXT
         ========================================================= */
 
         function nextMedia() {
+
+            if (
+                filteredMedia.length === 0
+            ) {
+                return;
+            }
 
 
             currentIndex++;
 
 
-            /*
-                Loop to first item.
-            */
-
             if (
-
                 currentIndex >=
-                mediaFiles.length
-
+                filteredMedia.length
             ) {
 
                 currentIndex = 0;
@@ -1714,7 +2128,45 @@
 
 
         /* =========================================================
-           BUTTON EVENTS
+           FILTER BUTTONS
+        ========================================================= */
+
+        filterButtons.forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        filterButtons.forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        applyFilter(
+                            button.dataset.filter
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           LIGHTBOX BUTTONS
         ========================================================= */
 
         closeButton.addEventListener(
@@ -1736,13 +2188,12 @@
 
 
         /* =========================================================
-           CLICK OUTSIDE LIGHTBOX
+           CLICK OUTSIDE
         ========================================================= */
 
         lightbox.addEventListener(
             "click",
             event => {
-
 
                 if (
                     event.target ===
@@ -1758,18 +2209,12 @@
 
 
         /* =========================================================
-           KEYBOARD CONTROLS
+           KEYBOARD
         ========================================================= */
 
         document.addEventListener(
             "keydown",
             event => {
-
-
-                /*
-                    Don't do anything if
-                    viewer isn't open.
-                */
 
                 if (
                     !lightbox.classList.contains(
@@ -1778,17 +2223,11 @@
                 ) {
 
                     return;
-
                 }
 
 
-                /*
-                    ESC
-                */
-
                 if (
-                    event.key ===
-                    "Escape"
+                    event.key === "Escape"
                 ) {
 
                     closeLightbox();
@@ -1796,13 +2235,8 @@
                 }
 
 
-                /*
-                    LEFT ARROW
-                */
-
                 if (
-                    event.key ===
-                    "ArrowLeft"
+                    event.key === "ArrowLeft"
                 ) {
 
                     previousMedia();
@@ -1810,13 +2244,8 @@
                 }
 
 
-                /*
-                    RIGHT ARROW
-                */
-
                 if (
-                    event.key ===
-                    "ArrowRight"
+                    event.key === "ArrowRight"
                 ) {
 
                     nextMedia();
@@ -1828,10 +2257,61 @@
 
 
         /* =========================================================
-           START APPLICATION
+           WINDOW RESIZE
         ========================================================= */
 
-        loadMedia();
+        let resizeTimer;
+
+
+        window.addEventListener(
+            "resize",
+            () => {
+
+                clearTimeout(
+                    resizeTimer
+                );
+
+
+                resizeTimer =
+                    setTimeout(
+                        () => {
+
+                            renderWall();
+
+                        },
+                        250
+                    );
+
+            }
+        );
+
+
+        /* =========================================================
+           HTML ESCAPE
+        ========================================================= */
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                text;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =========================================================
+           START
+        ========================================================= */
+
+        loadDatabase();
 
     </script>
 

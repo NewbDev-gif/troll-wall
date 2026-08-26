@@ -1,14 +1,18 @@
 name: Generate Media Database
 
 on:
+
   push:
+
     paths:
       - "media/**"
       - ".github/workflows/generate-media.yml"
 
   workflow_dispatch:
 
+
 permissions:
+
   contents: write
 
 
@@ -18,10 +22,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
+
     steps:
 
       # =========================================================
-      # CHECKOUT REPOSITORY
+      # CHECKOUT
       # =========================================================
 
       - name: Checkout repository
@@ -30,7 +35,7 @@ jobs:
 
 
       # =========================================================
-      # GENERATE media.json
+      # GENERATE MEDIA DATABASE
       # =========================================================
 
       - name: Generate media.json
@@ -48,6 +53,7 @@ jobs:
           # =======================================================
 
           MEDIA_FOLDER = "media"
+
           OUTPUT_FILE = "media.json"
 
 
@@ -56,20 +62,28 @@ jobs:
           # =======================================================
 
           IMAGE_EXTENSIONS = {
+
               ".jpg",
               ".jpeg",
               ".png",
               ".webp"
+
           }
+
 
           GIF_EXTENSIONS = {
+
               ".gif"
+
           }
 
+
           VIDEO_EXTENSIONS = {
+
               ".mp4",
               ".mov",
               ".webm"
+
           }
 
 
@@ -82,7 +96,11 @@ jobs:
 
           if os.path.isdir(MEDIA_FOLDER):
 
-              for filename in os.listdir(MEDIA_FOLDER):
+
+              for filename in os.listdir(
+                  MEDIA_FOLDER
+              ):
+
 
                   filepath = os.path.join(
                       MEDIA_FOLDER,
@@ -92,7 +110,10 @@ jobs:
 
                   # Ignore folders
 
-                  if not os.path.isfile(filepath):
+                  if not os.path.isfile(
+                      filepath
+                  ):
+
                       continue
 
 
@@ -103,7 +124,9 @@ jobs:
                   )[1].lower()
 
 
-                  # Determine media type
+                  # =================================================
+                  # DETERMINE MEDIA TYPE
+                  # =================================================
 
                   if extension in IMAGE_EXTENSIONS:
 
@@ -122,8 +145,6 @@ jobs:
 
                   else:
 
-                      # Ignore unsupported files
-
                       continue
 
 
@@ -135,13 +156,24 @@ jobs:
 
                       category = "video"
 
+
                   elif media_type == "gif":
 
                       category = "reaction"
 
+
                   else:
 
                       category = "meme"
+
+
+                  # =================================================
+                  # TITLE
+                  # =================================================
+
+                  title = os.path.splitext(
+                      filename
+                  )[0]
 
 
                   # =================================================
@@ -156,20 +188,20 @@ jobs:
 
                       "category": category,
 
-                      "title": os.path.splitext(
-                          filename
-                      )[0]
+                      "title": title
 
                   })
 
 
           # =======================================================
-          # SORT FILES
+          # SORT
           # =======================================================
 
           media.sort(
+
               key=lambda item:
                   item["file"].lower()
+
           )
 
 
@@ -187,26 +219,37 @@ jobs:
 
 
           # =======================================================
-          # WRITE media.json
+          # WRITE JSON
           # =======================================================
 
           with open(
+
               OUTPUT_FILE,
+
               "w",
+
               encoding="utf-8"
+
           ) as file:
 
+
               json.dump(
+
                   database,
+
                   file,
+
                   indent=4,
+
                   ensure_ascii=False
+
               )
 
 
           print(
               f"Generated {OUTPUT_FILE}"
           )
+
 
           print(
               f"Total media: {len(media)}"
@@ -216,7 +259,7 @@ jobs:
 
 
       # =========================================================
-      # CHECK IF media.json CHANGED
+      # CHECK FOR CHANGES
       # =========================================================
 
       - name: Check for changes
@@ -237,22 +280,29 @@ jobs:
 
 
       # =========================================================
-      # COMMIT media.json
+      # COMMIT DATABASE
       # =========================================================
 
       - name: Commit media.json
 
-        if: steps.changes.outputs.changed == 'true'
+        if:
+          steps.changes.outputs.changed == 'true'
 
         run: |
 
-          git config user.name "github-actions[bot]"
+          git config user.name \
+            "github-actions[bot]"
 
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
 
           git add media.json
 
+
           git commit \
             -m "Automatically update media database"
+
 
           git push
