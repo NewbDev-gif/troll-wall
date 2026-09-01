@@ -1977,6 +1977,57 @@ input:focus {
 
 
 /* =========================================================
+   MOBILE PACKED LAYOUT
+   ---------------------------------------------------------
+   The mobile wall is intentionally arranged in groups of four:
+
+       ┌─────────┬─────────┐
+       │   #1    │   #2    │
+       │         │         │
+       ├─────────┤   tall  │
+       │   #3    │         │
+       └─────────┴─────────┘
+       ┌───────────────────┐
+       │        #4         │
+       └───────────────────┘
+
+   This keeps the media compact while using the available
+   phone width properly.
+========================================================= */
+
+.mobile-layout-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mobile-layout-top {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+    align-items: start;
+}
+
+.mobile-layout-column {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mobile-layout-wide {
+    width: 100%;
+    min-width: 0;
+}
+
+.mobile-layout-wide .media-card {
+    width: 100%;
+}
+
+
+/* =========================================================
    RESPONSIVE
 ========================================================= */
 
@@ -2057,20 +2108,21 @@ input:focus {
 
     #wall-container {
 
-        padding: 10px;
+        padding: 8px;
     }
 
     #wall {
 
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            repeat(4, minmax(0, 1fr));
 
-        gap: 10px;
+        gap: 8px;
     }
 
     .wall-column {
 
-        gap: 10px;
+        gap: 8px;
+        min-width: 0;
     }
 
     #upload-button {
@@ -2119,12 +2171,15 @@ input:focus {
 
     #wall {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 6px;
     }
 
     .wall-column {
 
-        gap: 10px;
+        gap: 6px;
     }
 
     #upload-button {
@@ -3240,7 +3295,15 @@ function getColumnCount() {
         width <= 500
     ) {
 
-        return 1;
+        /*
+         * MOBILE:
+         * Use the packed 2-column layout:
+         * 1 = left top
+         * 2 = right top
+         * 3 = left below #1
+         * 4 = full width
+         */
+        return 2;
     }
 
 
@@ -3248,7 +3311,7 @@ function getColumnCount() {
         width <= 800
     ) {
 
-        return 2;
+        return 4;
     }
 
 
@@ -4733,109 +4796,6 @@ async function createMediaCard(
 
 
     /* =====================================================
-       COMMENTS SECTION
-    ===================================================== */
-
-    const commentsSection =
-        document.createElement(
-            "div"
-        );
-
-
-    commentsSection.className =
-        "comments-section";
-
-
-    /* COMMENT INPUT */
-
-    const commentInputRow =
-        document.createElement(
-            "div"
-        );
-
-
-    commentInputRow.className =
-        "comment-input-row";
-
-
-    const commentInput =
-        document.createElement(
-            "input"
-        );
-
-
-    commentInput.className =
-        "comment-input";
-
-
-    commentInput.type =
-        "text";
-
-
-    commentInput.maxLength =
-        500;
-
-
-    commentInput.placeholder =
-        "Write a comment...";
-
-
-    const commentSubmit =
-        document.createElement(
-            "button"
-        );
-
-
-    commentSubmit.className =
-        "comment-submit";
-
-
-    commentSubmit.type =
-        "button";
-
-
-    commentSubmit.textContent =
-        "POST";
-
-
-    commentInputRow.appendChild(
-        commentInput
-    );
-
-
-    commentInputRow.appendChild(
-        commentSubmit
-    );
-
-
-    commentsSection.appendChild(
-        commentInputRow
-    );
-
-
-    /* COMMENT LIST */
-
-    const commentList =
-        document.createElement(
-            "div"
-        );
-
-
-    commentList.className =
-        "comment-list";
-
-
-    commentsSection.appendChild(
-        commentList
-    );
-
-
-    info.appendChild(
-        commentsSection
-    );
-
-
-    /* =====================================================
        CARD
     ===================================================== */
 
@@ -4887,69 +4847,23 @@ async function createMediaCard(
 
 
     /* =====================================================
-       COMMENT TOGGLE
+       OPEN COMMENT MODAL
+
+       There is no comment section underneath the card anymore.
+       The COMMENT button opens the media modal, where the user
+       can like, dislike, read comments, and post a comment.
     ===================================================== */
 
     commentButton.onclick =
-        async function() {
-
-            commentsSection.classList.toggle(
-                "show"
-            );
-
-
-            if (
-                commentsSection.classList.contains(
-                    "show"
-                )
-            ) {
-
-                await renderComments(
-                    item,
-                    commentList,
-                    commentCount
-                );
-            }
-        };
-
-
-    /* =====================================================
-       POST COMMENT
-    ===================================================== */
-
-    commentSubmit.onclick =
-        async function() {
-
-            await addComment(
-                item,
-                commentInput,
-                commentSubmit,
-                commentList,
-                commentCount
-            );
-        };
-
-
-    commentInput.addEventListener(
-        "keydown",
         async function(event) {
 
-            if (
-                event.key === "Enter"
-            ) {
+            event.stopPropagation();
 
-                event.preventDefault();
-
-                await addComment(
-                    item,
-                    commentInput,
-                    commentSubmit,
-                    commentList,
-                    commentCount
-                );
-            }
-        }
-    );
+            await openMediaViewer(
+                item,
+                true
+            );
+        };
 
 
     /* =====================================================
@@ -5291,7 +5205,8 @@ async function refreshViewerVotes() {
 ========================================================= */
 
 async function openMediaViewer(
-    item
+    item,
+    focusComments = false
 ) {
 
     currentViewerItem =
@@ -5419,6 +5334,18 @@ async function openMediaViewer(
 
     viewerCommentList.scrollTop =
         viewerCommentList.scrollHeight;
+
+
+    /* Focus the comment box when the modal was opened
+       through the COMMENT button. */
+
+    if (focusComments && !item.isGithub) {
+
+        requestAnimationFrame(() => {
+
+            viewerCommentInput.focus();
+        });
+    }
 }
 
 
@@ -5850,16 +5777,215 @@ async function loadWall() {
 
 
     /* =====================================================
-       CREATE COLUMNS
+       BUILD WALL
+    ===================================================== */
+
+    /*
+     * MOBILE
+     * -----------------------------------------------------
+     * Do NOT use the desktop shortest-column algorithm here.
+     * Instead, build the packed layout in groups of four:
+     *
+     *   item 1       item 2
+     *   item 3       item 2
+     *
+     *   item 4 spans the complete width
+     *
+     * This prevents the cards from bunching into one side and
+     * makes the mobile wall look much closer to a compact
+     * Imgur-style gallery.
+     */
+    if (window.innerWidth <= 500) {
+
+        wall.innerHTML = "";
+
+        for (
+            let i = 0;
+            i < allMedia.length;
+            i += 4
+        ) {
+
+            const group =
+                document.createElement(
+                    "div"
+                );
+
+            group.className =
+                "mobile-layout-group";
+
+
+            const top =
+                document.createElement(
+                    "div"
+                );
+
+            top.className =
+                "mobile-layout-top";
+
+
+            const left =
+                document.createElement(
+                    "div"
+                );
+
+            left.className =
+                "mobile-layout-column";
+
+
+            const right =
+                document.createElement(
+                    "div"
+                );
+
+            right.className =
+                "mobile-layout-column";
+
+
+            /* ITEM 1 — LEFT TOP */
+            if (allMedia[i]) {
+
+                const card =
+                    await createMediaCard(
+                        allMedia[i]
+                    );
+
+                left.appendChild(
+                    card
+                );
+
+                const media =
+                    card.querySelector(
+                        ".media-content"
+                    );
+
+                if (media) {
+                    await waitForMediaLoad(
+                        media
+                    );
+                }
+            }
+
+
+            /* ITEM 2 — RIGHT TOP / TALL SIDE */
+            if (allMedia[i + 1]) {
+
+                const card =
+                    await createMediaCard(
+                        allMedia[i + 1]
+                    );
+
+                right.appendChild(
+                    card
+                );
+
+                const media =
+                    card.querySelector(
+                        ".media-content"
+                    );
+
+                if (media) {
+                    await waitForMediaLoad(
+                        media
+                    );
+                }
+            }
+
+
+            /* ITEM 3 — LEFT BELOW ITEM 1 */
+            if (allMedia[i + 2]) {
+
+                const card =
+                    await createMediaCard(
+                        allMedia[i + 2]
+                    );
+
+                left.appendChild(
+                    card
+                );
+
+                const media =
+                    card.querySelector(
+                        ".media-content"
+                    );
+
+                if (media) {
+                    await waitForMediaLoad(
+                        media
+                    );
+                }
+            }
+
+
+            top.appendChild(
+                left
+            );
+
+            top.appendChild(
+                right
+            );
+
+            group.appendChild(
+                top
+            );
+
+
+            /* ITEM 4 — FULL WIDTH */
+            if (allMedia[i + 3]) {
+
+                const wide =
+                    document.createElement(
+                        "div"
+                    );
+
+                wide.className =
+                    "mobile-layout-wide";
+
+
+                const card =
+                    await createMediaCard(
+                        allMedia[i + 3]
+                    );
+
+                wide.appendChild(
+                    card
+                );
+
+                group.appendChild(
+                    wide
+                );
+
+
+                const media =
+                    card.querySelector(
+                        ".media-content"
+                    );
+
+                if (media) {
+                    await waitForMediaLoad(
+                        media
+                    );
+                }
+            }
+
+
+            wall.appendChild(
+                group
+            );
+        }
+
+        return;
+    }
+
+
+    /* =====================================================
+       DESKTOP / TABLET
+       -----------------------------------------------------
+       Keep the existing shortest-column masonry behavior.
     ===================================================== */
 
     const columns =
         createColumns();
 
-
-    /* =====================================================
-       BUILD WALL
-    ===================================================== */
 
     for (
         const item of allMedia
